@@ -1,11 +1,14 @@
-const connection = require('./db_connection');
+const connection = require("./db_connection");
 
+// טבלה של התפקידים האפשריים של משתמש במערכת שלנו
 const createRolesTable = `
 CREATE TABLE Roles (
   RoleID INT PRIMARY KEY AUTO_INCREMENT,
   RoleName VARCHAR(50) NOT NULL
 )`;
 
+// טבלה של כל המשתמשים
+// בשביל לתהחבר צריך להזין שם פרטי וסיסמה
 const createUsersTable = `
 CREATE TABLE Users (
   UserID INT PRIMARY KEY AUTO_INCREMENT,
@@ -19,6 +22,7 @@ CREATE TABLE Users (
   FOREIGN KEY (RoleID) REFERENCES Roles(RoleID)
 )`;
 
+// טבלה של כל הרופאים שהם סוג של משתמשים אבל משודרגים
 const createDoctorsTable = `
 CREATE TABLE Doctors (
   DoctorID INT PRIMARY KEY AUTO_INCREMENT,
@@ -27,6 +31,7 @@ CREATE TABLE Doctors (
   FOREIGN KEY (UserID) REFERENCES Users(UserID)
 )`;
 
+// טבלה של כל התרופות שניתן לקנות בחנות האונליין
 const createMedicinesTable = `
 CREATE TABLE Medicines (
   MedicineID INT PRIMARY KEY AUTO_INCREMENT,
@@ -35,6 +40,7 @@ CREATE TABLE Medicines (
   Price DECIMAL(10, 2)
 )`;
 
+// טבלה של כל המרשמים לתרופות שניתנו למטופלים ע"י רופאים
 const createPrescriptionsTable = `
 CREATE TABLE Prescriptions (
   PrescriptionID INT PRIMARY KEY AUTO_INCREMENT,
@@ -48,19 +54,23 @@ CREATE TABLE Prescriptions (
   FOREIGN KEY (MedicineID) REFERENCES Medicines(MedicineID)
 )`;
 
+// טבלה של כל ההפניות לבדיקות שניתנו למטופלים ע"י רופאים
+// DATE מתי ההפניה ניתנה
 const createReferralsTable = `
 CREATE TABLE Referrals (
   ReferralID INT PRIMARY KEY AUTO_INCREMENT,
   PatientID INT,
   DoctorID INT,
   TestName VARCHAR(100),
-  Date DATE,
+  Date DATE, 
   Location VARCHAR(255),
   Notes TEXT,
   FOREIGN KEY (PatientID) REFERENCES Users(UserID),
   FOREIGN KEY (DoctorID) REFERENCES Doctors(DoctorID)
 )`;
 
+// טבלה של הזמנות תרופות
+// כלומר כל הזמנות תרופות בחנות האונליין
 const createMedicineOrdersTable = `
 CREATE TABLE MedicineOrders (
   OrderID INT PRIMARY KEY AUTO_INCREMENT,
@@ -74,15 +84,19 @@ CREATE TABLE MedicineOrders (
   FOREIGN KEY (MedicineID) REFERENCES Medicines(MedicineID)
 )`;
 
+// טבלה של כתובות המשתמשים
 const createAddressesTable = `
 CREATE TABLE Addresses (
   AddressID INT PRIMARY KEY AUTO_INCREMENT,
   UserID INT,
+  ApartmentNumber INT,
+  BuildingNumber INT,
   Street VARCHAR(100),
   City VARCHAR(100),
   FOREIGN KEY (UserID) REFERENCES Users(UserID)
 )`;
 
+// טבלה של פרטי החשבון של המשתמשים
 const createAccountDetailsTable = `
 CREATE TABLE AccountDetails (
   AccountID INT PRIMARY KEY AUTO_INCREMENT,
@@ -93,6 +107,8 @@ CREATE TABLE AccountDetails (
   FOREIGN KEY (UserID) REFERENCES Users(UserID)
 )`;
 
+// טבלה של בקשת הזמנה לכרטיס קופת חולים חדש
+// (במקרה של אובדן או גנבה)
 const createNewCardRequestsTable = `
 CREATE TABLE NewCardRequests (
   RequestID INT PRIMARY KEY AUTO_INCREMENT,
@@ -101,6 +117,8 @@ CREATE TABLE NewCardRequests (
   FOREIGN KEY (PatientID) REFERENCES Users(UserID)
 )`;
 
+// טבלה של בקשת הפניות לתרופות
+// כאשר מטופל מבקש הפניה לתרופה ההפניה נשלחת לרופא המשויך לו
 const createPrescriptionRequestsTable = `
 CREATE TABLE PrescriptionRequests (
   RequestID INT PRIMARY KEY AUTO_INCREMENT,
@@ -111,6 +129,7 @@ CREATE TABLE PrescriptionRequests (
   FOREIGN KEY (MedicineID) REFERENCES Medicines(MedicineID)
 )`;
 
+// טבלה של זמנים פנויים לקבלת מטופלים עבור כל רופא
 const createAvailableTimesTable = `
 CREATE TABLE AvailableTimes (
   TimeID INT PRIMARY KEY AUTO_INCREMENT,
@@ -121,6 +140,7 @@ CREATE TABLE AvailableTimes (
   FOREIGN KEY (DoctorID) REFERENCES Doctors(DoctorID)
 )`;
 
+// טבלה של תורים שנקבעו עבור מטופלים אצל רופאים
 const createAppointmentsTable = `
 CREATE TABLE Appointments (
   AppointmentID INT PRIMARY KEY AUTO_INCREMENT,
@@ -133,25 +153,36 @@ CREATE TABLE Appointments (
   FOREIGN KEY (UserID) REFERENCES Users(UserID)
 )`;
 
+const createPatientDoctorTable = `
+CREATE TABLE PatientDoctor (
+  PatientID INT,
+  DoctorID INT,
+  PRIMARY KEY (PatientID, DoctorID),
+  FOREIGN KEY (PatientID) REFERENCES Users(UserID),
+  FOREIGN KEY (DoctorID) REFERENCES Doctors(DoctorID)
+)`;
+
 const queries = [
-/*  createRolesTable,
+  createRolesTable,
   createUsersTable,
   createDoctorsTable,
   createMedicinesTable,
   createPrescriptionsTable,
- createReferralsTable,
+  createReferralsTable,
   createMedicineOrdersTable,
- */ createAddressesTable,
+  createAddressesTable,
   createAccountDetailsTable,
   createNewCardRequestsTable,
   createPrescriptionRequestsTable,
   createAvailableTimesTable,
-  createAppointmentsTable
+  createAppointmentsTable,
+  createPatientDoctorTable
 ];
 
-queries.forEach(query => {
+// יצירה של כל הטבלאות בסדר הנכון לפי התלויות בין הטבלאות
+queries.forEach((query) => {
   connection.query(query, (err, result) => {
     if (err) throw err;
-    console.log('Table created successfully!');
+    console.log("Table created successfully!");
   });
 });

@@ -10,7 +10,6 @@ const connection = mysql.createConnection({
   user: 'root',
   password: 'fullstack',
   database: 'hmodb'
-  // Note: `database` key is omitted
 });
 
 console.log('Attempting to connect to MySQL server...');

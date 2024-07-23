@@ -10,10 +10,10 @@
     "dbconnect": "node db_connection.js",
     "dbcreate": "node db_creation.js",
     "tables_creation": "node db_actions/tables_creation.js"
-
   },
   "dependencies": {
     "mysql": "^2.18.1",
+    "mysql2": "^3.10.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

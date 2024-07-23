@@ -7,3 +7,4 @@ const pool = mysql.createPool({
     database: 'hmodb',
   }).promise();
 
+  module.exports = pool;

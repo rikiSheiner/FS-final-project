@@ -2,12 +2,13 @@
   "name": "fs-final-project",
   "private": true,
   "version": "0.0.0",
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "dbconnect": "node db_actions/db_connection.js",
+    "dbconnect": "node db_actions/actions.js",
     "dbcreate": "node db_actions/db_creation.js",
     "tables_creation": "node db_actions/tables_creation.js"
   },

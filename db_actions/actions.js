@@ -5,6 +5,6 @@ const pool = mysql.createPool({
     user: 'root',
     password: 'fullstack',
     database: 'hmodb',
-  }).promise();
+}).promise();
 
-  module.exports = pool;
+export default pool;

@@ -1,5 +1,4 @@
-
-var mysql = require('mysql2');
+var mysql = require('mysql');
 
 var con = mysql.createConnection({
   host: 'localhost',

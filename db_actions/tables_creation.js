@@ -163,6 +163,7 @@ CREATE TABLE PatientDoctor (
 )`;
 
 const queries = [
+  // 1
   createRolesTable,
   createUsersTable,
   createDoctorsTable,
@@ -170,6 +171,7 @@ const queries = [
   createPrescriptionsTable,
   createReferralsTable,
   createMedicineOrdersTable,
+  // 8
   createAddressesTable,
   createAccountDetailsTable,
   createNewCardRequestsTable,

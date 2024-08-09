@@ -5,7 +5,10 @@ class PrescriptionModel extends BaseModel {
     super('Prescriptions'); // שם הטבלה
   }
 
-  // ניתן להוסיף פונקציות מיוחדות למודל זה אם יש צורך
+  getPatientPrescriptions(patientId){
+    return super.findByProp('patientId', patientId);
+  }
+
 }
 
 module.exports = new PrescriptionModel();

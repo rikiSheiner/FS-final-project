@@ -5,7 +5,14 @@ class UserModel extends BaseModel {
     super('Users'); // שם הטבלה
   }
 
-  // ניתן להוסיף פונקציות מיוחדות למודל זה אם יש צורך
+  getUserByEmail(email) {
+    return super.findByProp('email', email);
+  }
+
+  deleteUserById(id){
+    super.deleteByProp('userId', id);
+  }
+  
 }
 
 module.exports = new UserModel();

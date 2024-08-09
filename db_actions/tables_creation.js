@@ -22,14 +22,26 @@ CREATE TABLE Users (
   FOREIGN KEY (RoleID) REFERENCES Roles(RoleID)
 )`;
 
+
+// טבלה של מרפאות, כל מרפאה עם מזהה ייחודי וכתובת
+const createClinicsTable = `
+CREATE TABLE Clinics (
+  ClinicID INT PRIMARY KEY AUTO_INCREMENT,
+  AddressID INT,
+  FOREIGN KEY (AddressID) REFERENCES Addresses(AddressID)
+)`;
+
 // טבלה של כל הרופאים שהם סוג של משתמשים אבל משודרגים
 const createDoctorsTable = `
 CREATE TABLE Doctors (
   DoctorID INT PRIMARY KEY AUTO_INCREMENT,
   UserID INT,
   Profession VARCHAR(100),
-  FOREIGN KEY (UserID) REFERENCES Users(UserID)
+  ClinicID INT,
+  FOREIGN KEY (UserID) REFERENCES Users(UserID),
+  FOREIGN KEY (ClinicID) REFERENCES Clinics(ClinicID)
 )`;
+
 
 // טבלה של כל התרופות שניתן לקנות בחנות האונליין
 const createMedicinesTable = `
@@ -163,16 +175,15 @@ CREATE TABLE PatientDoctor (
 )`;
 
 const queries = [
-  // 1
   createRolesTable,
   createUsersTable,
+  createAddressesTable,
+  createClinicsTable,
   createDoctorsTable,
   createMedicinesTable,
   createPrescriptionsTable,
   createReferralsTable,
   createMedicineOrdersTable,
-  // 8
-  createAddressesTable,
   createAccountDetailsTable,
   createNewCardRequestsTable,
   createPrescriptionRequestsTable,

@@ -5,7 +5,9 @@ class ReferralsModel extends BaseModel {
     super('Referrals'); // שם הטבלה
   }
 
-  // ניתן להוסיף פונקציות מיוחדות למודל זה אם יש צורך
+  getPatientRefferals(patientId){
+    return super.findByProp('patientId', patientId);
+  }
 }
 
 module.exports = new ReferralsModel();

@@ -33,6 +33,16 @@ class BaseModel {
     return rows;
   }
 
+    // Method to get all rows with a filter
+  async getAllWithFilter(filterPropName, filterPropValue) {
+      const [rows] = await pool.query(`
+        SELECT * 
+        FROM ${this.table}
+        WHERE ${filterPropName} = ?
+      `, [filterPropValue]);
+      return rows;
+    }
+
   async deleteByProp(propName, propValue) {
     const [result] = await pool.query(`
       DELETE FROM ${this.table}

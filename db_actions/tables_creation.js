@@ -18,7 +18,7 @@ CREATE TABLE Users (
   BirthDate DATE,
   Phone VARCHAR(15) UNIQUE NOT NULL,
   Email VARCHAR(100) UNIQUE NOT NULL,
-  RoleID INT,
+  RoleID INT,    
   FOREIGN KEY (RoleID) REFERENCES Roles(RoleID)
 )`;
 

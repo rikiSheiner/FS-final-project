@@ -1,6 +1,7 @@
 const userModel = require("../models/userModel");
 const DoctorControler = require("../controllers/DoctorControler");
-
+const appointmentModel = require('../models/appointmentModel'); // Adjust the path as needed
+const availableTimesModel=require('../models/availableTimesModel');
 async function createUser(req, res) {
   try {
     const newUser = req.body;
@@ -178,7 +179,7 @@ async function getAvailableAppointments(req, res) {
     // Get available times for the retrieved doctors
     const [availableTimes] = await DoctorControler.getAvailableTimesByDoctorIds(
       doctorIds
-    ); // צריך ליצור פה את הפונקציה במודל
+    ); 
 
     // Sort available times by date and time
     const sortedAvailableTimes = availableTimes.sort((a, b) => {
@@ -324,6 +325,43 @@ async function createNewCardRequest(req, res) {
   }
 }
 
+// Controller method to book an appointment using the base model's create function
+async function bookAppointment(req, res) {
+    try {
+      const { availableTimeId,doctorId, userId, date, startTime, endTime } = req.body;
+  
+      // Validate the input
+      if (!doctorId || !userId || !date || !startTime || !endTime) {
+        return res.status(400).json({ message: 'All appointment details must be provided' });
+      }
+  
+      // Prepare appointment data
+      const appointmentData = {
+        DoctorID: doctorId,
+        UserID: userId,
+        Date: date,
+        StartTime: startTime,
+        EndTime: endTime
+      };
+  
+      // Book the appointment using the create method from the base model
+      const result = await appointmentModel.create(appointmentData);
+
+      if (result.AppointmentID) {
+        // Delete the corresponding time slot from available times
+        const deleteResult = await availableTimesModel.deleteByProp('AvailableTimeID', availableTimeId);
+
+        if (deleteResult.affectedRows === 0) {
+          throw new Error('Failed to remove the time slot from available times');
+        }
+      }
+  
+      res.status(201).json({ message: 'Appointment booked successfully', appointmentId: result.insertId });
+    } catch (error) {
+      res.status(500).json({ message: 'Error booking appointment', error });
+    }
+  }
+
 module.exports = {
   createUser,
   getUser,
@@ -340,4 +378,5 @@ module.exports = {
   createNewCardRequest,
   getPrescriptionRequestOfPatient,
   getIncompletedPrescriptionReqtOfPatient,
+  bookAppointment,
 };

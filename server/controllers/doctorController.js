@@ -127,6 +127,15 @@ async function updateDoctor(req, res) {
       res.status(500).json({ message: 'Error fetching available times', error });
     }
   }
+
+  async function getSpecialties(req, res) {
+    try {
+      const specialties = await DoctorModel.getSpecialties();
+      res.status(200).json(specialties);
+    } catch (error) {
+      res.status(500).json({ message: 'Error fetching specialties', error });
+    }
+  }
   
 module.exports = {
     getDoctor,
@@ -134,4 +143,5 @@ module.exports = {
     deleteDoctor,
     updateDoctor,
     getDoctorsWithFilter,
+    getSpecialties,
   };

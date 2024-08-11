@@ -1,5 +1,6 @@
 const userModel = require("../models/userModel");
 const DoctorControler = require("../controllers/DoctorControler");
+const appointmentModel = require('../models/appointmentModel'); // Adjust the path as needed
 
 async function createUser(req, res) {
   try {
@@ -324,6 +325,34 @@ async function createNewCardRequest(req, res) {
   }
 }
 
+// Controller method to book an appointment using the base model's create function
+async function bookAppointment(req, res) {
+    try {
+      const { doctorId, userId, date, startTime, endTime } = req.body;
+  
+      // Validate the input
+      if (!doctorId || !userId || !date || !startTime || !endTime) {
+        return res.status(400).json({ message: 'All appointment details must be provided' });
+      }
+  
+      // Prepare appointment data
+      const appointmentData = {
+        DoctorID: doctorId,
+        UserID: userId,
+        Date: date,
+        StartTime: startTime,
+        EndTime: endTime
+      };
+  
+      // Book the appointment using the create method from the base model
+      const result = await appointmentModel.create(appointmentData);
+  
+      res.status(201).json({ message: 'Appointment booked successfully', appointmentId: result.insertId });
+    } catch (error) {
+      res.status(500).json({ message: 'Error booking appointment', error });
+    }
+  }
+
 module.exports = {
   createUser,
   getUser,
@@ -340,4 +369,5 @@ module.exports = {
   createNewCardRequest,
   getPrescriptionRequestOfPatient,
   getIncompletedPrescriptionReqtOfPatient,
+  bookAppointment,
 };

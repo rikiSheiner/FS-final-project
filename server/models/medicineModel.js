@@ -5,7 +5,11 @@ class MedicineModel extends BaseModel {
     super('Medicines'); // שם הטבלה
   }
 
-  // ניתן להוסיף פונקציות מיוחדות למודל זה אם יש צורך
+
+  getMedicineByName(medicineName){
+    return super.findByProp('name', medicineName);
+  }
+
 }
 
 module.exports = new MedicineModel();

@@ -22,4 +22,9 @@ router.get('/users', patientsController.getAllUsers);
 router.delete('/users/:id', patientsController.deleteUser);
 router.put('/users/:id', patientsController.updateUser);
 
+router.get('/medicines/:name', patientsController.searchMedicineByName); // חיפוש תרופה לפי שם
+router.get('/medicines', patientsController.getAllMedicines); // קבלת כל התרופות
+router.post('/medicines/order', patientsController.orderMedicine); // הזמנת תרופה
+
+
 module.exports = router;

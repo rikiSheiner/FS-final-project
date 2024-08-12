@@ -1,7 +1,10 @@
 const userModel = require("../models/userModel");
 const DoctorControler = require("../controllers/DoctorControler");
-const appointmentModel = require('../models/appointmentModel'); // Adjust the path as needed
-const availableTimesModel=require('../models/availableTimesModel');
+const appointmentModel = require("../models/appointmentModel");
+const availableTimesModel = require("../models/availableTimesModel");
+const medicineModel = require("../models/medicineModel");
+const medicineOrderModel = require("../models/medicineOrderModel");
+
 async function createUser(req, res) {
   try {
     const newUser = req.body;
@@ -179,7 +182,7 @@ async function getAvailableAppointments(req, res) {
     // Get available times for the retrieved doctors
     const [availableTimes] = await DoctorControler.getAvailableTimesByDoctorIds(
       doctorIds
-    ); 
+    );
 
     // Sort available times by date and time
     const sortedAvailableTimes = availableTimes.sort((a, b) => {
@@ -292,7 +295,7 @@ async function getPrescriptionRequestOfPatient(req, res) {
   try {
     const patientID = req.body.userId;
     const result = await prescriptionReqModel.getPRofPatient(patientID);
-    res.status(201).json(result);
+    res.status(200).json(result);
   } catch (error) {
     res
       .status(500)
@@ -327,40 +330,105 @@ async function createNewCardRequest(req, res) {
 
 // Controller method to book an appointment using the base model's create function
 async function bookAppointment(req, res) {
-    try {
-      const { availableTimeId,doctorId, userId, date, startTime, endTime } = req.body;
-  
-      // Validate the input
-      if (!doctorId || !userId || !date || !startTime || !endTime) {
-        return res.status(400).json({ message: 'All appointment details must be provided' });
-      }
-  
-      // Prepare appointment data
-      const appointmentData = {
-        DoctorID: doctorId,
-        UserID: userId,
-        Date: date,
-        StartTime: startTime,
-        EndTime: endTime
-      };
-  
-      // Book the appointment using the create method from the base model
-      const result = await appointmentModel.create(appointmentData);
+  try {
+    const { availableTimeId, doctorId, userId, date, startTime, endTime } =
+      req.body;
 
-      if (result.AppointmentID) {
-        // Delete the corresponding time slot from available times
-        const deleteResult = await availableTimesModel.deleteByProp('AvailableTimeID', availableTimeId);
-
-        if (deleteResult.affectedRows === 0) {
-          throw new Error('Failed to remove the time slot from available times');
-        }
-      }
-  
-      res.status(201).json({ message: 'Appointment booked successfully', appointmentId: result.insertId });
-    } catch (error) {
-      res.status(500).json({ message: 'Error booking appointment', error });
+    // Validate the input
+    if (!doctorId || !userId || !date || !startTime || !endTime) {
+      return res
+        .status(400)
+        .json({ message: "All appointment details must be provided" });
     }
+
+    // Prepare appointment data
+    const appointmentData = {
+      DoctorID: doctorId,
+      UserID: userId,
+      Date: date,
+      StartTime: startTime,
+      EndTime: endTime,
+    };
+
+    // Book the appointment using the create method from the base model
+    const result = await appointmentModel.create(appointmentData);
+
+    if (result.AppointmentID) {
+      // Delete the corresponding time slot from available times
+      const deleteResult = await availableTimesModel.deleteByProp(
+        "AvailableTimeID",
+        availableTimeId
+      );
+
+      if (deleteResult.affectedRows === 0) {
+        throw new Error("Failed to remove the time slot from available times");
+      }
+    }
+
+    res
+      .status(201)
+      .json({
+        message: "Appointment booked successfully",
+        appointmentId: result.insertId,
+      });
+  } catch (error) {
+    res.status(500).json({ message: "Error booking appointment", error });
   }
+}
+
+async function searchMedicineByName(req, res) {
+  try {
+    const { name } = req.params;
+    const result = await medicineModel.getMedicineByName(name);
+
+    if (result && result.length > 0) {
+      res
+        .status(200)
+        .json({ message: "The medicine was found", medicine: result });
+    } else {
+      res.status(404).json({ message: "No medicine found with that name" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Error searching for medicine", error });
+  }
+}
+
+async function getAllMedicines(req, res) {
+  try {
+    const medicines = await medicineModel.findAll();
+
+    if (medicines && medicines.length > 0) {
+      res.status(200).json(medicines);
+    } else {
+      res.status(404).json({ message: "No medicines found" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Error retrieving medicines", error });
+  }
+}
+
+async function orderMedicine(req, res) {
+  try {
+    const orderDetails = req.body;
+
+    if (!orderDetails.medicineId || !orderDetails.quantity) {
+      return res
+        .status(400)
+        .json({ message: "Medicine ID and quantity are required" });
+    }
+
+    const result = await medicineOrderModel.create(orderDetails);
+    res.status(201).json(result);
+  } catch (error) {
+    res.status(500).json({ message: "Error ordering medicine", error });
+  }
+}
+
+module.exports = {
+  searchMedicineByName,
+  getAllMedicines,
+  orderMedicine,
+};
 
 module.exports = {
   createUser,
@@ -379,4 +447,7 @@ module.exports = {
   getPrescriptionRequestOfPatient,
   getIncompletedPrescriptionReqtOfPatient,
   bookAppointment,
+  searchMedicineByName,
+  getAllMedicines,
+  orderMedicine,
 };

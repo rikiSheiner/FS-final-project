@@ -4,6 +4,7 @@ const appointmentModel = require("../models/appointmentModel");
 const availableTimesModel = require("../models/availableTimesModel");
 const medicineModel = require("../models/medicineModel");
 const medicineOrderModel = require("../models/medicineOrderModel");
+const accountDetailsModel = require("../models/accountDetailsModel");
 
 async function createUser(req, res) {
   try {
@@ -365,12 +366,10 @@ async function bookAppointment(req, res) {
       }
     }
 
-    res
-      .status(201)
-      .json({
-        message: "Appointment booked successfully",
-        appointmentId: result.insertId,
-      });
+    res.status(201).json({
+      message: "Appointment booked successfully",
+      appointmentId: result.insertId,
+    });
   } catch (error) {
     res.status(500).json({ message: "Error booking appointment", error });
   }
@@ -411,6 +410,15 @@ async function orderMedicine(req, res) {
   try {
     const orderDetails = req.body;
 
+    const accountDetails = accountDetailsModel.findByProp(
+      "userId",
+      orderDetails.patientID
+    );
+
+    if(!accountDetails){
+      return res.status(404).json({ message: 'Account details not found'});
+    }
+
     if (!orderDetails.medicineId || !orderDetails.quantity) {
       return res
         .status(400)
@@ -423,7 +431,6 @@ async function orderMedicine(req, res) {
     res.status(500).json({ message: "Error ordering medicine", error });
   }
 }
-
 
 module.exports = {
   createUser,

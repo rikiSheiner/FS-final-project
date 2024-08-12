@@ -424,11 +424,6 @@ async function orderMedicine(req, res) {
   }
 }
 
-module.exports = {
-  searchMedicineByName,
-  getAllMedicines,
-  orderMedicine,
-};
 
 module.exports = {
   createUser,

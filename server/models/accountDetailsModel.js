@@ -1,11 +1,12 @@
-const BaseModel = require('./baseModel');
+//const BaseModel = require('./baseModel');
+import BaseModel from "./baseModel.js";
 
 class AccountDetailsModel extends BaseModel {
   constructor() {
-    super('AccountDetails'); // שם הטבלה
+    super('AccountDetails'); 
   }
 
-  // ניתן להוסיף פונקציות מיוחדות למודל זה אם יש צורך
 }
 
-module.exports = new AccountDetailsModel();
+//module.exports = new AccountDetailsModel();
+export default new AccountDetailsModel();

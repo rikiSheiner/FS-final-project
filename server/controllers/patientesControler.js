@@ -1,10 +1,20 @@
-const userModel = require("../models/userModel");
+/*const userModel = require("../models/userModel");
 const DoctorControler = require("../controllers/DoctorControler");
 const appointmentModel = require("../models/appointmentModel");
 const availableTimesModel = require("../models/availableTimesModel");
 const medicineModel = require("../models/medicineModel");
 const medicineOrderModel = require("../models/medicineOrderModel");
 const accountDetailsModel = require("../models/accountDetailsModel");
+*/
+
+
+import userModel from "../models/userModel.js";
+import DoctorControler from "../controllers/doctorController.js";
+import appointmentModel from "../models/appointmentModel.js";
+import availableTimesModel from "../models/availableTimesModel.js";
+import medicineModel from "../models/medicineModel.js";
+import medicineOrderModel from "../models/medicineOrderModel.js";
+import accountDetailsModel from "../models/accountDetailsModel.js";
 
 async function createUser(req, res) {
   try {
@@ -39,7 +49,7 @@ async function getAllUsers(req, res) {
   }
 }
 
-async function deleteUser(req, res) {
+/*async function deleteUser(req, res) {
   try {
     const userID = req.params.id;
     const result = await userModel.deleteUserById(userID);
@@ -52,7 +62,7 @@ async function deleteUser(req, res) {
     res.status(500).json({ message: "Error deleting user", error });
   }
 }
-
+*/
 async function getPatientsWithFilter(req, res) {
   try {
     const { propName, propValue } = req.params;
@@ -321,13 +331,24 @@ async function getIncompletedPrescriptionReqtOfPatient(req, res) {
 
 async function createNewCardRequest(req, res) {
   try {
-    const newCardReq = req.body;
+    const { patientId } = req.body; 
+    if (!patientId) {
+      return res.status(400).json({ message: "patientId is required" });
+    }
+    
+    const newCardReq = {
+      patientId: patientId,
+      completed: false, 
+      createdAt: new Date()
+    };
+
     const result = await newCardReqModel.create(newCardReq);
     res.status(201).json(result);
   } catch (error) {
     res.status(500).json({ message: "Error creating new card request", error });
   }
 }
+
 
 // Controller method to book an appointment using the base model's create function
 async function bookAppointment(req, res) {
@@ -406,6 +427,34 @@ async function getAllMedicines(req, res) {
   }
 }
 
+async function getAllMedicinesWithPrescription(req, res) {
+  try {
+    const medicines = await medicineModel.getMedicinesByPrescriptionStatus(true);
+
+    if (medicines && medicines.length > 0) {
+      res.status(200).json(medicines);
+    } else {
+      res.status(404).json({ message: "No medicines with prescription found" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Error retrieving medicines with prescription", error });
+  }
+}
+
+async function getAllMedicinesWithoutPrescription(req, res) {
+  try {
+    const medicines = await medicineModel.getMedicinesByPrescriptionStatus(false);
+
+    if (medicines && medicines.length > 0) {
+      res.status(200).json(medicines);
+    } else {
+      res.status(404).json({ message: "No medicines without prescription found" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Error retrieving medicines without prescription", error });
+  }
+}
+
 async function orderMedicine(req, res) {
   try {
     const orderDetails = req.body;
@@ -432,8 +481,9 @@ async function orderMedicine(req, res) {
   }
 }
 
-module.exports = {
-  createUser,
+//module.exports = {
+export default{
+createUser,
   getUser,
   getAllUsers,
   deleteUser,
@@ -451,5 +501,7 @@ module.exports = {
   bookAppointment,
   searchMedicineByName,
   getAllMedicines,
+  getAllMedicinesWithPrescription,
+  getAllMedicinesWithoutPrescription,
   orderMedicine,
 };

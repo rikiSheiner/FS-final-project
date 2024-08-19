@@ -1,5 +1,10 @@
-const BaseModel = require('./baseModel');
-const pool = require('../config/db'); // Ensure the connection to the database is accessible
+//const BaseModel = require('./baseModel');
+
+import BaseModel from "./baseModel.js";
+
+//const pool = require('../config/db'); // Ensure the connection to the database is accessible
+import pool from '../config/dbConfig.js';
+
 class DoctorModel extends BaseModel {
   constructor() {
     super('Doctors'); // Table name
@@ -15,7 +20,7 @@ class DoctorModel extends BaseModel {
   }
 
   
-  // Additional methods specific to doctors can be added here
 }
 
-module.exports = new DoctorModel();
+//module.exports = new DoctorModel();
+export default new DoctorModel();

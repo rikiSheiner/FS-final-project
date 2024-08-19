@@ -1,11 +1,12 @@
-const BaseModel = require('./baseModel');
+//const BaseModel = require('./baseModel');
+import BaseModel from "./baseModel.js";
 
 class MedicineOrderModel extends BaseModel {
   constructor() {
-    super('MedicineOrders'); // שם הטבלה
+    super('MedicineOrders'); 
   }
 
-  // ניתן להוסיף פונקציות מיוחדות למודל זה אם יש צורך
 }
 
-module.exports = new MedicineOrderModel();
+//module.exports = new MedicineOrderModel();
+export default new MedicineOrderModel();

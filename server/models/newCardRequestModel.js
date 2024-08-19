@@ -1,10 +1,12 @@
-const BaseModel = require('./baseModel');
+//const BaseModel = require('./baseModel');
+import BaseModel from "./baseModel.js";
 
 class NewCardRequestModel extends BaseModel {
   constructor() {
-    super('NewCardRequests'); // שם הטבלה
+    super('NewCardRequests'); 
   }
 
 }
 
-module.exports = new NewCardRequestModel();
+//module.exports = new NewCardRequestModel();
+export default new NewCardRequestModel();

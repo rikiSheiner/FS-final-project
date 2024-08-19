@@ -1,11 +1,22 @@
-const doctorModel = require('../models/doctorModel');
+/*const doctorModel = require('../models/doctorModel');
 const userController= require('../controllers/patientesControler');
 const availableTimesModel = require('../models/availableTimesModel'); // Adjust the path as needed
 const appointmentModel = require('../models/appointmentModel');
 const userModel=require('../models/userModels');
 const refferalModel=require('../models/referralsModel');
 const prescriptionModel = require('../models/prescriptionModel');
-// Get a doctor by a specific property
+*/
+
+// ייבוא מודולים עם import במקום require
+import doctorModel from '../models/doctorModel.js';
+import userController from '../controllers/patientesControler.js';
+import availableTimesModel from '../models/availableTimesModel.js';
+import appointmentModel from '../models/appointmentModel.js';
+import userModel from '../models/userModel.js';
+import refferalModel from '../models/referralsModel.js';
+import prescriptionModel from '../models/prescriptionModel.js';
+
+
 async function getDoctor(req, res) {
     try {
       const propName = req.params.name;
@@ -218,8 +229,10 @@ async function updateDoctor(req, res) {
     res.status(500).json({ message: 'Error creating prescription', error });
   }
 }
-module.exports = {
-    getDoctor,
+
+//module.exports = {
+export default{
+getDoctor,
     getAllDoctors,
     deleteDoctor,
     updateDoctor,

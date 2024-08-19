@@ -1,21 +1,27 @@
-const express = require('express');
+/*const express = require('express');
 const router = express.Router();
 const doctorController = require('../controllers/doctorController');
+*/
 
-router.get('/doctors/:id', doctorController.getDoctor);
-router.get('/doctors', doctorController.getAllDoctors);
-router.delete('/doctors/:id', doctorController.deleteDoctor);
-router.put('/doctors/:id', doctorController.updateDoctor);
-router.get('/doctors/filter', doctorController.getDoctorsWithFilter);
+import express from 'express';
+const router_of_doctor = express.Router();
+import doctorController from '../controllers/doctorController.js';
 
-router.get('/specialties', doctorController.getSpecialties);
+router_of_doctor.get('/doctors/:id', doctorController.getDoctor);
+router_of_doctor.get('/doctors', doctorController.getAllDoctors);
+router_of_doctor.delete('/doctors/:id', doctorController.deleteDoctor);
+router_of_doctor.put('/doctors/:id', doctorController.updateDoctor);
+router_of_doctor.get('/doctors/filter', doctorController.getDoctorsWithFilter);
 
-router.get('/doctors/:id/appointments', doctorController.getAppointmentsByDoctorId);
-router.get('/doctors/:id/available-times', doctorController.getAvailableTimes);
+router_of_doctor.get('/specialties', doctorController.getSpecialties);
 
-router.get('/patients/:userId', doctorController.getPatientByUserId);
+router_of_doctor.get('/doctors/:id/appointments', doctorController.getAppointmentsByDoctorId);
+router_of_doctor.get('/doctors/:id/available-times', doctorController.getAvailableTimes);
 
-router.post('/referrals', doctorController.creatAReffral);
-router.post('/prescriptions', doctorController.createPrescription);
+router_of_doctor.get('/patients/:userId', doctorController.getPatientByUserId);
 
-module.exports = router;
+router_of_doctor.post('/referrals', doctorController.creatAReffral);
+router_of_doctor.post('/prescriptions', doctorController.createPrescription);
+
+//module.exports = router;
+export default router_of_doctor;

@@ -49,7 +49,8 @@ CREATE TABLE Medicines (
   MedicineID INT PRIMARY KEY AUTO_INCREMENT,
   Name VARCHAR(100),
   ImagePath VARCHAR(255),
-  Price DECIMAL(10, 2)
+  Price DECIMAL(10, 2),
+  is_prescription_required TINYINT(1)
 )`;
 
 // טבלה של כל המרשמים לתרופות שניתנו למטופלים ע"י רופאים
@@ -126,6 +127,7 @@ CREATE TABLE NewCardRequests (
   RequestID INT PRIMARY KEY AUTO_INCREMENT,
   PatientID INT,
   Completed BOOLEAN,
+  CreatedAt DATE,
   FOREIGN KEY (PatientID) REFERENCES Users(UserID)
 )`;
 

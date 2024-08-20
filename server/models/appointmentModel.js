@@ -1,4 +1,5 @@
-const BaseModel = require('./baseModel');
+//const BaseModel = require('./baseModel');
+import BaseModel from "./baseModel.js";
 
 class AppointmentModel extends BaseModel {
   constructor() {
@@ -8,4 +9,5 @@ class AppointmentModel extends BaseModel {
   // ניתן להוסיף פונקציות מיוחדות למודל זה אם יש צורך
 }
 
-module.exports = new AppointmentModel();
+//module.exports = new AppointmentModel();
+export default new AppointmentModel();

@@ -1,6 +1,7 @@
-const pool = require('../config/db');
+//const pool = require('../config/dbConfig');
+import pool from '../config/dbConfig.js';
 
-class BaseModel {
+export default class BaseModel {
   constructor(table) {
     this.table = table;
   }
@@ -64,4 +65,4 @@ class BaseModel {
   }
 }
 
-module.exports = BaseModel;
+//module.exports = BaseModel;

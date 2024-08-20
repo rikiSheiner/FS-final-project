@@ -1,4 +1,5 @@
-const BaseModel = require('./baseModel');
+//const BaseModel = require('./baseModel');
+import BaseModel from "./baseModel.js";
 
 class AddressModel extends BaseModel {
   constructor() {
@@ -8,4 +9,5 @@ class AddressModel extends BaseModel {
   // ניתן להוסיף פונקציות מיוחדות למודל זה אם יש צורך
 }
 
-module.exports = new AddressModel();
+//module.exports = new AddressModel();
+export default new AddressModel();

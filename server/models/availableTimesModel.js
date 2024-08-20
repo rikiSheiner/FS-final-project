@@ -1,4 +1,5 @@
-const BaseModel = require('./baseModel');
+//const BaseModel = require('./baseModel');
+import BaseModel from "./baseModel.js";
 
 class AvailableTimesModel extends BaseModel {
   constructor() {
@@ -24,4 +25,5 @@ class AvailableTimesModel extends BaseModel {
 
 }
 
-module.exports = new AvailableTimesModel();
+//module.exports = new AvailableTimesModel();
+export default new AvailableTimesModel();

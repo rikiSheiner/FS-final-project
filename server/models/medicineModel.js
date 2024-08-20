@@ -1,15 +1,19 @@
-const BaseModel = require('./baseModel');
+//const BaseModel = require('./baseModel');
+import BaseModel from "./baseModel.js";
 
 class MedicineModel extends BaseModel {
   constructor() {
-    super('Medicines'); // שם הטבלה
+    super('Medicines'); 
   }
 
-
-  getMedicineByName(medicineName){
+  getMedicineByName(medicineName) {
     return super.findByProp('name', medicineName);
   }
 
+  async getMedicinesByPrescriptionStatus(requiresPrescription) {
+    return await super.getAllWithFilter('is_prescription_required', requiresPrescription);
+  }
 }
 
-module.exports = new MedicineModel();
+//module.exports = new MedicineModel();
+export default new MedicineModel();

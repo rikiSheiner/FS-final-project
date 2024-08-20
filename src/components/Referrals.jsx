@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 
-function Referrals(){
+const Referrals = () => {
 
-}
-
+};
 export default Referrals;

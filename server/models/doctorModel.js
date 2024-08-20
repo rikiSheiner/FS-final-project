@@ -1,8 +1,4 @@
-//const BaseModel = require('./baseModel');
-
 import BaseModel from "./baseModel.js";
-
-//const pool = require('../config/db'); // Ensure the connection to the database is accessible
 import pool from '../config/dbConfig.js';
 
 class DoctorModel extends BaseModel {
@@ -22,5 +18,4 @@ class DoctorModel extends BaseModel {
   
 }
 
-//module.exports = new DoctorModel();
 export default new DoctorModel();

@@ -1,4 +1,3 @@
-//const BaseModel = require('./baseModel');
 import BaseModel from "./baseModel.js";
 
 class MedicineOrderModel extends BaseModel {
@@ -8,5 +7,4 @@ class MedicineOrderModel extends BaseModel {
 
 }
 
-//module.exports = new MedicineOrderModel();
 export default new MedicineOrderModel();

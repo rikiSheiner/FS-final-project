@@ -1,7 +1,4 @@
 import express from 'express';
-//const patientsController = require('../controllers/patientesControler');
-
-//const express = require('express');
 const router_of_patient = express.Router();
 import patientsController from '../controllers/patientesControler.js';
 
@@ -25,7 +22,7 @@ router_of_patient.get('/users', patientsController.getAllUsers);
 router_of_patient.delete('/users/:id', patientsController.deleteUser);
 router_of_patient.put('/users/:id', patientsController.updateUser);
 
-router_of_patient.get('/medicines/:name', patientsController.searchMedicineByName); // חיפוש תרופה לפי שם
+//router_of_patient.get('/medicines/:name', patientsController.searchMedicineByName); // חיפוש תרופה לפי שם
 router_of_patient.get('/medicines', patientsController.getAllMedicines); // קבלת כל התרופות
 
 router_of_patient.get('/medicines/with-prescription', patientsController.getAllMedicinesWithPrescription);
@@ -34,4 +31,3 @@ router_of_patient.get('/medicines/without-prescription', patientsController.getA
 router_of_patient.post('/medicines/order', patientsController.orderMedicine); // הזמנת תרופה
 
 export default router_of_patient;
-//module.exports = router;

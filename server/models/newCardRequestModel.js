@@ -1,4 +1,3 @@
-//const BaseModel = require('./baseModel');
 import BaseModel from "./baseModel.js";
 
 class NewCardRequestModel extends BaseModel {
@@ -8,5 +7,4 @@ class NewCardRequestModel extends BaseModel {
 
 }
 
-//module.exports = new NewCardRequestModel();
 export default new NewCardRequestModel();

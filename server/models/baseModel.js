@@ -1,4 +1,3 @@
-//const pool = require('../config/dbConfig');
 import pool from '../config/dbConfig.js';
 
 export default class BaseModel {
@@ -65,4 +64,3 @@ export default class BaseModel {
   }
 }
 
-//module.exports = BaseModel;

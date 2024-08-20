@@ -1,13 +1,3 @@
-/*const userModel = require("../models/userModel");
-const DoctorControler = require("../controllers/DoctorControler");
-const appointmentModel = require("../models/appointmentModel");
-const availableTimesModel = require("../models/availableTimesModel");
-const medicineModel = require("../models/medicineModel");
-const medicineOrderModel = require("../models/medicineOrderModel");
-const accountDetailsModel = require("../models/accountDetailsModel");
-*/
-
-
 import userModel from "../models/userModel.js";
 import DoctorControler from "../controllers/doctorController.js";
 import appointmentModel from "../models/appointmentModel.js";
@@ -481,7 +471,6 @@ async function orderMedicine(req, res) {
   }
 }
 
-//module.exports = {
 export default{
 createUser,
   getUser,

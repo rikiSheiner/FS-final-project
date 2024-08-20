@@ -1,13 +1,3 @@
-/*const doctorModel = require('../models/doctorModel');
-const userController= require('../controllers/patientesControler');
-const availableTimesModel = require('../models/availableTimesModel'); // Adjust the path as needed
-const appointmentModel = require('../models/appointmentModel');
-const userModel=require('../models/userModels');
-const refferalModel=require('../models/referralsModel');
-const prescriptionModel = require('../models/prescriptionModel');
-*/
-
-// ייבוא מודולים עם import במקום require
 import doctorModel from '../models/doctorModel.js';
 import userController from '../controllers/patientesControler.js';
 import availableTimesModel from '../models/availableTimesModel.js';
@@ -230,7 +220,6 @@ async function updateDoctor(req, res) {
   }
 }
 
-//module.exports = {
 export default{
 getDoctor,
     getAllDoctors,

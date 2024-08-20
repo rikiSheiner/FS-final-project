@@ -1,4 +1,3 @@
-//const BaseModel = require('./baseModel');
 import BaseModel from "./baseModel.js";
 
 class AccountDetailsModel extends BaseModel {
@@ -8,5 +7,4 @@ class AccountDetailsModel extends BaseModel {
 
 }
 
-//module.exports = new AccountDetailsModel();
 export default new AccountDetailsModel();

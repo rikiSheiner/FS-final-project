@@ -1,8 +1,3 @@
-/*const express = require('express');
-const router = express.Router();
-const doctorController = require('../controllers/doctorController');
-*/
-
 import express from 'express';
 const router_of_doctor = express.Router();
 import doctorController from '../controllers/doctorController.js';
@@ -23,5 +18,4 @@ router_of_doctor.get('/patients/:userId', doctorController.getPatientByUserId);
 router_of_doctor.post('/referrals', doctorController.creatAReffral);
 router_of_doctor.post('/prescriptions', doctorController.createPrescription);
 
-//module.exports = router;
 export default router_of_doctor;

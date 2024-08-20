@@ -1,4 +1,3 @@
-//const BaseModel = require('./baseModel');
 import BaseModel from "./baseModel.js";
 
 class ReferralsModel extends BaseModel {
@@ -11,5 +10,4 @@ class ReferralsModel extends BaseModel {
   }
 }
 
-//module.exports = new ReferralsModel();
 export default new ReferralsModel();

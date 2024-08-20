@@ -1,4 +1,3 @@
-//const BaseModel = require('./baseModel');
 import BaseModel from "./baseModel.js";
 
 class RolesModel extends BaseModel {
@@ -9,5 +8,4 @@ class RolesModel extends BaseModel {
   // ניתן להוסיף פונקציות מיוחדות למודל זה אם יש צורך
 }
 
-//module.exports = new RolesModel();
 export default new RolesModel();

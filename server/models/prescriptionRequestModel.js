@@ -1,4 +1,3 @@
-//const BaseModel = require('./baseModel');
 import BaseModel from "./baseModel.js";
 
 class PrescriptionRequestModel extends BaseModel {
@@ -18,5 +17,4 @@ class PrescriptionRequestModel extends BaseModel {
   
 }
 
-//module.exports = new PrescriptionRequestModel();
 export default new PrescriptionRequestModel();

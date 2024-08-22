@@ -1,5 +1,6 @@
 import React from "react";
 import { Outlet, Link } from "react-router-dom";
+import classes from '../styles/App.module.css';
  function NavBar(){
     return(
         <>        
@@ -9,7 +10,7 @@ import { Outlet, Link } from "react-router-dom";
             <Link to="home" className={classes.lnk}>Home</Link>
           </li>
           <li className={classes.liLnk}>
-            <Link to="orderAppointmet" className={classes.lnk}>Posts</Link>
+            <Link to="orderAppointmet" className={classes.lnk}>orderAppointmet</Link>
           </li>
           <li className={classes.liLnk}>
             <Link to="orderNewCard" className={classes.lnk}>orderNewCard</Link>

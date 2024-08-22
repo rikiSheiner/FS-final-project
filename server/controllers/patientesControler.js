@@ -104,48 +104,44 @@ async function updateUser(req, res) {
 
 async function signIn(req, res) {
   try {
-    const { firstName, lastName, password, birthDate, phone, email, roleID } =
-      req.body;
+    console.log('Request Body:', req.body); // Log the request body
 
-    //  Validate input
+    const { firstName, lastName, password, birthDate, phone, email, roleID } = req.body;
+
+    // Validate input
     if (!firstName || !lastName || !password || !phone || !email) {
-      return res
-        .status(400)
-        .json({ message: "All required fields must be filled" });
+      console.error('Validation Error: Missing required fields');
+      return res.status(400).json({ message: "All required fields must be filled" });
     }
 
     // Check if a user already exists with the same email
-    let user = await userModel.findByProp("Email", email);
+    let user = await userModel.findByProp("email", email);
     if (user) {
-      return res
-        .status(409)
-        .json({ message: "User with this email already exists" });
+      console.error('Validation Error: User with this email already exists');
+      return res.status(409).json({ message: "User with this email already exists" });
     }
 
     // Check if a user already exists with the same phone
-    user = await userModel.findByProp("Phone", phone);
+    user = await userModel.findByProp("phone", phone);
     if (user) {
-      return res
-        .status(409)
-        .json({ message: "User with this phone number already exists" });
+      console.error('Validation Error: User with this phone number already exists');
+      return res.status(409).json({ message: "User with this phone number already exists" });
     }
 
     // Check if a user already exists with the same password
-    user = await userModel.findByProp("Password", password);
+    user = await userModel.findByProp("password", password);
     if (user) {
-      return res
-        .status(409)
-        .json({ message: "User with this password already exists" });
+      console.error('Validation Error: User with this password already exists');
+      return res.status(409).json({ message: "User with this password already exists" });
     }
 
     // Password length validation
     if (password.length < 8 || password.length > 10) {
-      return res
-        .status(400)
-        .json({ message: "Password must be between 8 and 10 characters" });
+      console.error('Validation Error: Password length invalid');
+      return res.status(400).json({ message: "Password must be between 8 and 10 characters" });
     }
 
-    //  Create new user
+    // Create new user
     const newUser = {
       firstName,
       lastName,
@@ -156,14 +152,21 @@ async function signIn(req, res) {
       roleID: roleID || null,
     };
 
-    const createdUser = await userModel.createUser(newUser);
+    console.log('Creating new user:', newUser); // Log the user being created
+    const createdUser = await userModel.create(newUser);
 
     // Respond with the created user data
+    console.log('User created successfully:', createdUser); // Log successful creation
     res.status(201).json(createdUser);
   } catch (error) {
-    res.status(500).json({ message: "Error creating user", error });
+    console.error('Error during sign-in:', error); // Log the actual error message
+    res.status(500).json({ message: "Error creating user", error: error.message || 'An unknown error occurred' });
   }
 }
+
+
+
+
 
 async function getAvailableAppointments(req, res) {
   try {
@@ -234,8 +237,10 @@ async function loginUser(req, res) {
       },
     });
   } catch (error) {
-    console.error("Error during login:", error);
-    res.status(500).json({ message: "Error logging in", error: error.message });
+  
+      console.error('Error during sign-in:', error);
+      res.status(500).json({ message: "Error creating user", error: error.message || 'An unknown error occurred' });
+
   }
 }
 

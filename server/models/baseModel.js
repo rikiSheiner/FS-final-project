@@ -9,12 +9,22 @@ export default class BaseModel {
     const columns = Object.keys(data).join(', ');
     const placeholders = Object.keys(data).map(() => '?').join(', ');
     const values = Object.values(data);
-    const [result] = await pool.query(`
-      INSERT INTO ${this.table} (${columns})
-      VALUES (${placeholders})
-    `, values);
-    return result;
+  
+    console.log('Inserting data:', { columns, placeholders, values }); // Log query details
+  
+    try {
+      const [result] = await pool.query(`
+        INSERT INTO ${this.table} (${columns})
+        VALUES (${placeholders})
+      `, values);
+      return result;
+    } catch (err) {
+      console.error('Database Error:', err); // Log database errors
+      throw new Error('Database error: ' + err.message); // Throw a new error with a message
+    }
   }
+  
+  
 
   async findByProp(propName, propValue) {
     const [rows] = await pool.query(`

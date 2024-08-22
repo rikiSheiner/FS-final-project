@@ -6,6 +6,7 @@ import medicineModel from "../models/medicineModel.js";
 import medicineOrderModel from "../models/medicineOrderModel.js";
 import accountDetailsModel from "../models/accountDetailsModel.js";
 
+
 async function createUser(req, res) {
   try {
     const newUser = req.body;
@@ -203,40 +204,43 @@ async function getAvailableAppointments(req, res) {
 // פונקציה עבור ביצוע התחברות של משתמש
 // הפרטים הדרושים עבור התחברות המשתמש הם אימייל וסיסמה
 // יש לוודא שהם נכונים כדי לאפשר למשתמש להתחבר
+
 async function loginUser(req, res) {
   try {
     const { email, password } = req.body;
 
-    // חיפוש בבסיס הנתונים של משתמש עם מייל זה
+    if (!email || !password) {
+      return res.status(400).json({ message: "Email and password are required" });
+    }
+
     const user = await userModel.getUserByEmail(email);
 
-    // בדיקה האם מצאנו משתמש עם אימייל זה
-    if (!user) {
-      // אם לא מצאנו משתמש מתאים יש בעיה ונחזיר קוד שגיאה
-      return res.status(404).json({ message: "User not found" });
+    if (!user || !user.Password) {
+      return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    // השוואה בין הסיסמה של המשתמש הקיים במערכת לבין הסיסמה שהתקבלה
-    if (password !== user.password) {
-      // סיסמה שגויה נחזיר שגיאה
-      return res.status(401).json({ message: "Wrong password" });
+    // Directly compare plain text passwords
+    if (password !== user.Password) {
+      return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    // ההתחברות בוצעה בהצלחה
-    // נחזיר פרטים בסיסיים של המשתמש
     res.status(200).json({
       message: "Login successful",
       user: {
-        id: user.id,
-        email: user.email,
-        firstName: user.firstName,
-        lastName: user.lastName,
+        id: user.UserID,
+        email: user.Email,
+        firstName: user.FirstName,
+        lastName: user.LastName,
       },
     });
   } catch (error) {
-    res.status(500).json({ message: "Error logging in", error });
+    console.error("Error during login:", error);
+    res.status(500).json({ message: "Error logging in", error: error.message });
   }
 }
+
+
+
 
 async function getPatientRefferals(req, res) {
   try {

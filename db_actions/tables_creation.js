@@ -27,8 +27,7 @@ CREATE TABLE Users (
 const createClinicsTable = `
 CREATE TABLE Clinics (
   ClinicID INT PRIMARY KEY AUTO_INCREMENT,
-  AddressID INT,
-  FOREIGN KEY (AddressID) REFERENCES Addresses(AddressID)
+  AddressID VARCHAR(100),
 )`;
 
 // טבלה של כל הרופאים שהם סוג של משתמשים אבל משודרגים

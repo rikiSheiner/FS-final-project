@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import classes from '../styles/App.module.css';
 
 const Login = () => {
   const [userType, setUserType] = useState(null);
@@ -30,6 +31,7 @@ const Login = () => {
       if (response.ok) {
         console.log('Login successful:', data);
         // Redirect to home page or wherever you want
+        localStorage.setItem('user', JSON.stringify(data.user));
         navigate('/home');
       } else {
         // Handle errors such as incorrect login details
@@ -44,6 +46,7 @@ const Login = () => {
 
   return (
     <div style={{ maxWidth: '400px', margin: '0 auto', padding: '20px' }}>
+      <img src='clinic.png'  className={classes.myImage} />
       {!userType ? (
         <div>
           <h2>Login as:</h2>

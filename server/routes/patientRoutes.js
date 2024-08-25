@@ -15,6 +15,7 @@ router_of_patient.post('/patients/:id/card-requests', patientsController.createN
 
 router_of_patient.get('/appointments/available/:specialty', patientsController.getAvailableAppointments);
 router_of_patient.post('/appointments/book', patientsController.bookAppointment);
+router_of_patient.post('/appointments', patientsController.getAllAppointments);
 
 router_of_patient.post('/users', patientsController.createUser);
 router_of_patient.get('/users/:id', patientsController.getUser);

@@ -1,6 +1,6 @@
 import userModel from "../models/userModel.js";
 import DoctorControler from "../controllers/doctorController.js";
-import appointmentModel from "../models/appointmentModel.js";
+import appointmentModel from '../models/appointmentModel.js';
 import availableTimesModel from "../models/availableTimesModel.js";
 import medicineModel from "../models/medicineModel.js";
 import medicineOrderModel from "../models/medicineOrderModel.js";
@@ -480,6 +480,22 @@ async function orderMedicine(req, res) {
   }
 }
 
+async function getAllAppointments(req, res) {
+  const { id } = req.body;
+  console.log('Received User ID:', id);
+
+  try {
+    const appointments = await appointmentModel.getAllWithFilter('UserID', id);
+    console.log('Fetched Appointments:', appointments);
+    res.status(200).json(appointments);
+  } catch (error) {
+    console.error('Error fetching appointments:', error);
+    res.status(500).json({ message: "Error fetching appointments", error });
+  }
+}
+
+
+
 export default{
 createUser,
   getUser,
@@ -502,4 +518,5 @@ createUser,
   getAllMedicinesWithPrescription,
   getAllMedicinesWithoutPrescription,
   orderMedicine,
+  getAllAppointments,
 };

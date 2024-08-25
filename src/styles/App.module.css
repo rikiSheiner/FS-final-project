@@ -1,51 +1,144 @@
-.navbar {
-    width: 100%;
-    top: 0;
-    left: 0;
-    margin: 0;
-    padding: 10px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-size: 24px;
-    position: fixed;
-    background-color:aqua;
-    z-index: 1000;
-    box-shadow: 0 27px 30px rgba(0, 0, 0, 0.1);
-  }
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: aqua;
+  margin: 0;
+  padding: 0; /* Remove any default padding */
+  overflow-x: hidden; /* Hide horizontal scrolling */
+  overflow-y: auto; /* Enable vertical scrolling */
+  min-height: 100vh; /* Ensure the body takes at least full viewport height */
 
-  .homep{
-    width: 100%;
-    height: 100%;
-    top: 85px;
-    left: 0;
-    margin: 0;
-    padding: 10px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-size: 24px;
-    position: fixed;
-    background-color:white;
-    z-index: 100;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
+}
+.myImage{
+  width: 300px;
+}
+.imag{
+  width: 500px;
+}
+.navbar {
+  width: 100%;
+  top: 0;
+  left: 0;
+  margin: 0;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 24px;
+  position: relative;
+  background-color: aqua;
+  z-index: 1000;
+  box-shadow: 0 27px 30px rgba(0, 0, 0, 0.1);
+}
+h1{
+  font-size: 40px;
+}
+h3{
+  color: black;
+  font-size: 30px;
+}
+
+.homep {
+  width: 100%;
+  position: relative; /* Use relative positioning for proper scrolling */
+  top: 15px; /* Adjust as needed */
+  padding: 20px;
+  background-color: white;
+  z-index: 100;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: rgb(130, 144, 244);
+}
+
+.gridContainer {
+  display: grid;
+  grid-template-areas:
+    'menu main main main main side'
+    'menu main main main main side'
+    'menu main main main main side'
+    'menu footer footer footer footer footer';
+  gap: 10px;
+  width: 97.5%; /* Make it full width */
+  height: auto; /* Allow height to adjust based on content */
+  align-self: center;
   
-  .navLnk {
-    list-style-type: none;
-    display: flex;
-    margin: 0;
-    padding: 0;
-  }
+}
+
+.menu {
+  grid-area: menu;
+  background-color: #e3a9df;
+  border-radius: 20%;
+  padding: 40px;
+  color: #812195;
+  box-shadow: 0 27px 30px rgba(0, 0, 0, 0.1);
+}
+
+.main {
+  grid-area: main;
+  background-color: #f484f6;
+  border-radius: 20%;
+  padding: 40px;
+  box-shadow: 0 27px 30px rgba(0, 0, 0, 0.1);
+}
+
+.right {
+  grid-area: side;
+  background-color: #e83edf;
+  padding: 40px;
+  color: white;
+  font-size: 45px;
+  border-radius: 20%;
+  box-shadow: 0 27px 30px rgba(0, 0, 0, 0.1);
+}
+.appointmentBox {
+  background-color: #f4f4f4;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 10px;
+  box-shadow: 0 27px 30px rgba(0, 0, 0, 0.1);
   
-  .liLnk {
-    margin-right: 20px;
-  }
-  
-  .lnk {
-    display: block;
-    color: rgb(130, 144, 244);
-    text-align: center;
-    padding: 16px;
-    text-decoration: none;
-  }
+}
+
+.footer {
+  grid-area: footer;
+  background-color: #9216aa;
+  padding: 40px;
+  box-shadow: 0 27px 30px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+.navLnk {
+  list-style-type: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+.liLnk {
+  margin-right: 20px;
+}
+
+.lnk {
+  display: block;
+  color: rgb(130, 144, 244);
+  text-align: center;
+  padding: 16px;
+  text-decoration: none;
+}
+.resourceList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  color: #9216aa;
+  font-size: 20px;
+}
+
+.resourceItem {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.resourceIcon {
+  font-size: 2rem;
+  color: #333;
+}

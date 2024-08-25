@@ -4,7 +4,7 @@ import Welcome from "./components/Welcome";
 import Login from "./components/Login";
 import Signup from "./components/Signup"
 import Home from "./components/Home"
-import "./App.css";
+import "./styles/App.module.css";
 import NavBar from "./components/navBar";
 import Prespictions from "./components/Prespictions.JSX";
 import Referrals from "./components/Referrals.JSX";
@@ -20,7 +20,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Navigate to="/home" />} />
+        <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/welcome" element={<Welcome />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
@@ -31,7 +31,7 @@ function App() {
           <Route path="myReferrals" element={<Referrals />} />
           <Route path="myPrescriptions" element={<Prespictions />} />
         </Route>
-        <Route path="*" element={<Navigate to="/home" />} />
+        <Route path="*" element={<Navigate to="/login" />} />
       </Routes>
     </BrowserRouter>
   );

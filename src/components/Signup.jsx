@@ -1,20 +1,22 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import classes from '../styles/App.module.css'; // Import the same CSS file
+
 const SignUp = () => {
-    const [formData, setFormData] = useState({
-        firstName: '',
-        lastName: '',
-        email: '',
-        phone: '',
-        birthDate: '',
-        password: '',
-        roleID: '',
-      });
-      
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    birthDate: '',
+    password: '',
+    roleID: '',
+  });
 
   const [error, setError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const navigate = useNavigate();
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -26,7 +28,6 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Basic validation
     if (!formData.firstName || !formData.lastName || !formData.email || !formData.phone || !formData.password) {
       setError('All required fields must be filled');
       return;
@@ -38,15 +39,14 @@ const SignUp = () => {
     }
 
     try {
-        const response = await fetch('http://localhost:3001/api/patients/sign-in', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formData),
-          });
+      const response = await fetch('http://localhost:3001/api/patients/sign-in', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
 
-      // Check if the response is ok
       if (!response.ok) {
         const text = await response.text();
         throw new Error(`HTTP error! Status: ${response.status}. Response: ${text}`);
@@ -57,21 +57,20 @@ const SignUp = () => {
       if (response.ok) {
         setSuccessMessage('User created successfully');
         setError('');
-        navigate('/home');
+        navigate('/login');
       } else {
         setError(result.message);
       }
     } catch (error) {
-        
       console.error('Error:', error);
-
     }
   };
 
   return (
-    <div>
-      <h1>Sign Up</h1>
+    <div style={{ maxWidth: '400px', margin: '0 auto', padding: '20px' }}> {/* Apply similar styles */}
+    
       <form onSubmit={handleSubmit}>
+      <h1>Sign Up</h1>
         <label>
           First Name:
           <input
@@ -164,5 +163,6 @@ const SignUp = () => {
 };
 
 export default SignUp;
+
 
 

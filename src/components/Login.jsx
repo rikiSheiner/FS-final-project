@@ -31,6 +31,7 @@ const Login = () => {
       if (response.ok) {
         console.log('Login successful:', data);
         // Redirect to home page or wherever you want
+        localStorage.clear();
         localStorage.setItem('user', JSON.stringify(data.user));
         navigate('/home');
       } else {
@@ -81,8 +82,9 @@ const Login = () => {
             </div>
             <button type="submit">Login</button>
             {error && <p style={{ color: 'red' }}>{error}</p>}
+            <div>{userType === 'doctor' ? '' : <Link to="/signup">Click here to signup</Link>}</div>
           </form>
-          <div>{userType === 'doctor' ? '' : <Link to="/signup">Click here to signup</Link>}</div>
+         
         </>
       )}
     </div>

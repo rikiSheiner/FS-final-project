@@ -170,7 +170,7 @@ async function updateDoctor(req, res) {
     }
   }
 
- async function creatAReffral(req,res){
+ async function creataReffral(req,res){
   try{
   const { patientID, doctorID, testName, date, location, notes } = req.body;
 
@@ -230,6 +230,6 @@ getDoctor,
     getAppointmentsByDoctorId,
     getAvailableTimes,
     getPatientByUserId,
-    creatAReffral,
+    creataReffral,
     createPrescription,
   };

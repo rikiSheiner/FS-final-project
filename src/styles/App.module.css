@@ -46,7 +46,7 @@ input {
 }
 
 button {
-  width: 100%;
+  width: 150px;
   padding: 10px;
   background-color: #007bff;
   border: none;
@@ -55,6 +55,8 @@ button {
   font-weight: bold;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  align-items: center;
+  align-self: center;
 }
 
 button:hover {
@@ -207,3 +209,50 @@ h3{
   font-size: 2rem;
   color: #333;
 }
+
+.formGroup {
+  width: 400px;
+  margin: 0 auto; /* Centers the form horizontally */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.formGroup label {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #333;
+  text-align: center; /* Center the label text */
+}
+
+.formGroup input, .formGroup select, .formGroup textarea {
+  width: 100%; /* Ensures input elements take up the full width of the formGroup */
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  transition: border-color 0.3s ease-in-out;
+  text-align: center; /* Center text inside input fields */
+}
+
+.formGroup input:focus, .formGroup select:focus, .formGroup textarea:focus {
+  border-color: #007BFF;
+  outline: none;
+  background-color: #fff;
+}
+
+.formGroup input[type="submit"] {
+  cursor: pointer;
+  background-color: #007BFF;
+  color: #fff;
+  border: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.formGroup input[type="submit"]:hover {
+  background-color: #0056b3;
+  
+}
+

@@ -10,6 +10,11 @@ import NewCardRequest from './components/NewCardRequest';
 import Pharmacy from './components/Pharmacy';
 import Referrals from './components/Referrals.JSX'
 import Prescriptions from './components/Prescriptions';
+import HomeD from './components/HomeD';
+import HomeContentD from './components/HomeContentD';
+import PatientAppointment from './components/patientAppointment';
+import ReferralsReq from './components/ReferralsReq';
+import PrescriptionsReq from './components/PrescriptionsReq'
 
 function App() {
   return (
@@ -26,6 +31,12 @@ function App() {
           <Route path="pharmacy" element={<Pharmacy />} />
           <Route path="myReferrals" element={<Referrals />} />
           <Route path="myPrescriptions" element={<Prescriptions />} />
+        </Route>
+        <Route path="/homeD" element={<HomeD />}>
+          <Route index element={<HomeContentD />} /> {/* Default content */}
+          <Route path="patientAppointment" element={<PatientAppointment/>} />
+          <Route path="ReferralsReq" element={<ReferralsReq />} />
+          <Route path="PrescriptionsReq" element={<PrescriptionsReq />} />
         </Route>
         <Route path="*" element={<Navigate to="/login" />} />
       </Routes>

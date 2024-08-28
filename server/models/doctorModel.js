@@ -8,11 +8,15 @@ class DoctorModel extends BaseModel {
 
   // Method to get unique specialties
   async getSpecialties() {
-    const [rows] = await pool.query(`
-      SELECT DISTINCT Profession
-      FROM Doctors
-    `);
-    return rows.map(row => row.Profession);
+    try {
+      const specialties = await this.findDistinct('Profession');
+      console.log('Specialties:', specialties);
+  
+      return specialties.map(row => row.Profession);
+    } catch (error) {
+      console.error('Error in getSpecialties:', error); 
+      throw error;
+    }
   }
 
   

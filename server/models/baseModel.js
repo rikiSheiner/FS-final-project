@@ -72,5 +72,13 @@ export default class BaseModel {
     `, values);
     return result;
   }
+
+   async findDistinct(column) {
+    const [rows] = await pool.query(`
+      SELECT DISTINCT ${column} 
+      FROM ${this.table}
+    `);
+    return rows;
+  }
 }
 

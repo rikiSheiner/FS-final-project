@@ -15,7 +15,7 @@ router_of_doctor.get('/doctors/:id/available-times', doctorController.getAvailab
 
 router_of_doctor.get('/patients/:userId', doctorController.getPatientByUserId);
 
-router_of_doctor.post('/referrals', doctorController.creatAReffral);
+router_of_doctor.post('/referrals', doctorController.creataReffral);
 router_of_doctor.post('/prescriptions', doctorController.createPrescription);
 
 export default router_of_doctor;

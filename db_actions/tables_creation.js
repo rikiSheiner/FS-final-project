@@ -27,9 +27,8 @@ CREATE TABLE Users (
 const createClinicsTable = `
 CREATE TABLE Clinics (
   ClinicID INT PRIMARY KEY AUTO_INCREMENT,
-  AddressID INT,
-  FOREIGN KEY (AddressID) REFERENCES Addresses(AddressID)
-)`;
+  Location VARCHAR(100) NOT NULL
+);`;
 
 // טבלה של כל הרופאים שהם סוג של משתמשים אבל משודרגים
 const createDoctorsTable = `
@@ -85,16 +84,27 @@ CREATE TABLE Referrals (
 // טבלה של הזמנות תרופות
 // כלומר כל הזמנות תרופות בחנות האונליין
 const createMedicineOrdersTable = `
-CREATE TABLE MedicineOrders (
-  OrderID INT PRIMARY KEY AUTO_INCREMENT,
-  PatientID INT,
-  MedicineID INT,
-  Amount INT,
-  CreationDate DATE,
-  TotalPrice DECIMAL(10, 2),
-  Completed BOOLEAN,
-  FOREIGN KEY (PatientID) REFERENCES Users(UserID),
-  FOREIGN KEY (MedicineID) REFERENCES Medicines(MedicineID)
+CREATE TABLE medicineorders (
+    OrderID INT AUTO_INCREMENT PRIMARY KEY,
+    PatientID INT NOT NULL,
+    CreationDate DATE NOT NULL,
+    TotalPrice DECIMAL(10, 2) NOT NULL,
+    Completed TINYINT(1) NOT NULL DEFAULT 0,
+    AddressID INT,
+    AccountID INT,
+    FOREIGN KEY (AddressID) REFERENCES addresses(AddressID),
+    FOREIGN KEY (AccountID) REFERENCES accountdetails(AccountID)
+)`;
+
+const createOrderItemsTable = `
+CREATE TABLE order_items (
+    OrderItemID INT AUTO_INCREMENT PRIMARY KEY,
+    OrderID INT NOT NULL,
+    MedicineID INT NOT NULL,
+    Quantity INT NOT NULL,
+    UnitPrice DECIMAL(10, 2) NOT NULL,
+    FOREIGN KEY (OrderID) REFERENCES medicineorders(OrderID),
+    FOREIGN KEY (MedicineID) REFERENCES medicines(MedicineID)
 )`;
 
 // טבלה של כתובות המשתמשים
@@ -106,8 +116,10 @@ CREATE TABLE Addresses (
   BuildingNumber INT,
   Street VARCHAR(100),
   City VARCHAR(100),
+  IsDefault BOOLEAN DEFAULT FALSE, -- שדה לסימון כתובת ברירת מחדל
   FOREIGN KEY (UserID) REFERENCES Users(UserID)
 )`;
+
 
 // טבלה של פרטי החשבון של המשתמשים
 const createAccountDetailsTable = `
@@ -117,6 +129,7 @@ CREATE TABLE AccountDetails (
   CardNumber VARCHAR(16) NOT NULL,
   ExpirationDate DATE NOT NULL,
   CVV VARCHAR(3) NOT NULL,
+  IsDefault BOOLEAN DEFAULT FALSE, -- שדה לסימון שיטת תשלום ברירת מחדל
   FOREIGN KEY (UserID) REFERENCES Users(UserID)
 )`;
 
@@ -186,6 +199,7 @@ const queries = [
   createPrescriptionsTable,
   createReferralsTable,
   createMedicineOrdersTable,
+  createOrderItemsTable,
   createAccountDetailsTable,
   createNewCardRequestsTable,
   createPrescriptionRequestsTable,

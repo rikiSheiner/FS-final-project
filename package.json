@@ -15,7 +15,10 @@
     "test": "node server/routes/test.js"
   },
   "dependencies": {
+    "@fortawesome/free-solid-svg-icons": "^6.6.0",
+    "@fortawesome/react-fontawesome": "^0.2.2",
     "axios": "^1.7.4",
+    "cors": "^2.8.5",
     "curl": "^0.1.4",
     "express": "^4.19.2",
     "json-server": "^1.0.0-beta.1",

@@ -23,6 +23,7 @@ router_of_patient.get('/users/:id', patientsController.getUser);
 router_of_patient.get('/users', patientsController.getAllUsers);
 router_of_patient.delete('/users/:id', patientsController.deleteUser);
 router_of_patient.put('/users/:id', patientsController.updateUser);
+router_of_patient.post('/connectDoctor',patientsController.connectDoctor);
 
 //router_of_patient.get('/medicines/:name', patientsController.searchMedicineByName); // חיפוש תרופה לפי שם
 router_of_patient.get('/medicines', patientsController.getAllMedicines); // קבלת כל התרופות

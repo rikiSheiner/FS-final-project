@@ -6,6 +6,7 @@ import medicineModel from "../models/medicineModel.js";
 import medicineOrderModel from "../models/medicineOrderModel.js";
 import accountDetailsModel from "../models/accountDetailsModel.js";
 import doctorModel from "../models/doctorModel.js";
+import PatientDoctorModel from '../models/PatientDoctorModel.js';
 
 async function createUser(req, res) {
   try {
@@ -491,7 +492,24 @@ async function getAllAppointments(req, res) {
   }
 }
 
+async function connectDoctor (req, res)  {
+  try {
+    const { userId, doctorId } = req.body;
 
+    // Ensure both userId and doctorId are provided
+    if (!userId || !doctorId) {
+      return res.status(400).json({ message: 'User ID and Doctor ID are required.' });
+    }
+
+    // Create a new entry in the PatientDoctor table
+    const result = await PatientDoctorModel.create({ PatientID: userId, DoctorID: doctorId });
+
+    res.status(201).json({ message: 'Doctor successfully assigned to patient.', result });
+  } catch (error) {
+    console.error('Error connecting doctor:', error);
+    res.status(500).json({ message: 'Failed to assign doctor.', error: error.message });
+  }
+};
 
 export default{
 createUser,
@@ -517,4 +535,5 @@ createUser,
   orderMedicine,
   getAllAppointments,
   getProfession,
+  connectDoctor
 };

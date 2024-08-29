@@ -25,20 +25,72 @@ const SignUp = () => {
     }));
   };
 
+  // Fetch family doctors
+  const fetchFamilyDoctors = async () => {
+    const propName = "Profession"; // Ensure this is correctly mapped
+    const propValue = "Family";
+    try {
+      const response = await fetch('http://localhost:3001/api/doctors/filter', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ propName, propValue}), // Adjust based on your API
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to fetch doctors");
+      }
+
+      const data = await response.json();
+      return data; // This should be an array of doctors
+    } catch (error) {
+      console.error("Error fetching family doctors:", error.message);
+      alert(`Error: ${error.message}`);
+      return []; // Return an empty array if there's an error
+    }
+  };
+
+  // Assign doctor to user
+  const assignDoctorToUser = async (userId, doctorId) => {
+    try {
+      const response = await fetch('http://localhost:3001/api/patients/connectDoctor', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ userId, doctorId }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to assign doctor");
+      }
+
+      return await response.json();
+    } catch (error) {
+      console.error("Error assigning doctor:", error.message);
+      alert(`Error: ${error.message}`);
+      return null;
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     if (!formData.firstName || !formData.lastName || !formData.email || !formData.phone || !formData.password) {
       setError('All required fields must be filled');
       return;
     }
-
+  
     if (formData.password.length < 8 || formData.password.length > 10) {
       setError('Password must be between 8 and 10 characters');
       return;
     }
-
+  
     try {
+      // Create the user
       const response = await fetch('http://localhost:3001/api/patients/sign-in', {
         method: 'POST',
         headers: {
@@ -46,31 +98,47 @@ const SignUp = () => {
         },
         body: JSON.stringify(formData),
       });
-
+  
       if (!response.ok) {
         const text = await response.text();
         throw new Error(`HTTP error! Status: ${response.status}. Response: ${text}`);
       }
-
+  
       const result = await response.json();
-
-      if (response.ok) {
-        setSuccessMessage('User created successfully');
-        setError('');
-        navigate('/login');
-      } else {
-        setError(result.message);
+      const userId = result.insertId; // Adjust based on your actual response
+  
+      if (!userId) {
+        throw new Error('User ID is not defined in the response');
       }
+  
+      // Fetch family doctors
+      const familyDoctors = await fetchFamilyDoctors();
+  
+      // Randomly select a family doctor if any are found
+      let assignedDoctorId = null;
+      if (familyDoctors.length > 0) {
+        const randomIndex = Math.floor(Math.random() * familyDoctors.length);
+        assignedDoctorId = familyDoctors[randomIndex].DoctorID;
+      }
+  
+      // Assign the selected doctor to the user
+      if (assignedDoctorId) {
+        await assignDoctorToUser(userId, assignedDoctorId);
+      }
+  
+      setSuccessMessage('User created and doctor assigned successfully');
+      setError('');
+      navigate('/login');
     } catch (error) {
-      console.error('Error:', error);
+      console.error('Error:', error.message);
+      setError('An error occurred while creating the user or assigning the doctor.');
     }
   };
 
   return (
     <div style={{ maxWidth: '400px', margin: '0 auto', padding: '20px' }}> {/* Apply similar styles */}
-    
       <form onSubmit={handleSubmit}>
-      <h1>Sign Up</h1>
+        <h1>Sign Up</h1>
         <label>
           First Name:
           <input
@@ -163,6 +231,7 @@ const SignUp = () => {
 };
 
 export default SignUp;
+
 
 
 

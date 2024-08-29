@@ -1,0 +1,92 @@
+.checkout {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.orderSummary {
+  flex: 1;
+  max-width: 300px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 20px;
+  border: 1px solid #ccc;
+}
+
+.orderSummary h3 {
+  font-size: 1.2em;
+  color: #007bff;
+}
+
+.orderBox {
+  margin-top: 20px;
+  padding: 15px;
+  border: 1px solid #007bff;
+  border-radius: 5px;
+  background-color: #fff;
+}
+
+.orderBox p {
+  margin: 5px 0;
+}
+
+.backToCart {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.backToCart:hover {
+  background-color: #0056b3;
+}
+
+.checkoutDetails {
+  flex: 2;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.checkoutDetails h3 {
+  font-size: 1.5em;
+  margin-bottom: 20px;
+  color: #007bff;
+}
+
+.formGroup {
+  margin-bottom: 15px;
+}
+
+.formGroup label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.formGroup input {
+  width: calc(100% - 10px);
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.submitButton {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.submitButton:hover {
+  background-color: #0056b3;
+}
+
+

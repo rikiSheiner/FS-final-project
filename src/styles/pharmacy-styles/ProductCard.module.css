@@ -1,0 +1,68 @@
+.card {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 16px;
+    text-align: center;
+    background-color: #fff;
+    width: 220px;
+}
+
+.image {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 12px;
+}
+
+.name {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.pricing {
+    font-size: 20px;
+    color: #ff6600;
+    margin-bottom: 12px;
+}
+
+.addToCart {
+    background-color: #ff6600;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.addToCart:hover {
+    background-color: #e55a00;
+}
+
+.message {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #d4edda; /* צבע ירוק בהיר */
+    color: #155724; /* צבע ירוק כהה */
+    border: 1px solid #c3e6cb; /* גבול ירוק בהיר */
+    border-radius: 5px;
+    text-align: center;
+  }
+  
+
+  .quantityControl {
+    display: flex;
+    align-items: center;
+    margin-top: 8px;
+  }
+  
+  .quantityControl button {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    padding: 5px;
+    cursor: pointer;
+  }
+  
+  .quantityControl span {
+    margin: 0 10px;
+  }
+  

@@ -1,0 +1,67 @@
+/* Referrals.module.css */
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  h2 {
+    text-align: center;
+    color: #333;
+    font-family: 'Roboto', sans-serif;
+    margin-bottom: 20px;
+  }
+  
+  .referral {
+    background-color: #ffffff;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 12px;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    text-align: left;
+  }
+  
+  .referral-details {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #333;
+  }
+  
+  .referral-details p {
+    margin: 8px 0;
+  }
+  
+  .referral-details strong {
+    color: #007bff;
+  }
+  
+  .referral:before {
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 5px;
+    background-color: #007bff;
+    border-radius: 5px;
+  }
+  
+
+
+/* חדש */
+ul {
+    list-style-type: none; /* הסרת הנקודות מהרשימה */
+    padding: 0; /* הסרת המרווחים הפנימיים ברשימה */
+  }
+  
+  li {
+    margin-bottom: 20px; /* הוספת מרווח בין הפריטים ברשימה */
+  }
+  

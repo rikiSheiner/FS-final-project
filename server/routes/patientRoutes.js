@@ -13,14 +13,17 @@ router_of_patient.get('/patients/:id/prescription-requests', patientsController.
 router_of_patient.get('/patients/:id/incompleted-prescription-requests', patientsController.getIncompletedPrescriptionReqtOfPatient);
 router_of_patient.post('/:id/card-requests', patientsController.createNewCardRequest);
 
-router_of_patient.get('/appointments/available/:specialty', patientsController.getAvailableAppointments);
+router_of_patient.post('/appointments/available', patientsController.getAvailableAppointments);   //אני פה
 router_of_patient.post('/appointments/book', patientsController.bookAppointment);
+router_of_patient.post('/appointments', patientsController.getAllAppointments);
+router_of_patient.get('/professions', patientsController.getProfession);
 
 router_of_patient.post('/users', patientsController.createUser);
 router_of_patient.get('/users/:id', patientsController.getUser);
 router_of_patient.get('/users', patientsController.getAllUsers);
 router_of_patient.delete('/users/:id', patientsController.deleteUser);
 router_of_patient.put('/users/:id', patientsController.updateUser);
+router_of_patient.post('/connectDoctor',patientsController.connectDoctor);
 
 
 router_of_patient.get('/professions', patientsController.getProfession);

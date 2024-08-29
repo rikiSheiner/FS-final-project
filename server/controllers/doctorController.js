@@ -9,8 +9,7 @@ import prescriptionModel from '../models/prescriptionModel.js';
 
 async function getDoctor(req, res) {
     try {
-      const propName = req.params.name;
-      const propValue = req.params.value;
+      const { propName, propValue} = req.body;
       const doctor = await doctorModel.findByProp(propName, propValue);
   
       if (doctor) {
@@ -35,7 +34,7 @@ async function getAllDoctors(req, res) {
 
   async function getDoctorsWithFilter(req, res) {
     try {
-      const { propName, propValue } = req.params; // e.g., /doctors/filter/:propName/:propValue
+      const { propName, propValue } = req.body; // e.g., /doctors/filter/:propName/:propValue
       const doctors = await doctorModel.getAllWithFilter(propName, propValue);
       res.status(200).json(doctors);
     } catch (error) {
@@ -170,7 +169,7 @@ async function updateDoctor(req, res) {
     }
   }
 
- async function creatAReffral(req,res){
+ async function creataReffral(req,res){
   try{
   const { patientID, doctorID, testName, date, location, notes } = req.body;
 
@@ -230,6 +229,6 @@ getDoctor,
     getAppointmentsByDoctorId,
     getAvailableTimes,
     getPatientByUserId,
-    creatAReffral,
+    creataReffral,
     createPrescription,
   };

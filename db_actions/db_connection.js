@@ -1,6 +1,6 @@
 
 
-const mysql = require('mysql2');
+import mysql from 'mysql2';
 
 console.log('Starting script...');
 
@@ -37,4 +37,4 @@ connection.connect((err) => {
 console.log('Script finished.');
 
 
-module.exports = connection;
+export default connection;

@@ -11,6 +11,19 @@ export default class BaseModel {
       .map(() => "?")
       .join(", ");
     const values = Object.values(data);
+  
+    console.log('Inserting data:', { columns, placeholders, values }); // Log query details
+  
+    try {
+      const [result] = await pool.query(`
+        INSERT INTO ${this.table} (${columns})
+        VALUES (${placeholders})
+      `, values);
+      return result;
+    } catch (err) {
+      console.error('Database Error:', err); // Log database errors
+      throw new Error('Database error: ' + err.message); // Throw a new error with a message
+    }
     const [result] = await pool.query(
       `
       INSERT INTO ${this.table} (${columns})
@@ -20,6 +33,8 @@ export default class BaseModel {
     );
     return result;
   }
+  
+  
 
   async findByProp(propName, propValue) {
     console.log(
@@ -55,10 +70,10 @@ export default class BaseModel {
     return rows;
   }
 
-  // Method to get all rows with a filter
-  async getAllWithFilter(filterPropName, filterPropValue) {
-    const [rows] = await pool.query(
-      `
+    // Method to get all rows with a filter
+    async getAllWithFilter(filterPropName, filterPropValue) {
+      console.log(`Querying ${this.table} with ${filterPropName} = ${filterPropValue}`);
+      const [rows] = await pool.query(`
         SELECT * 
         FROM ${this.table}
         WHERE ${filterPropName} = ?
@@ -96,3 +111,4 @@ export default class BaseModel {
     return result;
   }
 }
+

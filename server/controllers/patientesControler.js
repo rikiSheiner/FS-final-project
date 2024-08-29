@@ -1,6 +1,6 @@
 import userModel from "../models/userModel.js";
 import DoctorControler from "../controllers/doctorController.js";
-import appointmentModel from "../models/appointmentModel.js";
+import appointmentModel from '../models/appointmentModel.js';
 import availableTimesModel from "../models/availableTimesModel.js";
 import medicineModel from "../models/medicineModel.js";
 import medicineOrderModel from "../models/medicineOrderModel.js";
@@ -13,6 +13,8 @@ import prescriptionModel from '../models/prescriptionModel.js';
 import refferalModel from "../models/referralsModel.js";
 import prescriptionReqModel from '../models/prescriptionRequestModel.js';
 
+import doctorModel from "../models/doctorModel.js";
+import PatientDoctorModel from '../models/PatientDoctorModel.js';
 
 async function createUser(req, res) {
   try {
@@ -46,6 +48,7 @@ async function getAllUsers(req, res) {
     res.status(500).json({ message: "Error fetching users", error });
   }
 }
+
 
 /*async function deleteUser(req, res) {
   try {
@@ -112,48 +115,44 @@ async function updateUser(req, res) {
 
 async function signIn(req, res) {
   try {
-    const { firstName, lastName, password, birthDate, phone, email, roleID } =
-      req.body;
+    console.log('Request Body:', req.body); // Log the request body
 
-    //  Validate input
+    const { firstName, lastName, password, birthDate, phone, email, roleID } = req.body;
+
+    // Validate input
     if (!firstName || !lastName || !password || !phone || !email) {
-      return res
-        .status(400)
-        .json({ message: "All required fields must be filled" });
+      console.error('Validation Error: Missing required fields');
+      return res.status(400).json({ message: "All required fields must be filled" });
     }
 
     // Check if a user already exists with the same email
-    let user = await userModel.findByProp("Email", email);
+    let user = await userModel.findByProp("email", email);
     if (user) {
-      return res
-        .status(409)
-        .json({ message: "User with this email already exists" });
+      console.error('Validation Error: User with this email already exists');
+      return res.status(409).json({ message: "User with this email already exists" });
     }
 
     // Check if a user already exists with the same phone
-    user = await userModel.findByProp("Phone", phone);
+    user = await userModel.findByProp("phone", phone);
     if (user) {
-      return res
-        .status(409)
-        .json({ message: "User with this phone number already exists" });
+      console.error('Validation Error: User with this phone number already exists');
+      return res.status(409).json({ message: "User with this phone number already exists" });
     }
 
     // Check if a user already exists with the same password
-    user = await userModel.findByProp("Password", password);
+    user = await userModel.findByProp("password", password);
     if (user) {
-      return res
-        .status(409)
-        .json({ message: "User with this password already exists" });
+      console.error('Validation Error: User with this password already exists');
+      return res.status(409).json({ message: "User with this password already exists" });
     }
 
     // Password length validation
     if (password.length < 8 || password.length > 10) {
-      return res
-        .status(400)
-        .json({ message: "Password must be between 8 and 10 characters" });
+      console.error('Validation Error: Password length invalid');
+      return res.status(400).json({ message: "Password must be between 8 and 10 characters" });
     }
 
-    //  Create new user
+    // Create new user
     const newUser = {
       firstName,
       lastName,
@@ -164,88 +163,96 @@ async function signIn(req, res) {
       roleID: roleID || null,
     };
 
-    const createdUser = await userModel.createUser(newUser);
+    console.log('Creating new user:', newUser); // Log the user being created
+    const createdUser = await userModel.create(newUser);
 
     // Respond with the created user data
+    console.log('User created successfully:', createdUser); // Log successful creation
     res.status(201).json(createdUser);
   } catch (error) {
-    res.status(500).json({ message: "Error creating user", error });
+    console.error('Error during sign-in:', error); // Log the actual error message
+    res.status(500).json({ message: "Error creating user", error: error.message || 'An unknown error occurred' });
   }
 }
 
 async function getAvailableAppointments(req, res) {
-  try {
-    const { specialty } = req.params; // e.g., /appointments/available/:specialty
+    try {
+        const { doctorId } = req.body;
+        console.log("doctorId received:", doctorId); // Confirm doctor ID is received
 
-    // Get doctors with the specified specialty
-    const doctors = await doctorModel.getAllWithFilter("Profession", specialty);
+        const availableTimes = await availableTimesModel.getAvailableTimesByDoctorIds([doctorId]);
+        console.log("Available times retrieved:", availableTimes); // Log the retrieved times
 
-    if (doctors.length === 0) {
-      return res
-        .status(404)
-        .json({ message: "No doctors found with the specified specialty" });
+        if (!availableTimes || availableTimes.length === 0) {
+            return res.status(404).json({ message: "No available times found for the specified doctor" });
+        }
+
+        // Sort and return available times
+        const sortedAvailableTimes = availableTimes.sort((a, b) => {
+            const dateTimeA = new Date(`${a.Date} ${a.StartTime}`);
+            const dateTimeB = new Date(`${b.Date} ${b.StartTime}`);
+            return dateTimeA - dateTimeB;
+        });
+
+        res.status(200).json(sortedAvailableTimes);
+    } catch (error) {
+        console.error("Error fetching available appointments:", error);
+        res.status(500).json({ message: "Error fetching available appointments", error });
     }
-
-    // Extract doctor IDs
-    const doctorIds = doctors.map((doctor) => doctor.DoctorID);
-
-    // Get available times for the retrieved doctors
-    const [availableTimes] = await DoctorControler.getAvailableTimesByDoctorIds(
-      doctorIds
-    );
-
-    // Sort available times by date and time
-    const sortedAvailableTimes = availableTimes.sort((a, b) => {
-      const dateTimeA = new Date(`${a.Date} ${a.StartTime}`);
-      const dateTimeB = new Date(`${b.Date} ${b.StartTime}`);
-      return dateTimeA - dateTimeB;
-    });
-
-    res.status(200).json(sortedAvailableTimes);
-  } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Error fetching available appointments", error });
-  }
 }
 
+
+
+async function getProfession(req, res) {
+  try {
+    const Profession = await doctorModel.getSpecialties();
+    res.status(200).json(Profession);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching professions", error: error.message });
+  }
+}
 // פונקציה עבור ביצוע התחברות של משתמש
 // הפרטים הדרושים עבור התחברות המשתמש הם אימייל וסיסמה
 // יש לוודא שהם נכונים כדי לאפשר למשתמש להתחבר
+
 async function loginUser(req, res) {
   try {
     const { email, password } = req.body;
 
-    // חיפוש בבסיס הנתונים של משתמש עם מייל זה
+    if (!email || !password) {
+      return res.status(400).json({ message: "Email and password are required" });
+    }
+
     const user = await userModel.getUserByEmail(email);
 
-    // בדיקה האם מצאנו משתמש עם אימייל זה
-    if (!user) {
-      // אם לא מצאנו משתמש מתאים יש בעיה ונחזיר קוד שגיאה
-      return res.status(404).json({ message: "User not found" });
+    if (!user || !user.Password) {
+      return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    // השוואה בין הסיסמה של המשתמש הקיים במערכת לבין הסיסמה שהתקבלה
-    if (password !== user.password) {
-      // סיסמה שגויה נחזיר שגיאה
-      return res.status(401).json({ message: "Wrong password" });
+    // Directly compare plain text passwords
+    if (password !== user.Password) {
+      return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    // ההתחברות בוצעה בהצלחה
-    // נחזיר פרטים בסיסיים של המשתמש
     res.status(200).json({
       message: "Login successful",
       user: {
-        id: user.id,
-        email: user.email,
-        firstName: user.firstName,
-        lastName: user.lastName,
+        id: user.UserID,
+        email: user.Email,
+        firstName: user.FirstName,
+        lastName: user.LastName,
       },
     });
   } catch (error) {
-    res.status(500).json({ message: "Error logging in", error });
+  
+      console.error('Error during sign-in:', error);
+      res.status(500).json({ message: "Error creating user", error: error.message || 'An unknown error occurred' });
+
   }
 }
+
+
+
 
 async function getPatientRefferals(req, res) {
   try {
@@ -632,8 +639,42 @@ async function getProfession(req, res) {
   }
 }
 
-export default {
-  createUser,
+
+async function getAllAppointments(req, res) {
+  const { id } = req.body;
+  console.log('Received User ID:', id);
+
+  try {
+    const appointments = await appointmentModel.getAllWithFilter('UserID', id);
+    console.log('Fetched Appointments:', appointments);
+    res.status(200).json(appointments);
+  } catch (error) {
+    console.error('Error fetching appointments:', error);
+    res.status(500).json({ message: "Error fetching appointments", error });
+  }
+}
+
+async function connectDoctor (req, res)  {
+  try {
+    const { userId, doctorId } = req.body;
+
+    // Ensure both userId and doctorId are provided
+    if (!userId || !doctorId) {
+      return res.status(400).json({ message: 'User ID and Doctor ID are required.' });
+    }
+
+    // Create a new entry in the PatientDoctor table
+    const result = await PatientDoctorModel.create({ PatientID: userId, DoctorID: doctorId });
+
+    res.status(201).json({ message: 'Doctor successfully assigned to patient.', result });
+  } catch (error) {
+    console.error('Error connecting doctor:', error);
+    res.status(500).json({ message: 'Failed to assign doctor.', error: error.message });
+  }
+};
+
+export default{
+createUser,
   getUser,
   getAllUsers,
   deleteUser,
@@ -658,4 +699,7 @@ export default {
   getAllAccountDetails,
 
   getProfession,
+  getAllAppointments,
+  getProfession,
+  connectDoctor
 };

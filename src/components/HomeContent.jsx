@@ -72,8 +72,8 @@ function HomeContent() {
                         </div>
                     </div>
                     <div className={classes.right}>
-                        Do you<br /> need your<br /> doctor's clinic?
-                        <br /><br /> <h4>contact us *2800</h4>
+                        Do you need your doctor's clinic?
+                        <br /> <h4>contact us *2800</h4>
                     </div>
                 </div>
             </div>

@@ -5,6 +5,14 @@ import availableTimesModel from "../models/availableTimesModel.js";
 import medicineModel from "../models/medicineModel.js";
 import medicineOrderModel from "../models/medicineOrderModel.js";
 import accountDetailsModel from "../models/accountDetailsModel.js";
+import addressModel from "../models/addressModel.js";
+import orderItemsModel from "../models/orderItemsModel.js";
+import doctorModel from "../models/doctorModel.js";
+import newCardReqModel from "../models/newCardRequestModel.js";
+import prescriptionModel from '../models/prescriptionModel.js';
+import refferalModel from "../models/referralsModel.js";
+import prescriptionReqModel from '../models/prescriptionRequestModel.js';
+
 
 async function createUser(req, res) {
   try {
@@ -57,6 +65,7 @@ async function getPatientsWithFilter(req, res) {
   try {
     const { propName, propValue } = req.params;
     const patients = await patientModel.getAllWithFilter(propName, propValue);
+
     res.status(200).json(patients);
   } catch (error) {
     res.status(500).json({ message: "Error fetching patients", error });
@@ -240,7 +249,7 @@ async function loginUser(req, res) {
 
 async function getPatientRefferals(req, res) {
   try {
-    const userID = req.body.user.userId;
+    const userID = Number(req.query.userID); // חילוץ ה-ID מה-Query String
 
     const refferals = await refferalModel.getPatientRefferals(userID);
 
@@ -259,30 +268,40 @@ async function getPatientRefferals(req, res) {
 }
 
 async function getPatientPrescriptions(req, res) {
+  const userID = Number(req.query.userID); // חילוץ ה-ID מה-Query String
+
+
+  console.log("UserID received from query:", userID);
+
+  if (!userID) {
+    return res.status(400).json({ message: "UserID is required" });
+  }
+
   try {
-    const userID = req.body.user.userId;
+    const prescriptions = await prescriptionModel.getPatientPrescriptions(userID);
 
-    const prescriptions = await prescriptionModel.getPatientPrescriptions(
-      userID
-    );
+    console.log('PatientPrescriptions', prescriptions);
 
-    if (!prescriptions) {
-      return res
-        .status(404)
-        .json({ message: "Prescriptions for patient not found" });
+    if (!prescriptions || prescriptions.length === 0) {
+      return res.status(404).json({ message: "Prescriptions for patient not found" });
     }
 
     res.status(200).json(prescriptions);
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Error retreiving patient's prescriptions", error });
+    console.error("Error retrieving patient's prescriptions:", error); 
+    res.status(500).json({ message: "Error retrieving patient's prescriptions", error: error.message });
   }
 }
+
+
 
 async function createPrescriptionRequest(req, res) {
   try {
     const newPrescriptionReq = req.body;
+
+    console.log(newPrescriptionReq);
+
+
     const result = await prescriptionReqModel.create(newPrescriptionReq);
     res.status(201).json(result);
   } catch (error) {
@@ -321,24 +340,26 @@ async function getIncompletedPrescriptionReqtOfPatient(req, res) {
 
 async function createNewCardRequest(req, res) {
   try {
-    const { patientId } = req.body; 
+    const { patientId } = req.body;
+
     if (!patientId) {
       return res.status(400).json({ message: "patientId is required" });
     }
-    
+
     const newCardReq = {
       patientId: patientId,
-      completed: false, 
-      createdAt: new Date()
+      completed: false,
+      createdAt: new Date(),
     };
 
     const result = await newCardReqModel.create(newCardReq);
     res.status(201).json(result);
+
   } catch (error) {
-    res.status(500).json({ message: "Error creating new card request", error });
+    console.error("Error creating new card request:", error);
+    res.status(500).json({ message: "Error creating new card request" });
   }
 }
-
 
 // Controller method to book an appointment using the base model's create function
 async function bookAppointment(req, res) {
@@ -419,7 +440,9 @@ async function getAllMedicines(req, res) {
 
 async function getAllMedicinesWithPrescription(req, res) {
   try {
-    const medicines = await medicineModel.getMedicinesByPrescriptionStatus(true);
+    const medicines = await medicineModel.getMedicinesByPrescriptionStatus(
+      true
+    );
 
     if (medicines && medicines.length > 0) {
       res.status(200).json(medicines);
@@ -427,24 +450,34 @@ async function getAllMedicinesWithPrescription(req, res) {
       res.status(404).json({ message: "No medicines with prescription found" });
     }
   } catch (error) {
-    res.status(500).json({ message: "Error retrieving medicines with prescription", error });
+    res
+      .status(500)
+      .json({ message: "Error retrieving medicines with prescription", error });
   }
 }
 
 async function getAllMedicinesWithoutPrescription(req, res) {
   try {
-    const medicines = await medicineModel.getMedicinesByPrescriptionStatus(false);
+    const medicines = await medicineModel.getMedicinesByPrescriptionStatus(
+      false
+    );
 
     if (medicines && medicines.length > 0) {
       res.status(200).json(medicines);
     } else {
-      res.status(404).json({ message: "No medicines without prescription found" });
+      res
+        .status(404)
+        .json({ message: "No medicines without prescription found" });
     }
   } catch (error) {
-    res.status(500).json({ message: "Error retrieving medicines without prescription", error });
+    res.status(500).json({
+      message: "Error retrieving medicines without prescription",
+      error,
+    });
   }
 }
 
+/*
 async function orderMedicine(req, res) {
   try {
     const orderDetails = req.body;
@@ -469,10 +502,138 @@ async function orderMedicine(req, res) {
   } catch (error) {
     res.status(500).json({ message: "Error ordering medicine", error });
   }
+}*/
+
+async function orderMedicine(req, res) {
+  try {
+    console.log("Request body:", req.body);
+
+    const { addressDetails, accountDetails, orderDetails } = req.body;
+
+    // בדיקת תקינות addressDetails
+    if (addressDetails) {
+      console.log("Address details received:", addressDetails);
+
+      if (addressDetails.isDefault) {
+        await addressModel.updateByProp("UserID", orderDetails.patientID, {
+          IsDefault: false,
+        });
+      }
+      const newAddress = await addressModel.create({
+        UserID: orderDetails.patientID,
+        ApartmentNumber: addressDetails.apartmentNumber,
+        BuildingNumber: addressDetails.buildingNumber,
+        Street: addressDetails.street,
+        City: addressDetails.city,
+        IsDefault: addressDetails.isDefault || false,
+      });
+      orderDetails.addressID = newAddress.insertId;
+      console.log("New address created with ID:", orderDetails.addressID);
+    }
+
+    // בדיקת תקינות accountDetails
+    if (accountDetails) {
+      console.log("Account details received:", accountDetails);
+
+      if (accountDetails.isDefault) {
+        await accountDetailsModel.updateByProp(
+          "UserID",
+          orderDetails.patientID,
+          { IsDefault: false }
+        );
+      }
+      const newAccountDetails = await accountDetailsModel.create({
+        UserID: orderDetails.patientID,
+        CardNumber: accountDetails.cardNumber,
+        ExpirationDate: accountDetails.expirationDate,
+        CVV: accountDetails.cvv,
+        IsDefault: accountDetails.isDefault || false,
+      });
+      orderDetails.accountID = newAccountDetails.insertId;
+      console.log(
+        "New account details created with ID:",
+        orderDetails.accountID
+      );
+    }
+
+    // יצירת ההזמנה בטבלת medicineorders
+    const orderResult = await medicineOrderModel.create({
+      PatientID: orderDetails.patientID,
+      TotalPrice: orderDetails.totalPrice,
+      AddressID: orderDetails.addressID,
+      AccountID: orderDetails.accountID,
+      Completed: true,
+      CreationDate: new Date(),
+    });
+
+    const orderID = orderResult.insertId; // שמירת מזהה ההזמנה שנוצר
+    console.log("New order created with ID:", orderID);
+
+    // הוספת כל פריט לטבלת order_items
+    for (let item of orderDetails.items) {
+      console.log("Adding item to order:", item);
+      await orderItemsModel.create({
+        OrderID: orderID,
+        MedicineID: item.medicineID,
+        Quantity: item.amount,
+        UnitPrice: item.price,
+      });
+    }
+
+    res
+      .status(201)
+      .json({ message: "Order created successfully", orderID: orderID });
+  } catch (error) {
+    console.error("Error in orderMedicine:", error); // הדפסת השגיאה ללוגים
+    res.status(500).json({ message: "Error ordering medicine", error });
+  }
 }
 
-export default{
-createUser,
+// פונקציה לקבלת כל הכתובות ששמורות עבור משתמש מסוים
+async function getAllAddresses(req, res) {
+  try {
+    const userId = req.params.userId;
+    console.log(`Received userId: ${userId}`); // בדוק שה-ID מגיע
+
+    const addresses = await addressModel.getAllWithFilter("UserID", userId);
+    res.status(200).json(addresses);
+  } catch (error) {
+    res.status(500).json({ message: "Error retrieving addresses", error });
+  }
+}
+
+// פונקציה לקבלת כל פרטי החשבונות השמורים עבור משתמש מסוים
+async function getAllAccountDetails(req, res) {
+  try {
+    const userId = req.params.userId;
+    const accountDetails = await accountDetailsModel.getAllWithFilter(
+      "UserID",
+      userId
+    );
+    res.status(200).json(accountDetails);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error retrieving account details", error });
+  }
+}
+
+async function getProfession(req, res) {
+  try {
+    const doctors = await doctorModel.getSpecialties();
+
+    if (doctors && doctors.length > 0) {
+      res.status(200).json(doctors);
+    } else {
+      res.status(404).json({ message: "No doctors found" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Error retrieving doctors", error });
+  }
+}
+
+export default {
+  createUser,
   getUser,
   getAllUsers,
   deleteUser,
@@ -493,4 +654,8 @@ createUser,
   getAllMedicinesWithPrescription,
   getAllMedicinesWithoutPrescription,
   orderMedicine,
+  getAllAddresses,
+  getAllAccountDetails,
+
+  getProfession,
 };

@@ -15,6 +15,8 @@ app.use(
   })
 );
 
+app.use(express.json());
+
 app.use("/api/patients", router_of_patient);
 app.use("/api/doctors", router_of_doctor);
 

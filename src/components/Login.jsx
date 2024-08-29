@@ -9,6 +9,24 @@ const Login = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
+  // Define fetchDoctor function at the top
+  const fetchDoctor = async (userId) => {
+    try {
+      const response = await fetch('http://localhost:3001/api/doctors/id', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ propName: 'UserID', propValue: userId }), // Send propName and propValue
+      });
+      const data = await response.json();
+      return data; // Adjust based on your actual API response
+    } catch (error) {
+      console.error('Error fetching doctor:', error);
+      return null; // Default value in case of error
+    }
+  };
+
   const handleUserTypeSelection = (type) => {
     setUserType(type);
   };
@@ -32,8 +50,19 @@ const Login = () => {
         console.log('Login successful:', data);
         // Redirect to home page or wherever you want
         localStorage.clear();
-        localStorage.setItem('user', JSON.stringify(data.user));
-        navigate('/home');
+        if (userType === 'patient') {
+          localStorage.setItem('user', JSON.stringify(data.user));
+          navigate('/home');
+        } else {
+          const doctorData = await fetchDoctor(data.user.id); // Ensure fetchDoctor is called after data is available
+          if (doctorData && doctorData.DoctorID) {
+            localStorage.setItem('doctor', JSON.stringify(doctorData));
+            localStorage.setItem('userdoctor', JSON.stringify(data.user));
+            navigate('/homeD');
+          } else {
+            setError('Access denied: Doctor not in the system');
+          }
+        }
       } else {
         // Handle errors such as incorrect login details
         setError(data.message || 'Login failed');
@@ -44,10 +73,9 @@ const Login = () => {
     }
   };
 
-
   return (
     <div style={{ maxWidth: '400px', margin: '0 auto', padding: '20px' }}>
-      <img src='clinic.png'  className={classes.myImage} />
+      <img src='clinic.png' className={classes.myImage} alt="Clinic Logo" />
       {!userType ? (
         <div>
           <h2>Login as:</h2>
@@ -84,7 +112,6 @@ const Login = () => {
             {error && <p style={{ color: 'red' }}>{error}</p>}
             <div>{userType === 'doctor' ? '' : <Link to="/signup">Click here to signup</Link>}</div>
           </form>
-         
         </>
       )}
     </div>
@@ -92,5 +119,7 @@ const Login = () => {
 };
 
 export default Login;
+
+
 
 

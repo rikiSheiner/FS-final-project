@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Link ,Outlet} from "react-router-dom";
 import classes from '../styles/App.module.css';
 import { FaRunning, FaSyringe, FaInfoCircle } from 'react-icons/fa';
 
 function HomeContent() {
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
     const [appointments, setAppointments] = useState([]);
+    const [doctorProfessions, setDoctorProfessions] = useState({});
 
     useEffect(() => {
         const fetchAppointments = async () => {
@@ -25,6 +25,20 @@ function HomeContent() {
                 const data = await response.json();
                 setAppointments(data);
 
+                // Fetch professions for doctors
+                const fetchProfessions = async () => {
+                    const professions = {};
+                    for (const appointment of data) {
+                        if (!professions[appointment.DoctorID]) {
+                            const profession = await fetchDoctorProfession(appointment.DoctorID);
+                            professions[appointment.DoctorID] = profession;
+                        }
+                    }
+                    setDoctorProfessions(professions);
+                };
+
+                fetchProfessions();
+
             } catch (error) {
                 console.error('Error fetching appointments:', error);
             }
@@ -34,6 +48,24 @@ function HomeContent() {
             fetchAppointments();
         }
     }, [user?.id]);
+
+    const fetchDoctorProfession = async (doctorID) => {
+        try {
+            const response = await fetch('http://localhost:3001/api/doctors/id', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ propName: 'DoctorID', propValue: doctorID }), // Send propName and propValue
+            });
+            const data = await response.json();
+            return data.Profession; // Adjust based on your actual API response
+        } catch (error) {
+            console.error('Error fetching doctor profession:', error);
+            return 'Unknown'; // Default value in case of error
+        }
+    };
+    
 
     function getGreeting() {
         const now = new Date();
@@ -61,7 +93,7 @@ function HomeContent() {
                                     <div key={appointment.AppointmentID} className={classes.appointmentBox}>
                                         <p>Date: {new Date(appointment.Date).toLocaleDateString()}</p>
                                         <p>Time: {appointment.StartTime} - {appointment.EndTime}</p>
-                                        <p>Doctor ID: {appointment.DoctorID}</p>
+                                        <p>Doctor Profession: {doctorProfessions[appointment.DoctorID]}</p>
                                     </div>
                                 ))
                             ) : (
@@ -70,7 +102,7 @@ function HomeContent() {
                         </div>
                     </div>
                     <div className={classes.main}>
-                    <h3>Health Resources</h3>
+                        <h3>Health Resources</h3>
                         <div className={classes.resourceList}>
                             <div className={classes.resourceItem}>
                                 <FaRunning className={classes.resourceIcon} />

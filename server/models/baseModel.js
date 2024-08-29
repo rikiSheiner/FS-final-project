@@ -44,7 +44,8 @@ export default class BaseModel {
   }
 
     // Method to get all rows with a filter
-  async getAllWithFilter(filterPropName, filterPropValue) {
+    async getAllWithFilter(filterPropName, filterPropValue) {
+      console.log(`Querying ${this.table} with ${filterPropName} = ${filterPropValue}`);
       const [rows] = await pool.query(`
         SELECT * 
         FROM ${this.table}

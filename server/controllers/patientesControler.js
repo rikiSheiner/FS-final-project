@@ -166,43 +166,32 @@ async function signIn(req, res) {
 }
 
 async function getAvailableAppointments(req, res) {
-  try {
-    const { specialty } = req.params; // e.g., /appointments/available/:specialty
-    console.log("Specialty received:", specialty);
+    try {
+        const { doctorId } = req.body;
+        console.log("doctorId received:", doctorId); // Confirm doctor ID is received
 
-    // Get doctors with the specified specialty
-    const doctors = await doctorModel.getAllWithFilter("Profession", specialty);
-    console.log("Doctors found:", doctors);
+        const availableTimes = await availableTimesModel.getAvailableTimesByDoctorIds([doctorId]);
+        console.log("Available times retrieved:", availableTimes); // Log the retrieved times
 
-    if (doctors.length === 0) {
-      console.log("No doctors found with the specified specialty");
-      return res
-        .status(404)
-        .json({ message: "No doctors found with the specified specialty" });
+        if (!availableTimes || availableTimes.length === 0) {
+            return res.status(404).json({ message: "No available times found for the specified doctor" });
+        }
+
+        // Sort and return available times
+        const sortedAvailableTimes = availableTimes.sort((a, b) => {
+            const dateTimeA = new Date(`${a.Date} ${a.StartTime}`);
+            const dateTimeB = new Date(`${b.Date} ${b.StartTime}`);
+            return dateTimeA - dateTimeB;
+        });
+
+        res.status(200).json(sortedAvailableTimes);
+    } catch (error) {
+        console.error("Error fetching available appointments:", error);
+        res.status(500).json({ message: "Error fetching available appointments", error });
     }
-
-    // Extract doctor IDs
-    const doctorIds = doctors.map((doctor) => doctor.DoctorID);
-    console.log("Doctor IDs:", doctorIds);
-
-    // Get available times for the retrieved doctors
-    const [availableTimes] = await DoctorControler.getAvailableTimesByDoctorIds(doctorIds);
-    console.log("Available times retrieved:", availableTimes);
-
-    // Sort available times by date and time
-    const sortedAvailableTimes = availableTimes.sort((a, b) => {
-      const dateTimeA = new Date(`${a.Date} ${a.StartTime}`);
-      const dateTimeB = new Date(`${b.Date} ${b.StartTime}`);
-      return dateTimeA - dateTimeB;
-    });
-    console.log("Sorted available times:", sortedAvailableTimes);
-
-    res.status(200).json(sortedAvailableTimes);
-  } catch (error) {
-    console.error("Error fetching available appointments:", error);
-    res.status(500).json({ message: "Error fetching available appointments", error });
-  }
 }
+
+
 
 async function getProfession(req, res) {
   try {

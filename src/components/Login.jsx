@@ -48,6 +48,8 @@ const Login = () => {
 
       if (response.ok) {
         console.log('Login successful:', data);
+        console.log('LOGIN', data.user);
+        
         // Redirect to home page or wherever you want
         localStorage.clear();
         if (userType === 'patient') {

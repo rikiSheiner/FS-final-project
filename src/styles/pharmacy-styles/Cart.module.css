@@ -1,180 +1,186 @@
-/*.cart {
-    padding: 20px;
-    background-color: #f5f5f5;
-    border-radius: 8px;
-  }
-  
-  .cart h2 {
-    font-size: 2rem;
-    color: #2c3e50;
-    margin-bottom: 20px;
-  }
-  
-  .cartItem {
-    display: flex;
-    align-items: center;
-    border-bottom: 1px solid #ddd;
-    padding: 10px 0;
-  }
-  
-  .cartItemImage {
-    width: 60px;
-    height: 60px;
-    object-fit: cover;
-    margin-right: 10px;
-  }
-  
-  .cartItemDetails {
-    flex: 1;
-  }
-  
-  .cartItemName {
-    display: block;
-    font-weight: bold;
-  }
-  
-  .cartItemPrice {
-    color: #ff4500;
-  }
-  
-  .removeButton {
-    background-color: #ff4500;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .removeButton:hover {
-    background-color: #ff8c00;
-  }
-  
-  .total {
-    margin-top: 20px;
-    font-size: 1.5rem;
-    font-weight: bold;
-    text-align: right;
-  }
-
-  .checkoutButtonContainer {
-    margin-top: 20px;
-    text-align: right; 
-  }
-  
-  .checkoutButton {
-    display: inline-block;
-    background-color: #ff4500;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 5px;
-    text-decoration: none;
-    font-size: 1.2rem;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
-  }
-  
-  .checkoutButton:hover {
-    background-color: #ff8c00;
-  }
-  */
-
-  .cart {
-    width: 80%;
-    margin: 0 auto;
-    background-color: #f8f8f8;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.cart {
+  width: 80%;
+  margin: 0 auto;
+  background-color: #f8f8f8;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 h2 {
-    text-align: left;
-    font-size: 24px;
-    margin-bottom: 20px;
+  text-align: left;
+  font-size: 24px;
+  margin-bottom: 20px;
 }
 
 ul {
-    list-style-type: none;
-    padding: 0;
+  list-style-type: none;
+  padding: 0;
 }
 
 .cartItem {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 15px 0;
-    border-bottom: 1px solid #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 0;
+  border-bottom: 1px solid #e0e0e0;
 }
 
 .cartItem:last-child {
-    border-bottom: none;
+  border-bottom: none;
 }
 
 .cartItemImage {
-    width: 80px;
-    height: auto;
-    margin-right: 20px;
+  width: 80px;
+  height: auto;
+  margin-right: 20px;
 }
 
 .cartItemDetails {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
 }
 
 .cartItemName {
-    font-size: 16px;
-    margin-bottom: 8px;
+  font-size: 16px;
+  margin-bottom: 8px;
 }
 
 .cartItemPrice {
-    font-size: 18px;
-    color: #333;
-    margin-bottom: 8px;
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 8px;
 }
 
 .cartItemQuantity {
-    font-size: 16px;
-    color: #666;
+  font-size: 16px;
+  color: #666;
 }
 
 .removeButton {
-    background-color: transparent;
-    color: #ff6600;
-    border: none;
-    cursor: pointer;
-    font-size: 18px;
-    margin-left: 20px;
+  background-color: transparent;
+  color: #ff6600;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  margin-left: 20px;
 }
 
 .removeButton:hover {
-    color: #e55a00;
+  color: #e55a00;
 }
 
 .total {
-    text-align: right;
-    margin-top: 20px;
-    font-size: 20px;
+  text-align: right;
+  margin-top: 20px;
+  font-size: 20px;
 }
-
 .checkoutButtonContainer {
-    text-align: right;
-    margin-top: 20px;
+  text-align: center; /* שינוי מיושר לימין למרכז */
+  margin-top: 20px;
+  width: 100%;
 }
 
 .checkoutButton {
-    background-color: #ff6600;
-    color: #fff;
-    padding: 12px 24px;
-    text-decoration: none;
-    border-radius: 4px;
-    font-size: 18px;
+  background-color: #ff6600;
+  color: #fff;
+  padding: 12px 0; /* שינוי padding כדי להתאים את הגובה לרוחב המיכל */
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 18px;
+  width: 100%; /* גורם לכפתור לתפוס את כל רוחב המיכל */
+  box-sizing: border-box; /* כולל padding בתוך רוחב הכפתור */
 }
 
 .checkoutButton:hover {
-    background-color: #e55a00;
+  background-color: #e55a00;
 }
 
+/* Media Queries for Responsiveness */
+
+/* עד 1024px (טאבלטים) */
+@media (max-width: 1024px) {
+  .cart {
+      width: 90%; /* התאמה לרוחב טאבלטים */
+  }
+
+  .cartItemImage {
+      width: 60px; /* הקטנת רוחב התמונה */
+      margin-right: 15px;
+  }
+
+  .cartItemName {
+      font-size: 14px; /* הקטנת גודל טקסט */
+  }
+
+  .cartItemPrice,
+  .cartItemQuantity {
+      font-size: 16px; /* הקטנת גודל טקסט */
+  }
+
+  .checkoutButton {
+      padding: 10px 20px; /* הקטנת גודל הכפתור */
+      font-size: 16px;
+  }
+}
+
+/* עד 768px (מוביילים וטאבלטים קטנים) */
+@media (max-width: 768px) {
+  .cart {
+      width: 100%;
+      padding: 10px; /* הקטנת padding */
+  }
+
+  h2 {
+      font-size: 20px; /* הקטנת גודל כותרת */
+  }
+
+  .cartItem {
+      flex-direction: column; /* סידור אנכי של האלמנטים בעגלה */
+      align-items: flex-start;
+  }
+
+  .cartItemImage {
+      width: 100%; /* תמונה תתפרס על כל הרוחב */
+      height: auto;
+      margin-right: 0;
+      margin-bottom: 10px;
+  }
+
+  .cartItemDetails {
+      align-items: center; /* ממרכז את פרטי המוצר */
+      text-align: center;
+  }
+
+  .removeButton {
+      margin: 10px 0;
+      font-size: 16px; /* הקטנת גודל כפתור ההסרה */
+  }
+
+  .checkoutButton {
+      width: 100%; /* הכפתור יתפוס את כל הרוחב */
+      padding: 10px;
+      font-size: 16px;
+  }
+}
+
+/* עד 480px (מוביילים קטנים) */
+@media (max-width: 480px) {
+  .cartItemName,
+  .cartItemPrice,
+  .cartItemQuantity {
+      font-size: 14px; /* הקטנת גודל טקסט */
+  }
+
+  .checkoutButton {
+      font-size: 14px; /* הקטנת גודל כפתור הצ'קאאוט */
+      padding: 8px 16px;
+  }
+
+  .removeButton {
+      font-size: 14px; /* הקטנת גודל כפתור ההסרה */
+  }
+}

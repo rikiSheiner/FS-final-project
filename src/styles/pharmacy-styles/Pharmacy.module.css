@@ -69,3 +69,52 @@
     display: inline-block;
     padding-bottom: 5px;
 }
+
+/* Media Queries for Responsiveness */
+
+/* עד 768px (טאבלטים ומוביילים) */
+@media (max-width: 768px) {
+    .header h1 {
+        font-size: 2rem;
+    }
+
+    .nav {
+        flex-direction: column; /* סידור אנכי של הקישורים */
+        align-items: center;
+    }
+
+    .navLink {
+        font-size: 1rem;
+        padding: 10px;
+        margin-bottom: 10px; /* רווח בין הקישורים */
+    }
+
+    .sectionTitle {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+    }
+
+    .container {
+        padding: 10px; /* הקטנת הרווחים מסביב */
+    }
+}
+
+/* עד 480px (מוביילים קטנים) */
+@media (max-width: 480px) {
+    .header h1 {
+        font-size: 1.5rem;
+    }
+
+    .navLink {
+        font-size: 0.9rem;
+        padding: 8px;
+    }
+
+    .sectionTitle {
+        font-size: 1.2rem;
+    }
+
+    .nav {
+        margin-bottom: 50px; /* הקטנת הרווח בין התפריט לתוכן */
+    }
+}

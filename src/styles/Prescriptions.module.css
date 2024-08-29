@@ -1,89 +1,164 @@
-/* Prescriptions.module.css */
-
 .container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+h2, h3 {
+  text-align: center;
+  color: #333;
+}
+
+.prescription {
+  background-color: #fff;
+  padding: 20px;
+  margin: 20px 0;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  text-align: left;
+}
+
+.prescription-header {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #ff6600;
+  padding-bottom: 10px;
+}
+
+.prescription-details {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #555;
+}
+
+.prescription-details p {
+  margin: 8px 0;
+}
+
+.customButton {
+  background-color: #ff6600;
+  color: #fff;
+  border: none;
+  padding: 10px 30px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  display: inline-block;
+  margin-top: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.customButton:hover {
+  background-color: #e55a00;
+}
+
+select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  border: 1px solid #ff6600;
+  border-radius: 4px;
+  background-color: #fff;
+}
+
+select:focus {
+  border-color: #ff6600;
+  outline: none;
+}
+
+.message {
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+  border-radius: 5px;
+  text-align: center;
+}
+
+/* Media Queries for Responsiveness */
+
+/* עד 768px (מוביילים וטאבלטים קטנים) */
+@media (max-width: 768px) {
+  .container {
+      padding: 15px;
   }
-  
-  h2, h3 {
-    text-align: center;
-    color: #333;
-  }
-  
+
   .prescription {
-    background-color: #fff;
-    padding: 20px;
-    margin: 20px 0;
-    border-radius: 12px;
-    border: 1px solid #ccc;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    text-align: left;
+      padding: 15px;
+      margin: 15px 0;
   }
-  
+
   .prescription-header {
-    font-size: 20px;
-    font-weight: bold;
-    text-align: center;
-    color: #333;
-    margin-bottom: 20px;
-    border-bottom: 2px solid #ff6600;
-    padding-bottom: 10px;
+      font-size: 18px;
+      padding-bottom: 8px;
+      margin-bottom: 15px;
   }
-  
+
   .prescription-details {
-    font-size: 16px;
-    line-height: 1.5;
-    color: #555;
+      font-size: 14px;
   }
-  
-  .prescription-details p {
-    margin: 8px 0;
-  }
-  
+
   .customButton {
-    background-color: #ff6600;
-    color: #fff;
-    border: none;
-    padding: 10px 30px;
-    border-radius: 30px;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: bold;
-    display: inline-block;
-    margin-top: 20px;
-    transition: background-color 0.3s ease;
+      font-size: 14px;
+      padding: 8px 20px;
+      border-radius: 25px;
+      margin-top: 15px;
   }
-  
-  .customButton:hover {
-    background-color: #e55a00;
-  }
-  
+
   select {
-    width: 100%;
-    padding: 10px;
-    margin-top: 10px;
-    border: 1px solid #ff6600;
-    border-radius: 4px;
-    background-color: #fff;
+      padding: 8px;
   }
-  
-  select:focus {
-    border-color: #ff6600;
-    outline: none;
-  }
-  
+
   .message {
-    margin-top: 10px;
-    padding: 10px;
-    background-color: #d4edda;
-    color: #155724;
-    border: 1px solid #c3e6cb;
-    border-radius: 5px;
-    text-align: center;
+      padding: 8px;
+      font-size: 14px;
   }
-  
+}
+
+/* עד 480px (מוביילים קטנים) */
+@media (max-width: 480px) {
+  .container {
+      padding: 10px;
+  }
+
+  .prescription {
+      padding: 10px;
+      margin: 10px 0;
+  }
+
+  .prescription-header {
+      font-size: 16px;
+      padding-bottom: 6px;
+      margin-bottom: 10px;
+  }
+
+  .prescription-details {
+      font-size: 13px;
+  }
+
+  .customButton {
+      font-size: 12px;
+      padding: 6px 15px;
+      border-radius: 20px;
+      margin-top: 10px;
+  }
+
+  select {
+      padding: 6px;
+  }
+
+  .message {
+      padding: 6px;
+      font-size: 13px;
+  }
+}

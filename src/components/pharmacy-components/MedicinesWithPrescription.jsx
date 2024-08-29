@@ -66,11 +66,13 @@ function MedicinesWithPrescription() {
     try {
       const currentUser = JSON.parse(localStorage.getItem("user"));
   
-      if (!currentUser || !currentUser.UserID) {
+      /*if (!currentUser || !currentUser.UserID) {
         throw new Error("User ID not found in local storage");
-      }
-  
-      const response = await fetch(`http://localhost:3001/api/patients/prescriptions?userID=${currentUser.UserID}`, {
+      }*/
+        if (!currentUser || !currentUser.id) {
+          throw new Error("User ID not found in local storage");
+        }
+      const response = await fetch(`http://localhost:3001/api/patients/prescriptions?userID=${currentUser.id}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

@@ -61,7 +61,8 @@ const ProductCard = ({ MedicineID, Name, ImagePath, Price, hasPrescription = tru
       }
 
       const requestData = {
-        PatientID: currentUser.UserID,
+        //PatientID: currentUser.UserID,
+        PatientID: currentUser.id,
         MedicineID: MedicineID,
         Approved: 0, // Not approved
       };

@@ -177,3 +177,52 @@
 .backButton:hover {
   background-color: #e55a00;
 }
+
+/* Media Queries for Responsiveness */
+
+/* עד 1024px (טאבלטים) */
+@media (max-width: 1024px) {
+  .checkout {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .orderSummary,
+  .checkoutDetails {
+    max-width: 100%;
+    margin-bottom: 20px;
+  }
+}
+
+/* עד 768px (מוביילים וטאבלטים קטנים) */
+@media (max-width: 768px) {
+  .orderSummary h3,
+  .checkoutDetails h3 {
+    font-size: 1.4em;
+  }
+
+  .submitButton,
+  .backToCart {
+    font-size: 14px;
+    padding: 10px;
+  }
+}
+
+/* עד 480px (מוביילים קטנים) */
+@media (max-width: 480px) {
+  .orderSummary h3,
+  .checkoutDetails h3 {
+    font-size: 1.2em;
+  }
+
+  .submitButton,
+  .backToCart {
+    font-size: 12px;
+    padding: 8px;
+  }
+
+  .formGroup label,
+  .formGroup input {
+    font-size: 12px;
+  }
+}

@@ -18,7 +18,9 @@ const Checkout = () => {
   const [totalAmount, setTotalAmount] = useState(getTotalAmount());
 
   useEffect(() => {
-    const userId = JSON.parse(localStorage.getItem('user')).UserID;
+    //const userId = JSON.parse(localStorage.getItem('user')).UserID;
+
+    const userId = JSON.parse(localStorage.getItem('user')).id;
 
     // Fetch existing addresses
     fetch(`http://localhost:3001/api/patients/users/${userId}/addresses`)
@@ -71,15 +73,18 @@ const Checkout = () => {
 
     const currentUser = JSON.parse(localStorage.getItem('user'));
 
+    console.log(currentUser);
     console.log("Selected address in handleContinueToPayment:", selectedAddress);
     setShippingDetails({
-      firstName: currentUser.FirstName,
-      lastName: currentUser.LastName,
+      //firstName: currentUser.FirstName,
+      //lastName: currentUser.LastName,
+      firstName: currentUser.firstName,
+      lastName: currentUser.lastName,
       street: selectedAddress.Street,
       city: selectedAddress.City,
       houseNumber: selectedAddress.BuildingNumber,
       apartmentNumber: selectedAddress.ApartmentNumber,
-      phoneNumber: currentUser.Phone,
+      phoneNumber: currentUser.phone,
     });
 
     setCheckoutStep(2);

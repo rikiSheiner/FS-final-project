@@ -24,14 +24,7 @@ export default class BaseModel {
       console.error('Database Error:', err); // Log database errors
       throw new Error('Database error: ' + err.message); // Throw a new error with a message
     }
-    const [result] = await pool.query(
-      `
-      INSERT INTO ${this.table} (${columns})
-      VALUES (${placeholders})
-    `,
-      values
-    );
-    return result;
+   
   }
   
   
@@ -49,9 +42,9 @@ export default class BaseModel {
     `,
       [propValue]
     );
-    console.log(rows);
-    //return rows[0];
-    return rows;
+    // console.log(rows);
+    return rows[0];
+    //return rows;
   }
 
   async findAll() {

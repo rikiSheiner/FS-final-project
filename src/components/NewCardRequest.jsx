@@ -12,8 +12,8 @@ function NewCardRequest() {
     console.log('Current user: ' + currentUser.FirstName);
 
     if (currentUser) {
-      setFullName(currentUser.FirstName + ' ' + currentUser.LastName);
-      setPatientId(currentUser.UserID);
+      setFullName(currentUser.firstName + ' ' + currentUser.lastName);
+      setPatientId(currentUser.id);
       setOrderDate(new Date().toLocaleDateString());
     }
   }, []);
@@ -44,26 +44,27 @@ function NewCardRequest() {
 
   return (
     <div className={styles.container}>
-      <h2 className={styles.title}>הזמנת כרטיס מגנטי</h2>
+      <h2 className={styles.title}>New Card Request</h2>
       <div className={styles.detailsRow}>
+
         <div className={styles.detailBox}>
-          <p>מספר כרטיס</p>
-          <p>{patientId}</p>
-        </div>
+        <p>Full Name</p>
+        <p>{fullName}</p>
+      </div>
         <div className={styles.detailBox}>
-          <p>תאריך הזמנת כרטיס</p>
+          <p>Order Date</p>
           <p>{orderDate}</p>
         </div>
         <div className={styles.detailBox}>
-          <p>שם מלא</p>
-          <p>{fullName}</p>
+          <p>User ID</p>
+          <p>{patientId}</p>
         </div>
       </div>
       <button 
         className={styles.button}
         onClick={handleCreateRequest}
       >
-        הזמנת כרטיס
+        Order Card
       </button>
       {message && (
         <p className={`${styles.message} ${message.includes('Error') ? styles.errorMessage : styles.successMessage}`}>

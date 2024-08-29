@@ -30,7 +30,7 @@ function NavBar() {
             </Link>
           </li>
           <li className={classes.liLnk}>
-            <Link to="pharmacy" className={classes.lnk}>
+            <Link to="/pharmacy" className={classes.lnk}>
               <FaPills className={classes.icon} /> Pharmacy
             </Link>
           </li>

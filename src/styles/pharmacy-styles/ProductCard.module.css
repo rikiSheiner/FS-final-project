@@ -1,28 +1,50 @@
+/* קונטיינר המכיל את כל הכרטיסיות */
+.cardsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* הכרטיסיות עצמן */
 .card {
   border: 1px solid #e0e0e0;
   border-radius: 8px;
   padding: 16px;
   text-align: center;
   background-color: #fff;
-  width: 220px;
+  width: 220px; /* רוחב קבוע לכל הכרטיסים */
+  flex: 0 1 220px; /* מגדיר רוחב בסיסי של 220px לכרטיסים */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  min-height: 380px;
+  box-sizing: border-box;
 }
 
 .image {
   max-width: 100%;
-  height: auto;
+  height: 180px;
+  object-fit: contain;
   margin-bottom: 12px;
+  flex-shrink: 0;
 }
 
 .name {
   font-size: 18px;
   font-weight: bold;
   margin-bottom: 8px;
+  flex-shrink: 0;
 }
 
 .pricing {
   font-size: 20px;
   color: #ff6600;
   margin-bottom: 12px;
+  flex-shrink: 0;
 }
 
 .addToCart {
@@ -32,13 +54,13 @@
   padding: 10px 20px;
   border-radius: 4px;
   cursor: pointer;
-  margin-top: 8px; /* רווח בין המחיר לכפתור */
-  display: block; /* מוודא שהכפתור מוצג בשורה נפרדת */
+  margin-top: 8px;
+  display: block;
   margin-left: auto;
-  margin-right: auto; /* מיישר את הכפתור למרכז */
-  width: fit-content; /* מתאים את רוחב הכפתור לתוכן */
+  margin-right: auto;
+  width: fit-content;
+  flex-shrink: 0;
 }
-
 
 .addToCart:hover {
   background-color: #e55a00;
@@ -47,17 +69,20 @@
 .message {
   margin-top: 10px;
   padding: 10px;
-  background-color: #d4edda; /* צבע ירוק בהיר */
-  color: #155724; /* צבע ירוק כהה */
-  border: 1px solid #c3e6cb; /* גבול ירוק בהיר */
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
   border-radius: 5px;
   text-align: center;
+  flex-shrink: 0;
 }
+
 .quantityControl {
   display: flex;
   align-items: center;
-  justify-content: center; /* מיישר את בקרת הכמות למרכז */
+  justify-content: center;
   margin-top: 8px;
+  flex-shrink: 0;
 }
 
 .quantityControl button {
@@ -65,7 +90,7 @@
   color: #fff;
   border: none;
   padding: 8px 12px;
-  border-radius: 50%; /* הופך את הכפתורים לעגולים */
+  border-radius: 50%;
   cursor: pointer;
   font-size: 16px;
   width: 40px;

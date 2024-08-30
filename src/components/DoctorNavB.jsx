@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import classes from '../styles/App.module.css';
+import classes from '../styles/NavBar.module.css';
 // Import FontAwesome icons from react-icons/fa
 import { FaHome, FaCalendarAlt, FaFileMedical, FaPrescriptionBottle, FaSignOutAlt } from 'react-icons/fa';
 

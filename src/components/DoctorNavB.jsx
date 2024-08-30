@@ -21,7 +21,7 @@ function DoctorNavB() {
           </li>
           <li className={classes.liLnk}>
             <Link to="patientAppointment" className={classes.lnk}>
-              <FaCalendarAlt className={classes.icon} /> Order Appointment
+              <FaCalendarAlt className={classes.icon} /> Patient Appointment
             </Link>
           </li>
           <li className={classes.liLnk}>

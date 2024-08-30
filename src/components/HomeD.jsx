@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import React from 'react';
 import { Outlet } from 'react-router-dom';
 import DoctorNavB from './DoctorNavB';
+
 const HomeD = () => {
+  return ( // Add return statement here
     <>
-    <div><DoctorNavB /></div>
-    <div>
+      <div><DoctorNavB /></div>
+      <div>
         <Outlet />
-    </div>
-</>
+      </div>
+    </>
+  );
 };
+
 export default HomeD;

@@ -8,8 +8,63 @@ function HomeContent() {
     const [doctorProfessions, setDoctorProfessions] = useState({});
 
     useEffect(() => {
-        // Fetch appointments and other data
+        const fetchAppointments = async () => {
+            try {
+                const response = await fetch(`http://localhost:3001/api/patients/appointments`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ id: user?.id }),
+                });
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                const data = await response.json();
+                setAppointments(data);
+
+                // Fetch professions for doctors
+                const fetchProfessions = async () => {
+                    const professions = {};
+                    for (const appointment of data) {
+                        if (!professions[appointment.DoctorID]) {
+                            const profession = await fetchDoctorProfession(appointment.DoctorID);
+                            professions[appointment.DoctorID] = profession;
+                        }
+                    }
+                    setDoctorProfessions(professions);
+                };
+
+                fetchProfessions();
+
+            } catch (error) {
+                console.error('Error fetching appointments:', error);
+            }
+        };
+
+        if (user?.id) {
+            fetchAppointments();
+        }
     }, [user?.id]);
+
+    const fetchDoctorProfession = async (doctorID) => {
+        try {
+            const response = await fetch('http://localhost:3001/api/doctors/id', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ propName: 'DoctorID', propValue: doctorID }), // Send propName and propValue
+            });
+            const data = await response.json();
+            return data.Profession; // Adjust based on your actual API response
+        } catch (error) {
+            console.error('Error fetching doctor profession:', error);
+            return 'Unknown'; // Default value in case of error
+        }
+    };
 
     function getGreeting() {
         const now = new Date();

@@ -6,7 +6,8 @@ class UserModel extends BaseModel {
   }
 
   getUserByEmail(email) {
-    return super.findByProp('email', email);
+    console.log('email' , email);
+    return super.findByProp('Email', email);
   }
 
   deleteUserById(id){

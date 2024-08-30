@@ -5,8 +5,10 @@ class PrescriptionRequestModel extends BaseModel {
     super('PrescriptionRequests'); 
   }
 
+  // קבלת כל בקשות למרשמים של מטופל מסוים
   getPRofPatient(patientID){
-    super.findByProp('patientID',patientID);
+    //super.findByProp('patientID',patientID);
+    super.getAllWithFilter('patientID',patientID);
   }
 
   getIncompletedPRofPatient(patientID){

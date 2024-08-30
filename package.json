@@ -15,6 +15,8 @@
     "test": "node server/routes/test.js"
   },
   "dependencies": {
+    "@fortawesome/free-solid-svg-icons": "^6.6.0",
+    "@fortawesome/react-fontawesome": "^0.2.2",
     "axios": "^1.7.4",
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",

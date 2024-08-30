@@ -6,12 +6,12 @@ router_of_patient.post('/sign-in', patientsController.signIn);
 router_of_patient.post('/login', patientsController.loginUser);
 
 router_of_patient.get('/patients', patientsController.getPatientsWithFilter);
-router_of_patient.get('/patients/:id/refferals', patientsController.getPatientRefferals);
-router_of_patient.get('/patients/:id/prescriptions', patientsController.getPatientPrescriptions);
-router_of_patient.post('/patients/:id/prescription-requests', patientsController.createPrescriptionRequest);
+router_of_patient.get('/refferals', patientsController.getPatientRefferals);
+router_of_patient.get('/prescriptions', patientsController.getPatientPrescriptions);
+router_of_patient.post('/prescription-requests', patientsController.createPrescriptionRequest);
 router_of_patient.get('/patients/:id/prescription-requests', patientsController.getPrescriptionRequestOfPatient);
 router_of_patient.get('/patients/:id/incompleted-prescription-requests', patientsController.getIncompletedPrescriptionReqtOfPatient);
-router_of_patient.post('/patients/:id/card-requests', patientsController.createNewCardRequest);
+router_of_patient.post('/:id/card-requests', patientsController.createNewCardRequest);
 
 router_of_patient.post('/appointments/available', patientsController.getAvailableAppointments);   //אני פה
 router_of_patient.post('/appointments/book', patientsController.bookAppointment);
@@ -25,6 +25,9 @@ router_of_patient.delete('/users/:id', patientsController.deleteUser);
 router_of_patient.put('/users/:id', patientsController.updateUser);
 router_of_patient.post('/connectDoctor',patientsController.connectDoctor);
 
+
+router_of_patient.get('/professions', patientsController.getProfession);
+
 //router_of_patient.get('/medicines/:name', patientsController.searchMedicineByName); // חיפוש תרופה לפי שם
 router_of_patient.get('/medicines', patientsController.getAllMedicines); // קבלת כל התרופות
 
@@ -32,5 +35,9 @@ router_of_patient.get('/medicines/with-prescription', patientsController.getAllM
 router_of_patient.get('/medicines/without-prescription', patientsController.getAllMedicinesWithoutPrescription);
 
 router_of_patient.post('/medicines/order', patientsController.orderMedicine); // הזמנת תרופה
+
+router_of_patient.get('/users/:userId/addresses', patientsController.getAllAddresses); // קבלת כל הכתובות של משתמש
+
+router_of_patient.get('/users/:userId/account-details', patientsController.getAllAccountDetails); // קבלת כל פרטי החשבון של משתמש
 
 export default router_of_patient;

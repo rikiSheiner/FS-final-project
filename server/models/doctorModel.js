@@ -1,12 +1,10 @@
 import BaseModel from "./baseModel.js";
-import pool from '../config/dbConfig.js';
 
 class DoctorModel extends BaseModel {
   constructor() {
-    super('Doctors'); // Table name
+    super('Doctors'); // שם הטבלה
   }
 
-  // Method to get unique specialties
   async getSpecialties() {
     try {
       const specialties = await this.findDistinct('Profession');
@@ -18,7 +16,6 @@ class DoctorModel extends BaseModel {
       throw error;
     }
   }
-
   
 }
 

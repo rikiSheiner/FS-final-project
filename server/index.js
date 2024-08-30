@@ -13,10 +13,8 @@ app.use(
   })
 );
 
-// Middleware to parse JSON bodies in requests
 app.use(express.json());
 
-// Mount routers
 app.use("/api/patients", router_of_patient);
 app.use("/api/doctors", router_of_doctor);
 

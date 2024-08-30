@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import classes from '../styles/App.module.css';
+import classes from '../styles/HomeContent.module.css'; // עדכון הייבוא ל-CSS החדש
 import { FaRunning, FaSyringe, FaInfoCircle } from 'react-icons/fa';
 
 function HomeContent() {
@@ -65,7 +65,6 @@ function HomeContent() {
             return 'Unknown'; // Default value in case of error
         }
     };
-    
 
     function getGreeting() {
         const now = new Date();
@@ -128,10 +127,9 @@ function HomeContent() {
                         </div>
                     </div>
                     <div className={classes.right}>
-                        Do you<br /> need your<br /> doctor's clinic?
-                        <br /><br /> <h4>contact us *2800</h4>
+                        Do you need your doctor's clinic?
+                        <br /> <h4>contact us *2800</h4>
                     </div>
-                    <div className={classes.footer}>Footer</div>
                 </div>
             </div>
         </>

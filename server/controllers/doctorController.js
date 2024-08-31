@@ -147,6 +147,35 @@ async function updateDoctor(req, res) {
     }
   }
 
+  async function getAppointmentsByDoctorIdWithQuery(req, res) {
+    try {
+        const doctorId = req.query.doctorId;
+
+        // בדיקה אם ה-DoctorID נשלח ב-Query
+        if (!doctorId) {
+            return res.status(400).json({ message: 'Missing doctorId query parameter' });
+        }
+
+        // בדיקה אם הדוקטור קיים
+        const doctor = await doctorModel.findByProp('DoctorID', doctorId);
+        if (!doctor) {
+            return res.status(404).json({ message: 'Doctor not found' });
+        }
+
+        // הבאת כל הפגישות עבור הדוקטור
+        const appointments = await appointmentModel.getAllWithFilter('DoctorID', doctorId);
+
+        if (appointments.length > 0) {
+            res.status(200).json(appointments);
+        } else {
+            res.status(404).json({ message: 'No appointments found for this doctor' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching appointments', error });
+    }
+}
+
+
   async function getPatientByUserId(req, res) {
     try {
       const { userId } = req.params;
@@ -231,4 +260,5 @@ getDoctor,
     getPatientByUserId,
     creataReffral,
     createPrescription,
+    getAppointmentsByDoctorIdWithQuery,
   };

@@ -151,9 +151,11 @@ CREATE TABLE PrescriptionRequests (
   RequestID INT PRIMARY KEY AUTO_INCREMENT,
   PatientID INT,
   MedicineID INT,
+  DoctorID INT,
   Approved BOOLEAN,
   FOREIGN KEY (PatientID) REFERENCES Users(UserID),
-  FOREIGN KEY (MedicineID) REFERENCES Medicines(MedicineID)
+  FOREIGN KEY (MedicineID) REFERENCES Medicines(MedicineID),
+  FOREIGN KEY (DoctorID) REFERENCES Doctors(DoctorID)
 )`;
 
 // טבלה של זמנים פנויים לקבלת מטופלים עבור כל רופא

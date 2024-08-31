@@ -74,7 +74,7 @@ function Prescriptions() {
         return;
       }
       const requestData = {
-        PatientID: currentUser.UserID,
+        PatientID: currentUser.id,
         MedicineID: selectedMedicine,
         Approved: 0 // לא מאושר
       };
@@ -114,7 +114,7 @@ function Prescriptions() {
               <p><strong>Creation Date:</strong> {new Date(prescription.CreationDate).toLocaleDateString()}</p>
               <p><strong>Expiration Date:</strong> {new Date(prescription.ExpirationDate).toLocaleDateString()}</p>
               <p><strong>Medicine Name:</strong> {prescription.MedicineName}</p>
-              <p><strong>Doctor Name:</strong> Dr. {prescription.DoctorFirstName} {prescription.DoctorLastName}</p>
+              <p><strong>Doctor Name:</strong> {prescription.DoctorFirstName} {prescription.DoctorLastName}</p>
             </div>
           </div>
         ))

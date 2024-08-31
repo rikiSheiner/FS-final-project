@@ -4,8 +4,8 @@ import availableTimesModel from '../models/availableTimesModel.js';
 import appointmentModel from '../models/appointmentModel.js';
 import userModel from '../models/userModel.js';
 import refferalModel from '../models/referralsModel.js';
-import prescriptionModel from '../models/prescriptionModel.js';
-
+import prescriptionRequestModel from '../models/prescriptionRequestModel.js'
+import medicineModel from '../models/medicineModel.js';
 
 async function getDoctor(req, res) {
     try {
@@ -218,6 +218,50 @@ async function updateDoctor(req, res) {
     res.status(500).json({ message: 'Error creating prescription', error });
   }
 }
+async function getPrescriptions(req, res) {
+  try {
+    const { id } = req.body; // חילוץ ה-ID מה-Query String
+
+    const refferals = await prescriptionRequestModel.getAllWithFilter("DoctorID",id);
+
+    if (!refferals) {
+      return res
+        .status(404)
+        .json({ message: "Refferals for patient not found" });
+    }
+
+    res.status(200).json(refferals);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error retreiving patient's refferals", error });
+  }
+}
+async function getMedName(req, res) {
+  try {
+    const { MedicineID } = req.body; // Extract MedicineID from the request body
+
+    // Query the database for the medicine by MedicineID
+    const med = await medicineModel.findByProp("MedicineID", MedicineID);
+
+    if (!med) {
+      return res
+        .status(404)
+        .json({ message: "Medicine not found" });
+    }
+
+    // Assuming the medicineModel.findByProp returns an object with a Name property
+    res.status(200).json({ Name: med.Name }); // Send back the Name of the medicine
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error retrieving medicine name", error });
+  }
+}
+
+async function alterApprove(req,res){
+
+}
 
 export default{
 getDoctor,
@@ -231,4 +275,7 @@ getDoctor,
     getPatientByUserId,
     creataReffral,
     createPrescription,
+    getPrescriptions,
+    getMedName,
+    alterApprove,
   };

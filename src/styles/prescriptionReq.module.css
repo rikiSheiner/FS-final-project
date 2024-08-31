@@ -1,0 +1,93 @@
+/* DoctorHomeContent.module.css */
+.container {
+    width: 100%;
+    padding: 20px;
+    background-color: #f0f4f8;
+    color: #333;
+    font-family: 'Arial', sans-serif;
+}
+
+h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #0a74da;
+    font-weight: bold;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.table th, .table td {
+    padding: 12px 15px;
+    border: 1px solid #ccc;
+    text-align: left;
+}
+
+.table th {
+    background-color: #d8e6f3;
+    color: #333;
+    font-weight: bold;
+}
+
+.table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+.approveButton {
+    background-color: #0a74da;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.approveButton:hover {
+    background-color: #0758a3;
+}
+
+/* Responsive Design */
+
+/* Up to 1024px */
+@media (max-width: 1024px) {
+    h2 {
+        font-size: 24px;
+    }
+
+    .table th, .table td {
+        padding: 10px 12px;
+    }
+}
+
+/* Up to 768px */
+@media (max-width: 768px) {
+    h2 {
+        font-size: 20px;
+    }
+
+    .table th, .table td {
+        padding: 8px 10px;
+        font-size: 14px;
+    }
+}
+
+/* Up to 480px */
+@media (max-width: 480px) {
+    h2 {
+        font-size: 18px;
+    }
+
+    .table th, .table td {
+        padding: 6px 8px;
+        font-size: 12px;
+    }
+}
+

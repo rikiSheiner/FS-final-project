@@ -15,7 +15,9 @@ router_of_doctor.get('/doctors/:id/available-times', doctorController.getAvailab
 
 router_of_doctor.get('/patients/:userId', doctorController.getPatientByUserId);
 
+router_of_doctor.post('/get/Prescriptions',doctorController.getPrescriptions);  //חדש 
 router_of_doctor.post('/referrals', doctorController.creataReffral);
 router_of_doctor.post('/prescriptions', doctorController.createPrescription);
+router_of_doctor.post('/getMedName',doctorController.getMedName);
 
 export default router_of_doctor;

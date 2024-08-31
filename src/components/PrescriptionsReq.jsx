@@ -68,6 +68,19 @@ function PrescriptionsReq() {
     const handleApprove = async (requestID) => {
         try {
             const prescriptionToApprove = prescriptions.find(p => p.RequestID === requestID);
+    
+            if (!prescriptionToApprove) {
+                throw new Error('Prescription request not found');
+            }
+    
+            const today = new Date();
+            const expirationDate = new Date(today); // Create a new Date object to avoid modifying the original date
+            expirationDate.setDate(today.getDate() + 21);
+    
+            // Use ISO format for dates
+            const creationDateISO = today.toISOString().split('T')[0]; // Format to 'YYYY-MM-DD'
+            const expirationDateISO = expirationDate.toISOString().split('T')[0]; // Format to 'YYYY-MM-DD'
+    
             const prescriptionResponse = await fetch('http://localhost:3001/api/doctors/prescriptions', {
                 method: 'POST',
                 headers: {
@@ -77,13 +90,27 @@ function PrescriptionsReq() {
                     patientID: prescriptionToApprove.PatientID,
                     doctorID: doctor?.DoctorID, // Assuming you want to use the current doctor's ID
                     medicineID: prescriptionToApprove.MedicineID,
-                    expirationDate: new Date().toISOString(), // Assuming the expiration date is the current date, adjust as needed
-                    creationDate: new Date().toISOString(), // Assuming the creation date is the current date, adjust as needed
+                    expirationDate: expirationDateISO,
+                    creationDate: creationDateISO,
                 }),
             });
     
             if (!prescriptionResponse.ok) {
-                throw new Error('Error creating prescription');
+                const responseBody = await prescriptionResponse.json();
+                throw new Error(`Error creating prescription: ${responseBody.message}`);
+            }
+
+            const updateResponse = await fetch('http://localhost:3001/api/doctors/approvedAlter', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ requestID: requestID }),
+            });
+    
+            if (!updateResponse.ok) {
+                const responseBody = await updateResponse.json();
+                throw new Error(`Error updating prescription status: ${responseBody.message}`);
             }
     
             // Refresh the prescriptions list
@@ -97,6 +124,8 @@ function PrescriptionsReq() {
             console.error('Error processing approval:', error);
         }
     };
+    
+    
 
     return (
         <div className={classes.container}>
@@ -114,10 +143,10 @@ function PrescriptionsReq() {
                 <tbody>
                     {prescriptions.map((prescription) => (
                         <tr key={prescription.RequestID}>
-                            <td>{prescription.RequestID}</td>
-                            <td>{prescription.PatientID}</td>
-                            <td>{medicineNames[prescription.MedicineID]}</td> {/* Displaying Medicine Name */}
-                            <td>{prescription.Approved ? 'Yes' : 'No'}</td>
+                            <td>id :{prescription.RequestID}</td>
+                            <td>patient :{prescription.PatientID}</td>
+                            <td>name :{medicineNames[prescription.MedicineID]}</td> {/* Displaying Medicine Name */}
+                            <td>status :{prescription.Approved ? 'Yes' : 'No'}</td>
                             <td>
                                 {!prescription.Approved && (
                                     <button

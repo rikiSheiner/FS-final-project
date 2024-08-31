@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import classes from '../styles/DoctorHomeContent.module.css';
 
 function DoctorHomeContent() {
-    // שליפת המידע של הרופא ושל המשתמש מה-Local Storage
     const doctor = JSON.parse(localStorage.getItem('doctor'));
     const userDoctor = JSON.parse(localStorage.getItem('userdoctor'));
 
@@ -11,7 +10,7 @@ function DoctorHomeContent() {
     useEffect(() => {
         const fetchAppointments = async () => {
             try {
-                const response = await fetch(`http://localhost:3001/api/doctors/${doctor?.DoctorID}/appointments`);
+        const response = await fetch(`http://localhost:3001/api/doctors/appointments?doctorId=${doctor?.DoctorID}`);
                 if (!response.ok) {
                     throw new Error('Failed to fetch appointments');
                 }
@@ -36,7 +35,7 @@ function DoctorHomeContent() {
                     <ul>
                         {appointments.map(appointment => (
                             <li key={appointment.AppointmentID} className={classes.appointment}>
-                                <p>Patient: {appointment.PatientName}</p>
+                                <p>Patient: {appointment.UserID}</p>
                                 <p>Date: {new Date(appointment.Date).toLocaleDateString()}</p>
                                 <p>Time: {appointment.StartTime} - {appointment.EndTime}</p>
                             </li>

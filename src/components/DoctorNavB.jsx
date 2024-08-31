@@ -1,8 +1,7 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import classes from '../styles/App.module.css';
-// Import FontAwesome icons from react-icons/fa
-import { FaHome, FaCalendarAlt, FaFileMedical, FaPrescriptionBottle, FaSignOutAlt } from 'react-icons/fa';
+import {FaUsers, FaHome, FaCalendarAlt, FaFileMedical, FaPrescriptionBottle, FaSignOutAlt } from 'react-icons/fa';
 
 function DoctorNavB() {
   const handleLogout = () => {
@@ -19,6 +18,11 @@ function DoctorNavB() {
               <FaHome className={classes.icon} /> Home
             </Link>
           </li>
+          <li className={classes.liLnk}>
+          <Link to="myPatients" className={classes.lnk}>
+            <FaUsers className={classes.icon} /> My Patients
+          </Link>
+        </li>      
           <li className={classes.liLnk}>
             <Link to="patientAppointment" className={classes.lnk}>
               <FaCalendarAlt className={classes.icon} /> Order Appointment

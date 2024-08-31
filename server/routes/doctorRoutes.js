@@ -18,4 +18,7 @@ router_of_doctor.get('/patients/:userId', doctorController.getPatientByUserId);
 router_of_doctor.post('/referrals', doctorController.creataReffral);
 router_of_doctor.post('/prescriptions', doctorController.createPrescription);
 
+
+router_of_doctor.get('/appointments', doctorController.getAppointmentsByDoctorIdWithQuery);
+
 export default router_of_doctor;

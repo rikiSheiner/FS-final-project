@@ -379,6 +379,14 @@ async function createPrescriptionRequest(req, res) {
 
     console.log(newPrescriptionReq);
 
+    const patientDoctorRelation = await PatientDoctorModel.findByProp('PatientID', newPrescriptionReq.PatientID);
+
+    if (!patientDoctorRelation) {
+      return res.status(404).json({ message: "Doctor not found for the given patient" });
+    }
+
+    newPrescriptionReq.DoctorID = patientDoctorRelation.DoctorID;
+
     const result = await prescriptionReqModel.create(newPrescriptionReq);
     res.status(201).json(result);
   } catch (error) {
@@ -387,6 +395,7 @@ async function createPrescriptionRequest(req, res) {
       .json({ message: "Error creating prescription request", error });
   }
 }
+
 
 async function getPrescriptionRequestOfPatient(req, res) {
   try {

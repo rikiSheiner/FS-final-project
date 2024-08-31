@@ -6,7 +6,6 @@ import OrderAppointment from "./components/OrderAppointment";
 import Referrals from "./components/Referrals";
 import Prescriptions from "./components/Prescriptions";
 import HomeD from "./components/HomeD";
-import HomeContentD from "./components/DoctorHomeContent";
 import PatientAppointment from "./components/patientAppointment";
 import ReferralsReq from "./components/ReferralsReq";
 import PrescriptionsReq from "./components/PrescriptionsReq";
@@ -22,6 +21,8 @@ import MedicinesWithoutPrescription from "./components/pharmacy-components/Medic
 import { CartProvider } from "./components/pharmacy-components/CartContext";
 import Cart from "./components/pharmacy-components/Cart";
 import Checkout from "./components/pharmacy-components/Checkout";
+import DoctorHomeContent from "./components/DoctorHomeContent";
+import PatientsOfDoctor from "./components/PatientsOfDoctor";
 
 function App() {
   return (
@@ -55,7 +56,8 @@ function App() {
           </Route>
 
           <Route path="/homeD" element={<HomeD />}>
-            <Route index element={<HomeContentD />} /> {/* Default content */}
+            <Route index element={<DoctorHomeContent />} /> 
+            <Route path="myPatients" element={<PatientsOfDoctor/>}></Route>
             <Route path="patientAppointment" element={<PatientAppointment />} />
             <Route path="ReferralsReq" element={<ReferralsReq />} />
             <Route path="PrescriptionsReq" element={<PrescriptionsReq />} />

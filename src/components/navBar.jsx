@@ -1,15 +1,23 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import classes from '../styles/NavBar.module.css';  // ייבוא קובץ ה-CSS החדש
-import { FaHome, FaCalendarAlt, FaIdCard, FaPills, FaFileMedical, FaPrescriptionBottle, FaSignOutAlt } from 'react-icons/fa';
+import classes from "../styles/NavBar.module.css"; // ייבוא קובץ ה-CSS החדש
+import {
+  FaHome,
+  FaCalendarAlt,
+  FaIdCard,
+  FaPills,
+  FaFileMedical,
+  FaPrescriptionBottle,
+  FaSignOutAlt,
+} from "react-icons/fa";
 
 function NavBar() {
   const handleLogout = () => {
     const navigate = useNavigate();
     localStorage.clear();
-    navigate('/login'); // Redirect to the login page after clearing localStorage
+    navigate("/login"); // Redirect to the login page after clearing localStorage
   };
-  
+
   return (
     <nav className={classes.navbar}>
       <ul className={classes.navLnk}>
@@ -21,11 +29,6 @@ function NavBar() {
         <li className={classes.liLnk}>
           <Link to="orderAppointmet" className={classes.lnk}>
             <FaCalendarAlt className={classes.icon} /> Order Appointment
-          </Link>
-        </li>
-        <li className={classes.liLnk}>
-          <Link to="orderNewCard" className={classes.lnk}>
-            <FaIdCard className={classes.icon} /> Order New Card
           </Link>
         </li>
         <li className={classes.liLnk}>
@@ -41,6 +44,11 @@ function NavBar() {
         <li className={classes.liLnk}>
           <Link to="myPrescriptions" className={classes.lnk}>
             <FaPrescriptionBottle className={classes.icon} /> My Prescriptions
+          </Link>
+        </li>
+        <li className={classes.liLnk}>
+          <Link to="orderNewCard" className={classes.lnk}>
+            <FaIdCard className={classes.icon} /> Order New Card
           </Link>
         </li>
         <li className={classes.liLnk}>

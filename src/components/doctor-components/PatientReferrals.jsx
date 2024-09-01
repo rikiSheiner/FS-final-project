@@ -24,7 +24,6 @@ function PatientReferrals({ referrals, createReferral }) {
         <ul className={styles.referralList}>
           {referrals.map((referral) => (
             <li key={referral.ReferralID} className={styles.referralItem}>
-              <p><strong>Referral ID:</strong> {referral.ReferralID}</p>
               <p><strong>Test Name:</strong> {referral.TestName}</p>
               <p><strong>Date:</strong> {new Date(referral.Date).toLocaleDateString()}</p>
               <p><strong>Location:</strong> {referral.Location}</p>

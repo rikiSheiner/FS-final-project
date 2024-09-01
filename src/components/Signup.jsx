@@ -25,9 +25,8 @@ const SignUp = () => {
     }));
   };
 
-  // Fetch family doctors
   const fetchFamilyDoctors = async () => {
-    const propName = "Profession"; // Ensure this is correctly mapped
+    const propName = "Profession"; 
     const propValue = "Family";
     try {
       const response = await fetch('http://localhost:3001/api/doctors/filter', {
@@ -35,7 +34,7 @@ const SignUp = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ propName, propValue}), // Adjust based on your API
+        body: JSON.stringify({ propName, propValue}), 
       });
 
       if (!response.ok) {

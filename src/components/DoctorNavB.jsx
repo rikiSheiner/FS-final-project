@@ -1,13 +1,13 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import classes from '../styles/App.module.css';
-import {FaUsers, FaHome, FaCalendarAlt, FaFileMedical, FaPrescriptionBottle, FaSignOutAlt } from 'react-icons/fa';
+import {FaUsers, FaHome, FaFileMedical, FaPrescriptionBottle, FaSignOutAlt } from 'react-icons/fa';
 
 function DoctorNavB() {
   const handleLogout = () => {
     const navigate = useNavigate();
     localStorage.clear();
-    navigate('/login'); // Redirect to the login page after clearing localStorage
+    navigate('/login'); 
   };
   return (
     <>
@@ -23,16 +23,8 @@ function DoctorNavB() {
             <FaUsers className={classes.icon} /> My Patients
           </Link>
         </li>      
-          <li className={classes.liLnk}>
-            <Link to="patientAppointment" className={classes.lnk}>
-              <FaCalendarAlt className={classes.icon} /> Patient Appointment
-            </Link>
-          </li>
-          <li className={classes.liLnk}>
-            <Link to="ReferralsReq" className={classes.lnk}>
-              <FaFileMedical className={classes.icon} /> Referrals
-             </Link>
-          </li>
+
+
           <li className={classes.liLnk}>
             <Link to="PrescriptionsReq" className={classes.lnk}>
               <FaPrescriptionBottle className={classes.icon} /> Prescriptions Requests
@@ -50,3 +42,4 @@ function DoctorNavB() {
 }
 
 export default DoctorNavB;
+

@@ -33,21 +33,21 @@ function OrderAppointment() {
             console.log("Selected Profession:", selectedProfession); // Add this line
             const propName = "Profession"; // Ensure this is correctly mapped
             const propValue = selectedProfession;
+    
             const fetchDoctors = async () => {
                 try {
-                    const response = await fetch('http://localhost:3001/api/doctors/filter', {
-                        method: 'POST',
+                    const response = await fetch(`http://localhost:3001/api/doctors/filter?propName=${propName}&propValue=${encodeURIComponent(propValue)}`, {
+                        method: 'GET',
                         headers: {
                             'Content-Type': 'application/json',
                         },
-                        body: JSON.stringify({ propName, propValue }),
                     });
-
+    
                     if (!response.ok) {
                         const errorData = await response.json();
                         throw new Error(errorData.message || "Failed to fetch doctors");
                     }
-
+    
                     const data = await response.json();
                     setDoctors(data);
                 } catch (error) {
@@ -55,11 +55,11 @@ function OrderAppointment() {
                     alert(`Error: ${error.message}`);
                 }
             };
-
+    
             fetchDoctors();
         }
     }, [selectedProfession]);
-
+    
     useEffect(() => {
         if (selectedDoctor) {
           const doctorId = selectedDoctor;
@@ -168,7 +168,7 @@ function OrderAppointment() {
                     <option value="">Select a Doctor</option>
                     {doctors.map((doctor, index) => (
                         <option key={index} value={doctor.DoctorID}>
-                            {`ClinicID: ${doctor.ClinicID}, Profession: ${doctor.Profession}, DoctorID: ${doctor.DoctorID}`}
+                            {`${doctor.FirstName} ${doctor.LastName} - ${doctor.Location}`}
                         </option>
                     ))}
                 </select>
@@ -197,6 +197,11 @@ function OrderAppointment() {
 }
 
 export default OrderAppointment;
+
+
+
+
+
 
 
 

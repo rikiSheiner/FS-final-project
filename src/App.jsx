@@ -6,10 +6,8 @@ import OrderAppointment from "./components/OrderAppointment";
 import Referrals from "./components/Referrals";
 import Prescriptions from "./components/Prescriptions";
 import HomeD from "./components/HomeD";
-import PatientAppointment from "./components/patientAppointment";
 import ReferralsReq from "./components/ReferralsReq";
 import PrescriptionsReq from "./components/PrescriptionsReq";
-import Welcome from "./components/Welcome";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import Home from "./components/Home";
@@ -30,12 +28,11 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Navigate to="/login" />} />
-          <Route path="/welcome" element={<Welcome />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
 
           <Route path="/home" element={<Home />}>
-            <Route index element={<HomeContent />} /> {/* Default content */}
+            <Route index element={<HomeContent />} /> 
             <Route path="orderAppointmet" element={<OrderAppointment />} />
             <Route path="orderNewCard" element={<NewCardRequest />} />
             <Route path="pharmacy" element={<Pharmacy />}>
@@ -58,7 +55,6 @@ function App() {
           <Route path="/homeD" element={<HomeD />}>
             <Route index element={<DoctorHomeContent />} /> 
             <Route path="myPatients" element={<PatientsOfDoctor/>}></Route>
-            <Route path="patientAppointment" element={<PatientAppointment />} />
             <Route path="ReferralsReq" element={<ReferralsReq />} />
             <Route path="PrescriptionsReq" element={<PrescriptionsReq />} />
           </Route>
@@ -73,4 +69,7 @@ export default App;
 
 /*
 <Route path="*" element={<Navigate to="/login" />} />
+
+            <Route path="patientAppointment" element={<PatientAppointment />} />
+
 */

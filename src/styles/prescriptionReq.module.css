@@ -1,11 +1,10 @@
-/* General Styles */
 .container {
     width: 100%;
     padding: 20px;
     background-color: #f0f4f8;
     color: #333;
     font-family: 'Arial', sans-serif;
-    overflow-x: auto; /* Allow horizontal scrolling if needed */
+    overflow-x: auto;
 }
 
 h2 {
@@ -71,9 +70,6 @@ h2 {
     background-color: #0758a3;
 }
 
-/* Responsive Design */
-
-/* Up to 768px */
 @media (max-width: 768px) {
     h2 {
         font-size: 20px;
@@ -85,7 +81,6 @@ h2 {
     }
 }
 
-/* Up to 480px */
 @media (max-width: 768px) {
     h2 {
         font-size: 18px;
@@ -95,7 +90,6 @@ h2 {
         border-collapse: separate;
         border-spacing: 0;
         width: 100%;
-        /* Add overflow auto to handle any overflow issues */
         overflow: auto;
     }
 
@@ -117,7 +111,7 @@ h2 {
         position: relative;
         width: 100%;
         box-sizing: border-box;
-        font-size: 14px; /* Adjust font size for readability */
+        font-size: 14px;
     }
 
     .table td::before {
@@ -143,24 +137,13 @@ h2 {
         position: relative;
     }
 
-    /* Hide h5 tags on larger screens */
     .table td h5 {
         display: none;
     }
 
-    /* Show h5 tags on small screens */
     .table td h5 {
         display: block;
         font-size: 14px;
         margin-bottom: 5px;
     }
 }
-
-
-
-
-
-
-
-
-

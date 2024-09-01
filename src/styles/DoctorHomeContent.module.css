@@ -1,31 +1,51 @@
+
+
 .container {
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    max-width: 800px;
+    max-width: 1200px;
     margin: 0 auto;
+    padding: 20px;
 }
 
 h1 {
-    font-size: 36px;
-    text-align: center;
     color: #333;
-    margin-bottom: 20px;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.statisticsSection {
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.statisticItem {
+    background-color: #f5f5f5;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 30%;
+}
+
+.statisticItem h2 {
+    font-size: 18px;
+    color: #ff6600;
+    margin-bottom: 10px;
+}
+
+.statisticItem p {
+    font-size: 24px;
+    color: #333;
 }
 
 .appointmentsSection {
-    background-color: #ffffff;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 40px;
 }
 
 .appointmentsSection h2 {
-    font-size: 24px;
-    color: #007bff;
-    margin-bottom: 20px;
     text-align: center;
+    color: #ff6600;
+    margin-bottom: 20px;
 }
 
 ul {
@@ -34,14 +54,15 @@ ul {
 }
 
 .appointment {
-    background-color: #f4f4f4;
+    background-color: #fff;
     padding: 15px;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     border-radius: 8px;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .appointment p {
     margin: 5px 0;
-    color: #555;
+    color: #333;
+    font-size: 16px;
 }

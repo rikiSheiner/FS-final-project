@@ -46,20 +46,7 @@ async function getAllUsers(req, res) {
   }
 }
 
-/*async function deleteUser(req, res) {
-  try {
-    const userID = req.params.id;
-    const result = await userModel.deleteUserById(userID);
-    if (result.affectedRows > 0) {
-      res.status(200).json({ message: "User deleted successfully" });
-    } else {
-      res.status(404).json({ message: "User not found" });
-    }
-  } catch (error) {
-    res.status(500).json({ message: "Error deleting user", error });
-  }
-}
-*/
+
 async function getPatientsWithFilter(req, res) {
   try {
     const { propName, propValue } = req.params;
@@ -111,12 +98,11 @@ async function updateUser(req, res) {
 
 async function signIn(req, res) {
   try {
-    console.log("Request Body:", req.body); // Log the request body
+    console.log("Request Body:", req.body);
 
     const { firstName, lastName, password, birthDate, phone, email, roleID } =
       req.body;
 
-    // Validate input
     if (!firstName || !lastName || !password || !phone || !email) {
       console.error("Validation Error: Missing required fields");
       return res
@@ -172,14 +158,14 @@ async function signIn(req, res) {
       roleID: roleID || null,
     };
 
-    console.log("Creating new user:", newUser); // Log the user being created
+    console.log("Creating new user:", newUser); 
     const createdUser = await userModel.create(newUser);
 
     // Respond with the created user data
-    console.log("User created successfully:", createdUser); // Log successful creation
+    console.log("User created successfully:", createdUser); 
     res.status(201).json(createdUser);
   } catch (error) {
-    console.error("Error during sign-in:", error); // Log the actual error message
+    console.error("Error during sign-in:", error);
     res
       .status(500)
       .json({
@@ -233,55 +219,6 @@ async function getProfession(req, res) {
 // פונקציה עבור ביצוע התחברות של משתמש
 // הפרטים הדרושים עבור התחברות המשתמש הם אימייל וסיסמה
 // יש לוודא שהם נכונים כדי לאפשר למשתמש להתחבר
-/*async function loginUser(req, res) {
-  try {
-    const { email, password } = req.body;
-
-    if (!email || !password) {
-      return res
-        .status(400)
-        .json({ message: "Email and password are required" });
-    }
-
-    console.log(email, password);
-    const users = await userModel.getUserByEmail(email);
-
-    if (!users) {
-      console.log(users);
-      console.log("User not found or password missing");
-      return res.status(401).json({ message: "Invalid credentials" });
-    }
-
-    const user = users[0];
-    // Directly compare plain text passwords
-    if (password !== user.Password) {
-      console.log(
-        `Password mismatch: provided=${password}, stored=${user.Password}`
-      );
-      return res.status(401).json({ message: "Invalid credentials" });
-    }
-
-    res.status(200).json({
-      message: "Login successful",
-      user: {
-        id: user.UserID,
-        email: user.Email,
-        firstName: user.FirstName,
-        lastName: user.LastName,
-      },
-    });
-  } catch (error) {
-    console.error("Error during sign-in:", error);
-    res
-      .status(500)
-      .json({
-        message: "Error during login",
-        error: error.message || "An unknown error occurred",
-      });
-  }
-}
-*/
-
 async function loginUser(req, res) {
   try {
     const { email, password } = req.body;
@@ -296,7 +233,6 @@ async function loginUser(req, res) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    // Directly compare plain text passwords
     if (password !== user.Password) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
@@ -321,7 +257,7 @@ async function loginUser(req, res) {
 
 async function getPatientRefferals(req, res) {
   try {
-    const userID = Number(req.query.userID); // חילוץ ה-ID מה-Query String
+    const userID = Number(req.query.userID); 
 
     const refferals = await refferalModel.getPatientRefferals(userID);
 
@@ -340,8 +276,7 @@ async function getPatientRefferals(req, res) {
 }
 
 async function getPatientPrescriptions(req, res) {
-  const userID = Number(req.query.userID); // חילוץ ה-ID מה-Query String
-
+  const userID = Number(req.query.userID); 
   console.log("UserID received from query:", userID);
 
   if (!userID) {
@@ -446,20 +381,17 @@ async function createNewCardRequest(req, res) {
   }
 }
 
-// Controller method to book an appointment using the base model's create function
 async function bookAppointment(req, res) {
   try {
     const { availableTimeId, doctorId, userId, date, startTime, endTime } =
       req.body;
 
-    // Validate the input
     if (!doctorId || !userId || !date || !startTime || !endTime) {
       return res
         .status(400)
         .json({ message: "All appointment details must be provided" });
     }
 
-    // Prepare appointment data
     const appointmentData = {
       DoctorID: doctorId,
       UserID: userId,
@@ -468,11 +400,9 @@ async function bookAppointment(req, res) {
       EndTime: endTime,
     };
 
-    // Book the appointment using the create method from the base model
     const result = await appointmentModel.create(appointmentData);
 
     if (result.AppointmentID) {
-      // Delete the corresponding time slot from available times
       const deleteResult = await availableTimesModel.deleteByProp(
         "AvailableTimeID",
         availableTimeId
@@ -562,40 +492,12 @@ async function getAllMedicinesWithoutPrescription(req, res) {
   }
 }
 
-/*
-async function orderMedicine(req, res) {
-  try {
-    const orderDetails = req.body;
-
-    const accountDetails = accountDetailsModel.findByProp(
-      "userId",
-      orderDetails.patientID
-    );
-
-    if(!accountDetails){
-      return res.status(404).json({ message: 'Account details not found'});
-    }
-
-    if (!orderDetails.medicineId || !orderDetails.quantity) {
-      return res
-        .status(400)
-        .json({ message: "Medicine ID and quantity are required" });
-    }
-
-    const result = await medicineOrderModel.create(orderDetails);
-    res.status(201).json(result);
-  } catch (error) {
-    res.status(500).json({ message: "Error ordering medicine", error });
-  }
-}*/
-
 async function orderMedicine(req, res) {
   try {
     console.log("Request body:", req.body);
 
     const { addressDetails, accountDetails, orderDetails } = req.body;
 
-    // בדיקת תקינות addressDetails
     if (addressDetails) {
       console.log("Address details received:", addressDetails);
 
@@ -616,7 +518,6 @@ async function orderMedicine(req, res) {
       console.log("New address created with ID:", orderDetails.addressID);
     }
 
-    // בדיקת תקינות accountDetails
     if (accountDetails) {
       console.log("Account details received:", accountDetails);
 
@@ -641,7 +542,6 @@ async function orderMedicine(req, res) {
       );
     }
 
-    // יצירת ההזמנה בטבלת medicineorders
     const orderResult = await medicineOrderModel.create({
       PatientID: orderDetails.patientID,
       TotalPrice: orderDetails.totalPrice,
@@ -651,10 +551,9 @@ async function orderMedicine(req, res) {
       CreationDate: new Date(),
     });
 
-    const orderID = orderResult.insertId; // שמירת מזהה ההזמנה שנוצר
+    const orderID = orderResult.insertId; 
     console.log("New order created with ID:", orderID);
 
-    // הוספת כל פריט לטבלת order_items
     for (let item of orderDetails.items) {
       console.log("Adding item to order:", item);
       await orderItemsModel.create({
@@ -669,7 +568,7 @@ async function orderMedicine(req, res) {
       .status(201)
       .json({ message: "Order created successfully", orderID: orderID });
   } catch (error) {
-    console.error("Error in orderMedicine:", error); // הדפסת השגיאה ללוגים
+    console.error("Error in orderMedicine:", error); 
     res.status(500).json({ message: "Error ordering medicine", error });
   }
 }
@@ -678,7 +577,7 @@ async function orderMedicine(req, res) {
 async function getAllAddresses(req, res) {
   try {
     const userId = req.params.userId;
-    console.log(`Received userId: ${userId}`); // בדוק שה-ID מגיע
+    console.log(`Received userId: ${userId}`); 
 
     const addresses = await addressModel.getAllWithFilter("UserID", userId);
     res.status(200).json(addresses);
@@ -703,21 +602,7 @@ async function getAllAccountDetails(req, res) {
   }
 }
 
-/*
-async function getProfession(req, res) {
-  try {
-    const doctors = await doctorModel.getSpecialties();
 
-    if (doctors && doctors.length > 0) {
-      res.status(200).json(doctors);
-    } else {
-      res.status(404).json({ message: "No doctors found" });
-    }
-  } catch (error) {
-    res.status(500).json({ message: "Error retrieving doctors", error });
-  }
-}
-*/
 
 async function getAllAppointments(req, res) {
   const { id } = req.body;
@@ -737,14 +622,12 @@ async function connectDoctor(req, res) {
   try {
     const { userId, doctorId } = req.body;
 
-    // Ensure both userId and doctorId are provided
     if (!userId || !doctorId) {
       return res
         .status(400)
         .json({ message: "User ID and Doctor ID are required." });
     }
 
-    // Create a new entry in the PatientDoctor table
     const result = await PatientDoctorModel.create({
       PatientID: userId,
       DoctorID: doctorId,

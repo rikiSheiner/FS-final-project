@@ -1,9 +1,9 @@
 import BaseModel from "./baseModel.js";
-import pool from '../config/dbConfig.js'; // הנחה שה-pool שלך מוגדר בקובץ זה
+import pool from '../config/dbConfig.js'; 
 
 class DoctorModel extends BaseModel {
   constructor() {
-    super('Doctors'); // שם הטבלה
+    super('Doctors'); 
   }
 
   async getSpecialties() {
@@ -18,7 +18,6 @@ class DoctorModel extends BaseModel {
     }
   }
 
-  // פונקציה חדשה להחזרת שמות רופאים ומיקומי מרפאות באמצעות pool
   async getDoctorsWithClinicDetails(propName, propValue) {
     try {
       const [rows] = await pool.query(`

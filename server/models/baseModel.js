@@ -12,7 +12,7 @@ export default class BaseModel {
       .join(", ");
     const values = Object.values(data);
   
-    console.log('Inserting data:', { columns, placeholders, values }); // Log query details
+    console.log('Inserting data:', { columns, placeholders, values }); 
   
     try {
       const [result] = await pool.query(`
@@ -21,8 +21,8 @@ export default class BaseModel {
       `, values);
       return result;
     } catch (err) {
-      console.error('Database Error:', err); // Log database errors
-      throw new Error('Database error: ' + err.message); // Throw a new error with a message
+      console.error('Database Error:', err); 
+      throw new Error('Database error: ' + err.message); 
     }
    
   }

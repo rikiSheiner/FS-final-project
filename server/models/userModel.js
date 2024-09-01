@@ -2,7 +2,7 @@ import BaseModel from "./baseModel.js";
 
 class UserModel extends BaseModel {
   constructor() {
-    super('Users'); // שם הטבלה
+    super('Users'); 
   }
 
   getUserByEmail(email) {

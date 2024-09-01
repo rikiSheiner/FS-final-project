@@ -3,13 +3,9 @@ import pool from "../config/dbConfig.js";
 
 class PrescriptionModel extends BaseModel {
   constructor() {
-    super('prescriptions'); // שם הטבלה
+    super('prescriptions'); 
   }
-/*
-  getPatientPrescriptions(patientId){
-    return super.findByProp('PatientID', patientId);
-  }
-*/
+
 
 async getPatientPrescriptions(patientId) {
   try {
@@ -22,7 +18,7 @@ async getPatientPrescriptions(patientId) {
       WHERE p.PatientID = ?
     `, [patientId]);
 
-    console.log("Rows retrieved with doctor and medicine names:", rows); // בדיקת השורות המוחזרות
+    console.log("Rows retrieved with doctor and medicine names:", rows); 
 
     return rows;
   } catch (error) {

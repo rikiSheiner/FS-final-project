@@ -23,6 +23,7 @@ router_of_doctor.post('/get/Prescriptions',doctorController.getPrescriptions);  
 router_of_doctor.post('/referrals', doctorController.creataReffral);
 router_of_doctor.post('/prescriptions', doctorController.createPrescription);
 router_of_doctor.post('/getMedName',doctorController.getMedName);
+router_of_doctor.put('/approvedAlter',doctorController.alterApprove);
 
 // בקשות מרשמים של מטופל מסוים שלא אושרו
 router_of_doctor.get('/unapproved-prescription-requests', doctorController.getUnapprovedPrescriptionRequests);

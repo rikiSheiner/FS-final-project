@@ -228,26 +228,33 @@ async function updateDoctor(req, res) {
  /*
  async function createPrescription(req, res) {
   try {
-    const { patientID, doctorID, medicineID, expirationDate, creationDate } = req.body;
+      const { patientID, doctorID, medicineID, expirationDate, creationDate } = req.body;
 
-    // Validate input
-    if (!patientID || !doctorID || !medicineID || !expirationDate || !creationDate) {
-      return res.status(400).json({ error: 'Missing required fields' });
-    }
+      // Validate input
+      if (!patientID || !doctorID || !medicineID || !expirationDate || !creationDate) {
+          return res.status(400).json({ error: 'Missing required fields' });
+      }
 
-    const prescriptionData = {
-      PatientID: patientID,
-      DoctorID: doctorID,
-      MedicineID: medicineID,
-      ExpirationDate: expirationDate,
-      CreationDate: creationDate,
-    };
+      // Ensure dates are in 'YYYY-MM-DD' format for the database
+      const formatDate = (dateStr) => {
+          const date = new Date(dateStr);
+          return date.toISOString().split('T')[0]; // Convert to 'YYYY-MM-DD'
+      };
 
-    const result = await prescriptionModel.create(prescriptionData);
+      const prescriptionData = {
+          PatientID: patientID,
+          DoctorID: doctorID,
+          MedicineID: medicineID,
+          ExpirationDate: formatDate(expirationDate),
+          CreationDate: formatDate(creationDate),
+      };
 
-    res.status(201).json({ message: 'Prescription created successfully', prescriptionId: result.insertId });
+      const result = await prescriptionModel.create(prescriptionData);
+
+      res.status(201).json({ message: 'Prescription created successfully', prescriptionId: result.insertId });
   } catch (error) {
-    res.status(500).json({ message: 'Error creating prescription', error });
+      console.error('Error creating prescription:', error); // Log the error for debugging
+      res.status(500).json({ message: 'Error creating prescription', error });
   }
 }*/
 async function createPrescription(req, res) {
@@ -407,8 +414,30 @@ async function getMedName(req, res) {
   }
 }
 
-async function alterApprove(req,res){
+async function alterApprove(req, res) {
+  try {
+    const { requestID } = req.body; // Extract requestID from the request body
 
+    if (!requestID) {
+      return res.status(400).json({ error: 'Request ID is required' });
+    }
+
+    // Update the status of the prescription request to "Yes"
+    const result = await prescriptionRequestModel.updateByProp(
+      'RequestID', // The property name to filter by
+      requestID, // The value of the property to filter by
+      { Approved: true } // The data to update
+    );
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: 'Prescription request not found' });
+    }
+
+    res.status(200).json({ message: 'Prescription request approved successfully' });
+  } catch (error) {
+    console.error('Error updating prescription status:', error); // Log the error for debugging
+    res.status(500).json({ message: 'Error updating prescription status', error });
+  }
 }
 
 export default{

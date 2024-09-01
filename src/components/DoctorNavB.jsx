@@ -30,7 +30,7 @@ function DoctorNavB() {
           </li>
           <li className={classes.liLnk}>
             <Link to="ReferralsReq" className={classes.lnk}>
-              <FaFileMedical className={classes.icon} /> Referrals Requests
+              <FaFileMedical className={classes.icon} /> Referrals
              </Link>
           </li>
           <li className={classes.liLnk}>

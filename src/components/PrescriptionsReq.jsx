@@ -5,6 +5,7 @@ function PrescriptionsReq() {
     const [doctor, setDoctor] = useState(JSON.parse(localStorage.getItem('doctor')));
     const [prescriptions, setPrescriptions] = useState([]);
     const [medicineNames, setMedicineNames] = useState({});
+    const [filter, setFilter] = useState('all'); // New state for filter type
 
     useEffect(() => {
         const fetchPrescriptions = async () => {
@@ -124,12 +125,25 @@ function PrescriptionsReq() {
             console.error('Error processing approval:', error);
         }
     };
-    
-    
+
+    // Filter prescriptions based on the selected filter type
+    const filteredPrescriptions = prescriptions.filter(prescription => {
+        if (filter === 'approved') {
+            return prescription.Approved;
+        } else if (filter === 'not-approved') {
+            return !prescription.Approved;
+        }
+        return true; // Show all prescriptions if no filter is applied
+    });
 
     return (
         <div className={classes.container}>
             <h2>Prescription Requests</h2>
+            <div className={classes.buttonContainer}>
+                <button onClick={() => setFilter('all')} className={classes.filterButton}>All</button>
+                <button onClick={() => setFilter('approved')} className={classes.filterButton}>Approved</button>
+                <button onClick={() => setFilter('not-approved')} className={classes.filterButton}>Not Approved</button>
+            </div>
             <table className={classes.table}>
                 <thead>
                     <tr>
@@ -141,12 +155,12 @@ function PrescriptionsReq() {
                     </tr>
                 </thead>
                 <tbody>
-                    {prescriptions.map((prescription) => (
+                    {filteredPrescriptions.map((prescription) => (
                         <tr key={prescription.RequestID}>
-                            <td>id :{prescription.RequestID}</td>
-                            <td>patient :{prescription.PatientID}</td>
-                            <td>name :{medicineNames[prescription.MedicineID]}</td> {/* Displaying Medicine Name */}
-                            <td>status :{prescription.Approved ? 'Yes' : 'No'}</td>
+                            <td>{prescription.RequestID}</td>
+                            <td>{prescription.PatientID}</td>
+                            <td>{medicineNames[prescription.MedicineID]}</td> {/* Displaying Medicine Name */}
+                            <td>{prescription.Approved ? 'Yes' : 'No'}</td>
                             <td>
                                 {!prescription.Approved && (
                                     <button
@@ -166,5 +180,6 @@ function PrescriptionsReq() {
 }
 
 export default PrescriptionsReq;
+
 
 

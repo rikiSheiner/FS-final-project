@@ -56,6 +56,21 @@ h2 {
     background-color: #0758a3;
 }
 
+.filterButton {
+    background-color: #0a74da;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.filterButton:hover {
+    background-color: #0758a3;
+}
+
 /* Responsive Design */
 
 /* Up to 768px */
@@ -71,7 +86,7 @@ h2 {
 }
 
 /* Up to 480px */
-@media (max-width: 480px) {
+@media (max-width: 768px) {
     h2 {
         font-size: 18px;
     }

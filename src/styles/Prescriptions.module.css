@@ -85,9 +85,7 @@ select:focus {
   text-align: center;
 }
 
-/* Media Queries for Responsiveness */
 
-/* עד 768px (מוביילים וטאבלטים קטנים) */
 @media (max-width: 768px) {
   .container {
       padding: 15px;
@@ -125,7 +123,6 @@ select:focus {
   }
 }
 
-/* עד 480px (מוביילים קטנים) */
 @media (max-width: 480px) {
   .container {
       padding: 10px;

@@ -1,5 +1,5 @@
 .navbar {
-    background-color: #FF6600; /* גוון כתום */
+    background-color: #FF6600;
     padding: 10px 20px;
     display: flex;
     align-items: center;
@@ -32,7 +32,7 @@
 }
 
 .lnk:hover {
-    background-color: #FFA500; /* גוון כתום בהיר */
+    background-color: #FFA500; 
     color: white;
     border-radius: 5px;
 }
@@ -42,7 +42,6 @@
     font-size: 18px;
 }
 
-/* Media Queries for Responsive Design */
 @media (max-width: 768px) {
     .navbar {
         flex-direction: column;

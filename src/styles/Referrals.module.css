@@ -23,7 +23,7 @@ h2 {
   border: 1px solid #e0e0e0;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   text-align: left;
-  position: relative; /* לשמירה על אלמנטים מוחלטים כמו :before */
+  position: relative; 
 }
 
 .referral-details {
@@ -61,7 +61,6 @@ li {
   margin-bottom: 20px;
 }
 
-/* Media Queries for Responsiveness */
 
 @media (max-width: 768px) {
   .container {

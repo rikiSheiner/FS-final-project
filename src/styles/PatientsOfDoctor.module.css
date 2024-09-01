@@ -1,6 +1,3 @@
-/* PatientsOfDoctor.module.css */
-
-/* עיצוב כללי */
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -57,6 +54,11 @@
   margin-bottom: 15px;
 }
 
+.formGroup label {
+  display: block;
+  margin-bottom: 5px;
+}
+
 .input, .textarea {
   width: 100%;
   padding: 10px;
@@ -85,80 +87,26 @@
   background-color: #e55b00;
 }
 
-/* רספונסיביות למסכים קטנים יותר */
-@media (max-width: 900px) {
-  .container {
-    padding: 15px;
-  }
-  
-  .title {
-    font-size: 22px;
-  }
-
-  .referralItem p,
-  .prescriptionItem p {
-    font-size: 14px;
-  }
-
-  .input, .textarea {
-    padding: 8px;
-    font-size: 14px;
-  }
-
-  .createButton,
-  .approveButton {
-    font-size: 14px;
-    padding: 10px 15px;
-  }
-}
-
-/* רספונסיביות למסכים קטנים מאוד */
-@media (max-width: 600px) {
-  .container {
-    padding: 10px;
-  }
-
-  .title {
-    font-size: 20px;
-  }
-
-  .referralItem p,
-  .prescriptionItem p {
-    font-size: 12px;
-  }
-
-  .input, .textarea {
-    padding: 6px;
-    font-size: 12px;
-  }
-
-  .createButton,
-  .approveButton {
-    font-size: 12px;
-    padding: 8px 10px;
-  }
-}
-
 .buttonGroup {
   display: flex;
   justify-content: center;
+  gap: 10px;
   margin-top: 20px;
 }
 
 .buttonGroup button {
-  padding: 8px 12px;
-  margin: 0 5px;
+  padding: 10px 20px;
   cursor: pointer;
   background-color: #f57c00;
   color: white;
   border: none;
   border-radius: 5px;
-  font-size: 14px;
+  font-size: 16px;
   transition: background-color 0.3s ease;
 }
 
 .buttonGroup button:hover {
-  background-color: #e65100;
+  background-color: #e55b00;
 }
 
 .buttonGroup .active {
@@ -166,35 +114,7 @@
   font-weight: bold;
 }
 
-.patientDetails {
-  background-color: #ffffff;
-  padding: 20px;
-  margin-top: 20px;
-  border-radius: 8px;
-  border-left: 4px solid #f57c00;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: left;
-}
-
-.patientDetails p {
-  margin: 10px 0;
-  font-size: 16px;
-  color: #333;
-}
-
-.patientDetails strong {
-  color: #f57c00;
-  margin-right: 10px;
-}
-
-.textLeft {
-  text-align: left;
-  line-height: 1.5;
-}
-
+.patientDetails,
 .requestCard {
   background-color: #ffffff;
   padding: 20px;
@@ -202,25 +122,27 @@
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   border-left: 4px solid #f57c00;
-  text-align: left;
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
 }
 
+.patientDetails p,
 .requestCard p {
   margin: 10px 0;
   font-size: 16px;
   color: #333;
 }
 
+.patientDetails strong,
 .requestCard strong {
   color: #f57c00;
   margin-right: 5px;
 }
 
-.container {
-  margin-top: 30px;
+.textLeft {
+  text-align: left;
+  line-height: 1.5;
 }
 
 .table {
@@ -248,11 +170,6 @@
   background-color: white;
 }
 
-.formGroup label {
-  display: block;
-  margin-bottom: 5px;
-}
-
 .button {
   padding: 10px 15px;
   background-color: #f57c00;
@@ -262,58 +179,80 @@
   cursor: pointer;
 }
 
-/* רספונסיביות עבור הטבלה */
-@media (max-width: 768px) {
-  .table {
-    width: 100%;
+.sectionTitle {
+  color: #f57c00;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .container {
+    padding: 15px;
+  }
+  
+  .title,
+  .sectionTitle {
+    font-size: 22px;
   }
 
-  .table th,
-  .table td {
+  .referralItem p,
+  .prescriptionItem p,
+  .requestCard p {
+    font-size: 14px;
+  }
+
+  .input, .textarea {
     padding: 8px;
     font-size: 14px;
   }
-}
 
-/* רספונסיביות עבור ה-container */
-@media (max-width: 480px) {
-  .container {
-    padding: 5px;
-  }
-
-  .title {
-    font-size: 18px;
-  }
-
-  .table th,
-  .table td {
-    font-size: 12px;
-    padding: 6px;
-  }
-
-  .requestCard p,
-  .referralItem p,
-  .prescriptionItem p {
-    font-size: 12px;
+  .createButton,
+  .approveButton {
+    font-size: 14px;
+    padding: 10px 15px;
   }
 }
 
-/* הגבלת רוחב מקסימלי לכרטיסים */
-.referralItem,
-.prescriptionItem,
-.requestCard {
-  max-width: 100%;
-}
-
-/* גלילה אופקית בטבלאות */
-.table-container {
-  overflow-x: auto;
-}
-
-/* עיצוב טבלאות רספונסיבי */
 @media (max-width: 768px) {
+  .title,
+  .sectionTitle {
+    font-size: 22px;
+  }
+
+  .requestCard {
+    padding: 15px;
+    margin-top: 15px;
+  }
+
+  .requestCard p {
+    font-size: 14px;
+  }
+
+  .approveButton {
+    font-size: 14px;
+    padding: 8px 15px;
+    max-width: none;
+  }
+
+  .buttonGroup {
+    flex-direction: column;
+  }
+
+  .buttonGroup button {
+    font-size: 14px;
+    padding: 8px 15px;
+  }
+
+  .selectPatient {
+    width: 100%;
+    font-size: 14px;
+    padding: 8px;
+  }
+
   .table-container {
-    overflow-x: auto; /* מאפשר גלילה אופקית */
+    overflow-x: auto;
   }
 
   .table {
@@ -326,13 +265,13 @@
   .table th,
   .table td,
   .table tr {
-    display: block; /* מציג כל רכיב של הטבלה כבלוק */
+    display: block;
   }
 
   .table thead tr {
     position: absolute;
     top: -9999px;
-    left: -9999px; /* מסתיר את כותרות העמודות */
+    left: -9999px;
   }
 
   .table tr {
@@ -342,7 +281,7 @@
   .table td {
     border: none;
     position: relative;
-    text-align:  center;
+    text-align: center;
   }
 
   .table td:before {
@@ -353,370 +292,60 @@
     padding-right: 10px;
     white-space: nowrap;
     text-align: left;
-    content: attr(data-label); /* מוסיף את הטקסט של כותרות העמודות כ-labels */
+    content: attr(data-label);
     font-weight: bold;
     color: #f57c00;
   }
 }
 
-
-/* עיצוב כללי */
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-  box-sizing: border-box;
-}
-
-.title {
-  color: #f57c00;
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-.requestCard {
-  background-color: #ffffff;
-  padding: 20px;
-  margin-top: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  border-left: 4px solid #f57c00;
-  text-align: center;
-  max-width: 100%; /* להבטיח שהכרטיס יהיה רספונסיבי */
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.requestCard p {
-  margin: 10px 0;
-  font-size: 16px;
-  color: #333;
-}
-
-.requestCard strong {
-  color: #f57c00;
-  margin-right: 5px;
-}
-
-.approveButton {
-  display: inline-block;
-  margin-top: 15px;
-  padding: 10px 20px;
-  background-color: #f57c00;
-  color: white;
-  font-weight: bold;
-  text-align: center;
-  border-radius: 5px;
-  cursor: pointer;
-  text-decoration: none;
-  transition: background-color 0.3s ease;
-  width: 100%;
-  max-width: 250px; /* יישור הכפתור עם רוחב מקסימלי */
-}
-
-.approveButton:hover {
-  background-color: #e55b00;
-}
-
-/* רספונסיביות למסכים קטנים יותר */
-@media (max-width: 768px) {
-  .container {
-    padding: 15px;
-  }
-
-  .title {
-    font-size: 22px;
-  }
-
-  .requestCard {
-    padding: 15px;
-    margin-top: 15px;
-  }
-
-  .requestCard p {
-    font-size: 14px;
-  }
-
-  .approveButton {
-    font-size: 14px;
-    padding: 8px 15px;
-    max-width: 100%; /* להבטיח שהכפתור יתפוס את כל הרוחב בכרטיס */
-  }
-}
-
-/* רספונסיביות למסכים קטנים מאוד */
-@media (max-width: 480px) {
+@media (max-width: 600px) {
   .container {
     padding: 10px;
   }
 
-  .title {
+  .title,
+  .sectionTitle {
     font-size: 20px;
   }
 
+  .referralItem p,
+  .prescriptionItem p,
   .requestCard p {
     font-size: 12px;
   }
 
+  .input, .textarea {
+    padding: 6px;
+    font-size: 12px;
+  }
+
+  .createButton,
   .approveButton {
     font-size: 12px;
-    padding: 6px 10px;
-  }
-}
-/* עיצוב כללי */
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-  box-sizing: border-box;
-}
-
-.title {
-  color: #f57c00;
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-.requestCard {
-  background-color: #ffffff;
-  padding: 20px;
-  margin-top: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  border-left: 4px solid #f57c00;
-  text-align: center;
-  max-width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-  box-sizing: border-box; /* מבטיח שהכרטיס לא ייחתך */
-}
-
-.requestCard p {
-  margin: 10px 0;
-  font-size: 16px;
-  color: #333;
-}
-
-.requestCard strong {
-  color: #f57c00;
-  margin-right: 5px;
-}
-
-.approveButton {
-  display: inline-block;
-  margin-top: 15px;
-  padding: 10px 20px;
-  background-color: #f57c00;
-  color: white;
-  font-weight: bold;
-  text-align: center;
-  border-radius: 5px;
-  cursor: pointer;
-  text-decoration: none;
-  transition: background-color 0.3s ease;
-  width: 100%;
-  max-width: 250px; /* יישור הכפתור עם רוחב מקסימלי */
-  box-sizing: border-box; /* מבטיח שהכפתור לא ייחתך */
-}
-
-.approveButton:hover {
-  background-color: #e55b00;
-}
-
-/* רספונסיביות למסכים קטנים יותר */
-@media (max-width: 768px) {
-  .container {
-    padding: 15px;
-  }
-
-  .title {
-    font-size: 22px;
-  }
-
-  .requestCard {
-    padding: 15px;
-    margin-top: 15px;
-    width: 100%;
-  }
-
-  .requestCard p {
-    font-size: 14px;
-  }
-
-  .approveButton {
-    font-size: 14px;
-    padding: 8px 15px;
-    width: 100%;
-    max-width: none; /* מאפשר לכפתור להתאים לרוחב הכרטיס */
+    padding: 8px 10px;
   }
 }
 
-/* רספונסיביות למסכים קטנים מאוד */
 @media (max-width: 480px) {
   .container {
-    padding: 10px;
+    padding: 5px;
   }
 
-  .title {
+  .title,
+  .sectionTitle {
     font-size: 20px;
-  }
-
-  .requestCard p {
-    font-size: 12px;
   }
 
   .approveButton {
     font-size: 12px;
     padding: 6px 10px;
     width: 100%;
-    max-width: none; /* מאפשר לכפתור להתאים לרוחב הכרטיס */
-  }
-}
-/* עיצוב כללי */
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-  box-sizing: border-box;
-}
-
-.title {
-  color: #f57c00;
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-/* עיצוב עבור בחירת המטופלים */
-.patientSelectContainer {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.selectPatient {
-  font-size: 16px;
-  padding: 10px;
-  margin: 0 auto;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  box-sizing: border-box;
-}
-
-/* עיצוב עבור הכפתורים */
-.buttonGroup {
-  display: flex;
-  justify-content: center;
-  gap: 10px; /* מרווח בין הכפתורים */
-  margin-top: 20px;
-}
-
-.buttonGroup button {
-  padding: 10px 20px;
-  cursor: pointer;
-  background-color: #f57c00;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  transition: background-color 0.3s ease;
-}
-
-.buttonGroup button:hover {
-  background-color: #e55b00;
-}
-
-.buttonGroup .active {
-  background-color: #ff8f00;
-  font-weight: bold;
-}
-
-/* רספונסיביות למסכים קטנים יותר */
-@media (max-width: 768px) {
-  .title {
-    font-size: 22px;
+    max-width: none;
   }
 
-  .buttonGroup {
-    flex-direction: column;
-    gap: 10px; /* מרווח בין הכפתורים */
-  }
-
-  .buttonGroup button {
-    font-size: 14px;
-    padding: 8px 15px;
-  }
-
-  .selectPatient {
-    width: 100%;
-    font-size: 14px;
-    padding: 8px;
-  }
-}
-
-/* רספונסיביות למסכים קטנים מאוד */
-@media (max-width: 480px) {
-  .title {
-    font-size: 20px;
-  }
-
-  .buttonGroup button {
-    font-size: 12px;
-    padding: 6px 10px;
-  }
-
-  .selectPatient {
+  .table th,
+  .table td {
     font-size: 12px;
     padding: 6px;
-  }
-}
-/* עיצוב כללי */
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-  box-sizing: border-box;
-}
-
-.title {
-  color: #f57c00;
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-/* כותרות עבור חלקים שונים כמו "Approved Prescriptions" */
-.sectionTitle {
-  color: #f57c00;
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 15px;
-  text-align: center;
-}
-
-/* רספונסיביות למסכים קטנים יותר */
-@media (max-width: 768px) {
-  .title {
-    font-size: 22px;
-  }
-
-  .sectionTitle {
-    font-size: 20px;
-  }
-}
-
-/* רספונסיביות למסכים קטנים מאוד */
-@media (max-width: 480px) {
-  .title {
-    font-size: 20px;
-  }
-
-  .sectionTitle {
-    font-size: 18px;
   }
 }

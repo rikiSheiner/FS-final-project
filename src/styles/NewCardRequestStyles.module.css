@@ -4,14 +4,14 @@
   border-radius: 8px;
   max-width: 90%;
   margin: 20px auto;
-  background-color: #fff4e6; /* גוון כתום בהיר כרקע */
+  background-color: #fff4e6; 
 }
 
 .title {
   text-align: center;
   margin-bottom: 20px;
   font-size: 24px;
-  color: #FF6600; /* צבע כותרת כתום */
+  color: #FF6600;
 }
 
 .detailsRow {
@@ -29,13 +29,13 @@
 .detailBox p {
   margin: 5px 0;
   font-size: 18px;
-  color: #FF6600; /* צבע טקסט בתוך detailBox לכתום */
+  color: #FF6600; 
 }
 
 .button {
   width: 100%;
   padding: 15px;
-  background-color: #FF6600; /* צבע כפתור כתום */
+  background-color: #FF6600; 
   color: #fff;
   border: none;
   border-radius: 4px;
@@ -44,7 +44,7 @@
 }
 
 .button:hover {
-  background-color: #cc5200; /* צבע כהה יותר ב-hover */
+  background-color: #cc5200; 
 }
 
 .message {
@@ -61,9 +61,7 @@
   color: green;
 }
 
-/* Media Queries for Responsiveness */
 
-/* עד 768px (טאבלטים ומוביילים קטנים) */
 @media (max-width: 768px) {
   .detailsRow {
     flex-direction: column;
@@ -94,7 +92,6 @@
   }
 }
 
-/* עד 480px (מוביילים קטנים) */
 @media (max-width: 480px) {
   .container {
     padding: 15px;

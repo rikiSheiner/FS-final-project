@@ -1,0 +1,101 @@
+/* Login.module.css */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 500px;
+    margin: auto;
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #FFA500;
+}
+
+.logoContainer {
+    margin-bottom: 20px;
+    text-align: center; /* Center the logo container */
+}
+
+.logo {
+    width: 150px;
+    height: auto;
+}
+
+.userTypeSelection {
+    text-align: center;
+    margin-bottom: 20px; /* Space between user type buttons and form */
+}
+
+.userTypeButton {
+    background-color: #0a74da;
+    color: white;
+    border: none;
+    padding: 8px 12px; /* Smaller button size */
+    margin: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px; /* Smaller font size */
+}
+
+.userTypeButton:hover {
+    background-color: #0758a3;
+}
+
+.loginFormContainer {
+    width: 100%;
+    text-align: center; /* Center the form inside container */
+    
+}
+
+.loginForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center items in the form */
+}
+
+.formGroup {
+    margin-bottom: 20px; /* Increased space between form rows */
+    width: 100%;
+}
+
+.formGroup label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.formGroup input {
+    width: 100%;
+    padding: 10px;
+    padding-right: 0px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+.submitButton {
+    background-color: #0a74da;
+    color: white;
+    border: none;
+    padding: 8px 12px; /* Smaller button size */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px; /* Smaller font size */
+    margin-top: 10px; /* Space between submit button and other elements */
+}
+
+.submitButton:hover {
+    background-color: #0758a3;
+}
+
+.error {
+    color: red;
+    margin-top: 10px;
+}
+
+.signupLink {
+    margin-top: 10px;
+    text-align: center; /* Center the signup link */
+}
+

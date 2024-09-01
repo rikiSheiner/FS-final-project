@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import classes from '../styles/App.module.css';
+import classes from '../styles/Login.module.css'; // Adjust path as needed
 
 const Login = () => {
   const [userType, setUserType] = useState(null);
@@ -76,51 +76,55 @@ const Login = () => {
   };
 
   return (
-    <div style={{ maxWidth: '400px', margin: '0 auto', padding: '20px' }}>
-      <img src='clinic.png' className={classes.myImage} alt="Clinic Logo" />
+    <div className={classes.container}>
+      <div className={classes.logoContainer}>
+        <img src='clinic.png' className={classes.logo} alt="Clinic Logo" />
+      </div>
       {!userType ? (
-        <div>
-          <h2>Login as:</h2>
-          <button onClick={() => handleUserTypeSelection('doctor')}>Doctor</button>
-          <button onClick={() => handleUserTypeSelection('patient')}>Patient</button>
+        <div className={classes.userTypeSelection}>
+          <h2>Select User Type</h2>
+          <button className={classes.userTypeButton} onClick={() => handleUserTypeSelection('doctor')}>Doctor</button>
+          <button className={classes.userTypeButton} onClick={() => handleUserTypeSelection('patient')}>Patient</button>
         </div>
       ) : (
-        <>
-          <form onSubmit={handleSubmit}>
-            <h2>{userType === 'doctor' ? 'Doctor Login' : 'Patient Login'}</h2>
-            <div>
-              <label>
-                Email:
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)} // Update email state
-                  required
-                />
-              </label>
+        <div className={classes.loginFormContainer}>
+         
+          <form onSubmit={handleSubmit} className={classes.loginForm}>
+          <h2>{userType === 'doctor' ? 'Doctor Login' : 'Patient Login'}</h2>
+            <div className={classes.formGroup}>
+              <label htmlFor="email">Email:</label>
+              <input
+                type="email"
+                id="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)} // Update email state
+                required
+              />
             </div>
-            <div>
-              <label>
-                Password:
-                <input
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)} // Update password state
-                  required
-                />
-              </label>
+            <div className={classes.formGroup}>
+              <label htmlFor="password">Password:</label>
+              <input
+                type="password"
+                id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)} // Update password state
+                required
+              />
             </div>
-            <button type="submit">Login</button>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
-            <div>{userType === 'doctor' ? '' : <Link to="/signup">Click here to signup</Link>}</div>
+            <button type="submit" className={classes.submitButton}>Login</button>
+            {error && <p className={classes.error}>{error}</p>}
+            <div className={classes.signupLink}>
+              {userType === 'doctor' ? '' : <Link to="/signup">Click here to signup</Link>}
+            </div>
           </form>
-        </>
+        </div>
       )}
     </div>
   );
 };
 
 export default Login;
+
 
 
 

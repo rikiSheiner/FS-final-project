@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import classes from '../styles/App.module.css'; // Import the same CSS file
+import classes from '../styles/Login.module.css'; // Import the same CSS file
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -136,7 +136,7 @@ const SignUp = () => {
   };
 
   return (
-    <div style={{ maxWidth: '400px', margin: '0 auto', padding: '20px' }}> {/* Apply similar styles */}
+    <div > {/* Apply similar styles */}
       <form onSubmit={handleSubmit}>
         <h1>Sign Up</h1>
         <label>

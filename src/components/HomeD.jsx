@@ -15,4 +15,5 @@ const HomeD = () => {
     </div>
   );
 };
+
 export default HomeD;

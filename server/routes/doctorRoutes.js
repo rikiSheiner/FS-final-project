@@ -8,6 +8,10 @@ router_of_doctor.delete('/doctors/:id', doctorController.deleteDoctor);
 router_of_doctor.put('/doctors/:id', doctorController.updateDoctor);
 router_of_doctor.post('/filter', doctorController.getDoctorsWithFilter);
 
+// נתיב לקבלת כל המטופלים של רופא מסוים
+router_of_doctor.get('/patients', doctorController.getPatientsByDoctorID);
+
+
 router_of_doctor.get('/specialties', doctorController.getSpecialties);
 
 router_of_doctor.get('/doctors/:id/appointments', doctorController.getAppointmentsByDoctorId);
@@ -20,6 +24,8 @@ router_of_doctor.post('/referrals', doctorController.creataReffral);
 router_of_doctor.post('/prescriptions', doctorController.createPrescription);
 router_of_doctor.post('/getMedName',doctorController.getMedName);
 
+// בקשות מרשמים של מטופל מסוים שלא אושרו
+router_of_doctor.get('/unapproved-prescription-requests', doctorController.getUnapprovedPrescriptionRequests);
 
 router_of_doctor.get('/appointments', doctorController.getAppointmentsByDoctorIdWithQuery);
 

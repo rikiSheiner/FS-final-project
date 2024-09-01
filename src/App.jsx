@@ -22,7 +22,7 @@ import { CartProvider } from "./components/pharmacy-components/CartContext";
 import Cart from "./components/pharmacy-components/Cart";
 import Checkout from "./components/pharmacy-components/Checkout";
 import DoctorHomeContent from "./components/DoctorHomeContent";
-import PatientsOfDoctor from "./components/PatientsOfDoctor";
+import PatientsOfDoctor from "./components/doctor-components/PatientsOfDoctor";
 
 function App() {
   return (

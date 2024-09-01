@@ -63,7 +63,6 @@ export default class BaseModel {
     return rows;
   }
 
-    // Method to get all rows with a filter
     async getAllWithFilter(filterPropName, filterPropValue) {
       console.log(`Querying ${this.table} with ${filterPropName} = ${filterPropValue}`);
       const [rows] = await pool.query(`
@@ -73,6 +72,21 @@ export default class BaseModel {
       `,
       [filterPropValue]
     );
+    return rows;
+  }
+
+  async getAllWithMultipleFilters(filters) {
+    const filterKeys = Object.keys(filters);
+    const filterValues = Object.values(filters);
+    
+    const whereClause = filterKeys.map(key => `${key} = ?`).join(" AND ");
+    
+    const [rows] = await pool.query(`
+      SELECT * 
+      FROM ${this.table}
+      WHERE ${whereClause}
+    `, filterValues);
+
     return rows;
   }
 

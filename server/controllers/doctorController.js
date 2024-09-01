@@ -6,6 +6,8 @@ import userModel from '../models/userModel.js';
 import refferalModel from '../models/referralsModel.js';
 import prescriptionRequestModel from '../models/prescriptionRequestModel.js'
 import medicineModel from '../models/medicineModel.js';
+import patientDoctorModel from '../models/PatientDoctorModel.js';
+import prescriptionModel from '../models/prescriptionModel.js';
 
 async function getDoctor(req, res) {
     try {
@@ -223,6 +225,7 @@ async function updateDoctor(req, res) {
 }
  }
 
+ /*
  async function createPrescription(req, res) {
   try {
     const { patientID, doctorID, medicineID, expirationDate, creationDate } = req.body;
@@ -246,10 +249,125 @@ async function updateDoctor(req, res) {
   } catch (error) {
     res.status(500).json({ message: 'Error creating prescription', error });
   }
+}*/
+async function createPrescription(req, res) {
+  try {
+    const { patientID, doctorID, medicineID, expirationDate, creationDate } = req.body;
+
+    // Validate input
+    if (!patientID || !doctorID || !medicineID || !expirationDate || !creationDate) {
+      return res.status(400).json({ error: 'Missing required fields' });
+    }
+
+    const prescriptionData = {
+      PatientID: patientID,
+      DoctorID: doctorID,
+      MedicineID: medicineID,
+      ExpirationDate: expirationDate,
+      CreationDate: creationDate,
+    };
+
+    // Create the prescription
+    const result = await prescriptionModel.create(prescriptionData);
+
+    res.status(201).json({ message: 'Prescription created successfully', prescriptionId: result.insertId });
+  } catch (error) {
+    console.error('Error creating prescription:', error);
+    res.status(500).json({ message: 'Error creating prescription', error });
+  }
 }
+
+// פונקציה שמחזירה את כל המטופלים של רופא מסוים
+async function getPatientsByDoctorID(req, res) {
+  try {
+    const doctorID = req.query.doctorID;
+
+    if (!doctorID) {
+      return res.status(400).json({ message: "DoctorID is required" });
+    }
+
+    // שימוש בפונקציה החדשה במודל
+    const patientDetails = await patientDoctorModel.getPatientsOfDoctor(doctorID);
+
+    if (!patientDetails || patientDetails.length === 0) {
+      return res.status(404).json({ message: "No patients found for the given doctor ID" });
+    }
+
+    res.status(200).json(patientDetails);
+  } catch (error) {
+    console.error("Error fetching patients by doctor ID:", error);
+    res.status(500).json({ message: "Could not fetch patients for the given doctor ID", error });
+  }
+}
+
+async function getUnapprovedPrescriptionRequests(req, res) {
+  try {
+    const doctorID = req.query.doctorID; 
+    const patientID = req.query.patientID; 
+
+    if (!doctorID || !patientID) {
+      return res.status(400).json({ message: "DoctorID and PatientID are required" });
+    }
+
+    console.log("DoctorID:", doctorID);
+    console.log("PatientID:", patientID);
+
+    const prescriptionRequests = await prescriptionRequestModel.getRequestsWithMedicineDetails({
+      DoctorID: doctorID,
+      PatientID: patientID,
+      Approved: false
+    });
+
+    console.log("Prescription Requests:", prescriptionRequests);
+
+    if (!prescriptionRequests || prescriptionRequests.length === 0) {
+      return res
+        .status(404)
+        .json({ message: "No unapproved prescription requests found for the given patient and doctor" });
+    }
+
+    res.status(200).json(prescriptionRequests);
+  } catch (error) {
+    console.error("Error retrieving unapproved prescription requests:", error);
+    res
+      .status(500)
+      .json({ message: "Error retrieving unapproved prescription requests", error: error.message });
+  }
+}
+
+
+async function getPatientPrescriptionRequests(req, res) {
+  try {
+    const doctorID = req.query.doctorID; 
+    const patientID = req.query.patientID; 
+
+    if (!doctorID || !patientID) {
+      return res.status(400).json({ message: "DoctorID and PatientID are required" });
+    }
+
+    const prescriptionRequests = await prescriptionRequestModel.getAllWithMultipleFilters({
+      DoctorID: doctorID,
+      PatientID: patientID
+    });
+
+    if (!prescriptionRequests || prescriptionRequests.length === 0) {
+      return res
+        .status(404)
+        .json({ message: "No prescription requests found for the given patient and doctor" });
+    }
+
+    res.status(200).json(prescriptionRequests);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error retrieving patient's prescription requests", error });
+  }
+}
+
+
 async function getPrescriptions(req, res) {
   try {
-    const { id } = req.body; // חילוץ ה-ID מה-Query String
+    const { id } = req.body; 
 
     const refferals = await prescriptionRequestModel.getAllWithFilter("DoctorID",id);
 
@@ -266,6 +384,7 @@ async function getPrescriptions(req, res) {
       .json({ message: "Error retreiving patient's refferals", error });
   }
 }
+
 async function getMedName(req, res) {
   try {
     const { MedicineID } = req.body; // Extract MedicineID from the request body
@@ -308,4 +427,7 @@ getDoctor,
     getPrescriptions,
     getMedName,
     alterApprove,
+    getPatientsByDoctorID,
+    getPatientPrescriptionRequests,
+    getUnapprovedPrescriptionRequests,
   };

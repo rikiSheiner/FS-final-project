@@ -4,11 +4,18 @@ import classes from '../styles/App.module.css';
 import {FaUsers, FaHome, FaCalendarAlt, FaFileMedical, FaPrescriptionBottle, FaSignOutAlt } from 'react-icons/fa';
 
 function DoctorNavB() {
-  const handleLogout = () => {
+  const handleLogout = async () => {
     const navigate = useNavigate();
-    localStorage.clear();
-    navigate('/login'); // Redirect to the login page after clearing localStorage
-  };
+
+    // Clear localStorage and wait for it to finish
+    await new Promise((resolve) => {
+        localStorage.clear();
+        resolve();
+    });
+
+    // After clearing, navigate to the login page
+    navigate('/login');
+};
   return (
     <>
       <nav className={classes.navbar}>

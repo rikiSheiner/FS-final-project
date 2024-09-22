@@ -1,5 +1,5 @@
 # Health Maintenance Organization (HMO) Management System
-1. Description: 
+1. Description:
    This project is my final project in the Full Stack course.
    It implements an end-to-end application for managing HMO services, featuring a multi-user system, using React for the frontend and Node.js with Express for the backend, integrated with a MySQL database,
    employing a modular architecture and RESTful API design.
